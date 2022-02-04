@@ -19,9 +19,9 @@ namespace ProjectTemplate
 		////////////////////////////////////////////////////////////////////////
 		///replace the values of these variables with your database credentials
 		////////////////////////////////////////////////////////////////////////
-		private string dbID = "cis440template";
-		private string dbPass = "!!Cis440";
-		private string dbName = "cis440template";
+		private string dbID = "spring2022team5";
+		private string dbPass = "spring2022team5";
+		private string dbName = "spring2022team5";
 		////////////////////////////////////////////////////////////////////////
 		
 		////////////////////////////////////////////////////////////////////////
@@ -43,7 +43,7 @@ namespace ProjectTemplate
 		{
 			try
 			{
-				string testQuery = "select * from test";
+				string testQuery = "select * from employers";
 
 				////////////////////////////////////////////////////////////////////////
 				///here's an example of using the getConString method!
@@ -55,7 +55,39 @@ namespace ProjectTemplate
 				MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
 				DataTable table = new DataTable();
 				adapter.Fill(table);
-				return "Success!";
+
+                // get columns
+                string idcolumn = table.Columns[0].ColumnName.ToString();
+                string namecolumn = table.Columns[1].ColumnName.ToString();
+                string addresscolumn = table.Columns[2].ColumnName.ToString();
+                string citycolumn = table.Columns[3].ColumnName.ToString();
+                string statecolumn = table.Columns[4].ColumnName.ToString();
+                string postalcodecolumn = table.Columns[5].ColumnName.ToString();
+                string countrycolumn = table.Columns[6].ColumnName.ToString();
+                string phonecolumn = table.Columns[7].ColumnName.ToString();
+                string websitecolumn = table.Columns[8].ColumnName.ToString();
+
+                // get data
+                string id = table.Rows[0].ItemArray[0].ToString();
+                string name = table.Rows[0].ItemArray[1].ToString();
+                string address = table.Rows[0].ItemArray[2].ToString();
+                string city = table.Rows[0].ItemArray[3].ToString();
+                string state = table.Rows[0].ItemArray[4].ToString();
+                string postalcode = table.Rows[0].ItemArray[5].ToString();
+                string country = table.Rows[0].ItemArray[6].ToString();
+                string phone = table.Rows[0].ItemArray[7].ToString();
+                string website = table.Rows[0].ItemArray[8].ToString();
+
+                // return test query
+                return idcolumn + ": " + id + "\n" 
+                    + namecolumn + ": " + name + "\n"
+                    + addresscolumn + ": " + address + "\n"
+                    + citycolumn + ": " + city + "\n"
+                    + statecolumn + ": " + state + "\n"
+                    + postalcodecolumn + ": " + postalcode + "\n"
+                    + countrycolumn + ": " + country + "\n"
+                    + phonecolumn + ": " + phone + "\n"
+                    + websitecolumn + ": " + website + "\n";
 			}
 			catch (Exception e)
 			{
