@@ -32,6 +32,33 @@
     <!--kcox19 Home Page-->
     <script type="text/javascript">
         //LOG ON METHOD
+        function Login() {
+            let user = document.getElementById("user");
+            let pass = document.getElementbyId("pass");
+            let list = ["abc", "xyz"]
+            let valid = false;
+
+            while (valid = false) {
+
+                for (int m = 0; m < list.size(); m++) {
+                    if (user.value = list[m]) {
+                        valid = true;
+                        break;
+                    }
+                }
+            }
+
+            if (valid = true) {
+                let loginParagraph = document.getElementById("loginParagraph");
+                loginParagraph.innerHTML = `<p><em>${user.value}</em>, you have been successfully logged in!</p>`
+            }
+            else {
+                let loginParagraph = document.getElementById("loginParagraph");
+                loginParagraph.innerHTML = `<p>Login unsuccessful, please try again!</p>`
+            }
+            
+
+        }
     </script>
     <!--END OF YOUR OWN JAVASCRIPT-->
     <!--AND YOUR OWN CSS CAN GO HERE AS WELL-->
@@ -53,23 +80,26 @@
 
         <label>Password: </label>
         <input id="pass" class="input"><br>
-    </section>
 
-    <br><br>
-    <section>
+        <br><br>
+
         <div id="button">
-            <button id="login" onclick="">Login</button><br><br>
+            <button id="login" onclick="javascript: Login();">Login</button><br><br>
         </div>
-        <hr>
+
     </section>
 
-    <section>
-        <h2>NAVIGATION</h2>
-        <a href="" target="_blank">About Page</a>
-        <a href="" target="_blank">Pascal Chat</a>
-        <a href="" target="_blank">Home</a>
+    <section id="section2">
+        <p id="loginParagraph"></p>
     </section>
+
+    <!--<section>
+            <h2>NAVIGATION</h2>
+            <a href="" target="_blank">About Page</a>
+            <a href="" target="_blank">Pascal Chat</a>
+            <a href="" target="_blank">Home</a>
+        </section>-->
 
 
 </body>
-    </html >
+        </html >
