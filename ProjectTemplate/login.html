@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Pascal Home</title>
+    <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
+    <!--<script type="text/javascript">
+        function TestButtonHandler() {
+            var webMethod = "ProjectServices.asmx/TestConnection";
+            var parameters = "{}";
+
+            //jQuery ajax method
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var responseFromServer = msg.d;
+                    alert(responseFromServer);
+                },
+                error: function (e) {
+                    alert("this code will only execute if javascript is unable to access the webservice");
+                }
+            });
+        }
+    </script>-->
+    <!--kcox19 Home Page-->
+    <script type="text/javascript">
+        //LOG ON METHOD
+    </script>
+    <!--END OF YOUR OWN JAVASCRIPT-->
+    <!--AND YOUR OWN CSS CAN GO HERE AS WELL-->
+    <style>
+    </style>
+    <!--END OF YOUR OWN CSS-->
+</head>
+<body>
+    <!--<button onclick="javascript: TestButtonHandler();">Click here to test connection!</button>-->
+    <header>
+        <h1>Pascal Home Page</h1>
+    </header>
+    <hr>
+
+    <h2>Login</h2>
+    <section id="section1">
+        <label>Username: </label>
+        <input id="user" class="input"><br>
+
+        <label>Password: </label>
+        <input id="pass" class="input"><br>
+    </section>
+
+    <br><br>
+    <section>
+        <div id="button">
+            <button id="login" onclick="">Login</button><br><br>
+        </div>
+        <hr>
+    </section>
+
+    <section>
+        <h2>NAVIGATION</h2>
+        <a href="" target="_blank">About Page</a>
+        <a href="" target="_blank">Pascal Chat</a>
+        <a href="" target="_blank">Home</a>
+    </section>
+
+
+</body>
+    </html >
