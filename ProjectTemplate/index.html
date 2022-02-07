@@ -1,105 +1,136 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
     <title>Pascal Home</title>
     <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
-    <!--<script type="text/javascript">
-        function TestButtonHandler() {
-            var webMethod = "ProjectServices.asmx/TestConnection";
-            var parameters = "{}";
-
-            //jQuery ajax method
-            $.ajax({
-                type: "POST",
-                url: webMethod,
-                data: parameters,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (msg) {
-                    var responseFromServer = msg.d;
-                    alert(responseFromServer);
-                },
-                error: function (e) {
-                    alert("this code will only execute if javascript is unable to access the webservice");
-                }
-            });
-        }
-    </script>-->
-    <!--kcox19 Home Page-->
+    <!--Home Page-->
     <script type="text/javascript">
-        //LOG ON METHOD
-        function Login() {
-            let user = document.getElementById("user");
-            let pass = document.getElementbyId("pass");
-            let list = ["abc", "xyz"]
-            let valid = false;
-
-            while (valid = false) {
-
-                for (int m = 0; m < list.size(); m++) {
-                    if (user.value = list[m]) {
-                        valid = true;
-                        break;
-                    }
-                }
-            }
-
-            if (valid = true) {
-                let loginParagraph = document.getElementById("loginParagraph");
-                loginParagraph.innerHTML = `<p><em>${user.value}</em>, you have been successfully logged in!</p>`
-            }
-            else {
-                let loginParagraph = document.getElementById("loginParagraph");
-                loginParagraph.innerHTML = `<p>Login unsuccessful, please try again!</p>`
-            }
-            
-
-        }
     </script>
-    <!--END OF YOUR OWN JAVASCRIPT-->
-    <!--AND YOUR OWN CSS CAN GO HERE AS WELL-->
+
     <style>
+        header {
+            position: absolute;
+            right: 0;
+        }
+
+        .button1 {
+            background-color: lightgrey;
+            color: darkslateblue;
+            font-size: 15px;
+            border-radius: 8px;
+            padding: 12px 28px;
+            transition-duration: 0.3s;
+        }
+
+            .button1:hover {
+                background-color: darkslateblue;
+                color: white;
+            }
+
+        .button2 {
+            background-color: darkslateblue;
+            color: white;
+            font-size: 15px;
+            border-radius: 8px;
+            padding: 12px 28px;
+            transition-duration: 0.3s;
+        }
+
+            .button2:hover {
+                background-color: lightgrey;
+                color: darkslateblue;
+            }
+
+        #logoBox {
+            align-self: center;
+            margin-left: auto;
+            margin-right: auto;
+            height: 200px;
+            width: 50%;
+            max-width: 300px;
+            background-color: darkslateblue;
+        }
+
+        body {
+            width: 700px;
+            padding: 25px;
+            background-color: whitesmoke;
+        }
+
+        h1 {
+            font-size: 30px;
+        }
+
+        h2 {
+            font-size: 25px;
+        }
+
+        h3 {
+            font-size: 25px;
+        }
+
+        .titles {
+            color: darkslateblue;
+        }
     </style>
-    <!--END OF YOUR OWN CSS-->
+
 </head>
+
 <body>
-    <!--<button onclick="javascript: TestButtonHandler();">Click here to test connection!</button>-->
+    <!--<INTRODUCTION>-->
     <header>
-        <h1>Pascal Home Page</h1>
+        <a class="button1" href="loginpage.html" target="_blank">Sign In</a>
+        <a class="button2" href="loginpage.html" target="_blank">Get Started</a>
     </header>
-    <hr>
 
-    <h2>Login</h2>
+    <br><br>
+
     <section id="section1">
-        <label>Username: </label>
-        <input id="user" class="input"><br>
+        <h1>Pascal Home Page</h1>
 
-        <label>Password: </label>
-        <input id="pass" class="input"><br>
-
-        <br><br>
-
-        <div id="button">
-            <button id="login" onclick="javascript: Login();">Login</button><br><br>
+        <div id="logoBox">
+            <img>
+            <p>pascal logo</p>
         </div>
 
     </section>
 
+    <h2 class="titles">Pascal<br>Changing the Face of Employee Engagement</h2>
     <section id="section2">
-        <p id="loginParagraph"></p>
+        <div>
+            <p>
+                When people are asked to do surveys, the reaction ranges from indifference to distain. Yearly surveys by
+                companies are often done in a rushed, careless way because employees just simply do not want to do them.
+                The data gathered from company surveys serve as a snapshot in time, and are potentially biased by the
+                mood and feeling of the employee on that particular day.
+                Flawed data leads to flawed decisions, which perpetuates an endless cycle leaving neither employer or
+                employee satisfied. Pascal is the answer to the timeless question of “how do we make surveys less
+                terrible?”
+            </p>
+            <p>
+                Based on the adorable housecat by the same name, Pascal seeks to change the way that employers engage
+                with their employees. Rather than long and grueling surveys, employees chat with Pascal to create
+                confidential dialog that captures a deeper level of understanding of the feelings of employees.
+                Employers are able to create dialogs that focus on key questions regarding their companies and can use
+                that data to create meaningful change. After employees are done conversing with Pascal, they are able to
+                see the feedback that their peers have given and react to it giving employers a chance to see how
+                widespread complements or complaints are.
+            </p>
+            <p>
+                Pascal is designed to converse with employees in short, frequent intervals allowing employees to mitigate
+                biases from recent events. To ensure engagement, employers can set rewards for participation. By
+                allowing employers to truly understand their employees, we believe that Pascal can make companies
+                better.
+            </p>
+        </div>
     </section>
-
-    <!--<section>
-            <h2>NAVIGATION</h2>
-            <a href="" target="_blank">About Page</a>
-            <a href="" target="_blank">Pascal Chat</a>
-            <a href="" target="_blank">Home</a>
-        </section>-->
 
 
 </body>
-        </html >
+
+</html>
