@@ -3,6 +3,7 @@
     box-sizing: border-box;
 }
 
+/* Next four blocks allow for RWD using grid model. */
 .col-01 {width:       8.33%; }
 .col-02 {width:      16.66%; }
 .col-03 {width:      25.00%; }
@@ -53,6 +54,10 @@ button {
 
 body {
     height: 100%;
+}
+
+body {
+    width: 100%;
 }
 
 body, .filler {
