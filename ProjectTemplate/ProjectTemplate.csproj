@@ -91,7 +91,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="loginPage.html" />
     <Content Include="index.html" />
     <Content Include="login.html" />
     <Content Include="logoff.html" />
