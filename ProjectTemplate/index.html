@@ -3,12 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cabin&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
-    <title>Pascal</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <title>Pascal Home</title>
     <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -16,79 +12,125 @@
     <script type="text/javascript">
     </script>
 
-<!--Styling moved to external style sheet to apply to all pages.-->
+    <style>
+        header {
+            position: absolute;
+            right: 0;
+        }
+
+        .button1 {
+            background-color: lightgrey;
+            color: darkslateblue;
+            font-size: 15px;
+            border-radius: 8px;
+            padding: 12px 28px;
+            transition-duration: 0.3s;
+        }
+
+            .button1:hover {
+                background-color: darkslateblue;
+                color: white;
+            }
+
+        .button2 {
+            background-color: darkslateblue;
+            color: white;
+            font-size: 15px;
+            border-radius: 8px;
+            padding: 12px 28px;
+            transition-duration: 0.3s;
+        }
+
+            .button2:hover {
+                background-color: lightgrey;
+                color: darkslateblue;
+            }
+
+        #logoBox {
+            align-self: center;
+            margin-left: auto;
+            margin-right: auto;
+            height: 200px;
+            width: 50%;
+            max-width: 300px;
+            background-color: darkslateblue;
+        }
+
+        body {
+            width: 700px;
+            padding: 25px;
+            background-color: whitesmoke;
+        }
+
+        h1 {
+            font-size: 30px;
+        }
+
+        h2 {
+            font-size: 25px;
+        }
+
+        h3 {
+            font-size: 25px;
+        }
+
+        .titles {
+            color: darkslateblue;
+        }
+    </style>
 
 </head>
-
 
 <body>
     <!--<INTRODUCTION>-->
     <header>
-        <div class="row">
-            <div class="col-09"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
-            <div class="col-01" style="vertical-align: bottom; white-space: nowrap;"><a href="loginpage.html">Sign In</a></div>
-            <!--The following button will to the Create Account page-->
-            <div class="col-02"><button type="button" onclick=window.open('','_blank'>Get Started</button></div>
-        </div>
 
-        <div class="row">
-            <div class="col-12" style="text-align: center; margin: 2em 0 2em 0;">
-                <img src=".\resources\pascal-logo.png" style="width: 50%;">
-            </div>
-        </div>
-
+        <a class="button1" href="loginpage.html" target="_blank">Sign In</a>
+        <a class="button2" href="loginpage.html" target="_blank">Get Started</a>
     </header>
-    <main>
-        <div class="row col-12">
-            <div class="col-01 filler">&nbsp;</div>
-            <div class="col-10">
 
-                <h1>Pascal</h1>
-                <h2>Changing the Face of Employee Engagement</h2>
+    <br><br>
 
-                <p>
-                    When people are asked to do surveys, the reaction ranges from indifference to disdain. Yearly surveys by
-                    companies are often done in a rushed, careless way because employees just simply do not want to do them.
-                    The data gathered from company surveys serve as a snapshot in time, and are potentially biased by the
-                    mood and feeling of the employee on that particular day.
-                    Flawed data leads to flawed decisions, which perpetuates an endless cycle leaving neither employer or
-                    employee satisfied. Pascal is the answer to the timeless question of, “How do we make surveys less
-                    terrible?”
-                </p>
+    <section id="section1">
+        <h1>Pascal Home Page</h1>
 
-                <p>
-                    Based on the adorable housecat by the same name, Pascal seeks to change the way that employers engage
-                    with their employees. Rather than long and grueling surveys, employees chat with Pascal to create
-                    confidential dialog that captures a deeper level of understanding of the feelings of employees.
-                    Employers are able to create dialogs that focus on key questions regarding their companies and can use
-                    that data to create meaningful change. After employees are done conversing with Pascal, they are able to
-                    see the feedback that their peers have given and react to it giving employers a chance to see how
-                    widespread complements or complaints are.
-                </p>
-
-                <hr />
-
-                <div class="col-06">
-                    <img src="" style="width: fit-content;"/>
-                </div>
-                <div class="col-06">
-                    <p>
-                        Pascal is designed to converse with employees in short, frequent intervals allowing employees to mitigate
-                        biases from recent events. To ensure engagement, employers can set rewards for participation. By
-                        allowing employers to truly understand their employees, we believe that Pascal can make companies
-                        better.
-                    </p>
-                </div>
-                <hr />
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div>
-            <div class="col-01 filler">&nbsp;</div>
+        <div id="logoBox">
+            <img>
+            <p>pascal logo</p>
         </div>
-    </main>
+
+    </section>
+
+    <h2 class="titles">Pascal<br>Changing the Face of Employee Engagement</h2>
+    <section id="section2">
+        <div>
+            <p>
+                When people are asked to do surveys, the reaction ranges from indifference to distain. Yearly surveys by
+                companies are often done in a rushed, careless way because employees just simply do not want to do them.
+                The data gathered from company surveys serve as a snapshot in time, and are potentially biased by the
+                mood and feeling of the employee on that particular day.
+                Flawed data leads to flawed decisions, which perpetuates an endless cycle leaving neither employer or
+                employee satisfied. Pascal is the answer to the timeless question of “how do we make surveys less
+                terrible?”
+            </p>
+            <p>
+                Based on the adorable housecat by the same name, Pascal seeks to change the way that employers engage
+                with their employees. Rather than long and grueling surveys, employees chat with Pascal to create
+                confidential dialog that captures a deeper level of understanding of the feelings of employees.
+                Employers are able to create dialogs that focus on key questions regarding their companies and can use
+                that data to create meaningful change. After employees are done conversing with Pascal, they are able to
+                see the feedback that their peers have given and react to it giving employers a chance to see how
+                widespread complements or complaints are.
+            </p>
+            <p>
+                Pascal is designed to converse with employees in short, frequent intervals allowing employees to mitigate
+                biases from recent events. To ensure engagement, employers can set rewards for participation. By
+                allowing employers to truly understand their employees, we believe that Pascal can make companies
+                better.
+            </p>
+        </div>
+    </section>
+
 
 </body>
 

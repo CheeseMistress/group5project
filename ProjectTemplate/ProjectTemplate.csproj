@@ -97,6 +97,7 @@
     <Content Include="logoff.html" />
     <Content Include="ProjectServices.asmx" />
     <Content Include="rewards.html" />
+    <Content Include="styles.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
