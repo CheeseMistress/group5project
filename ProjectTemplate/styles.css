@@ -1,0 +1,105 @@
+/* Style sheet should be used for all Pascal pages.*/
+* {
+    box-sizing: border-box;
+}
+
+/* Next four blocks allow for RWD using grid model. */
+.col-01 {width:       8.33%; }
+.col-02 {width:      16.66%; }
+.col-03 {width:      25.00%; }
+.col-04 {width:      33.33%; }
+.col-05 {width:      41.66%; }
+.col-06 {width:      50.00%; }
+.col-07 {width:      58.33%; }
+.col-08 {width:      66.66%; }
+.col-09 {width:      75.00%; }
+.col-10 {width:      83.33%; }
+.col-11 {width:      91.66%; }
+.col-12 {width:     100.00%; }
+
+[class*="col-"] {
+    float: left;
+}
+
+row {
+    height: fit-content;
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: block;
+}
+
+button {
+    background-color: #0A5E97;
+    color: #FFFFFF;
+    border-radius: 5px;
+    padding: 5%;
+    transition-duration: 0.2s;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    white-space: nowrap;
+    text-align: center;
+}
+
+    button:hover {
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+body {
+    height: 100%;
+}
+
+body {
+    width: 100%;
+}
+
+body, .filler {
+    background-color: transparent;
+    font-family: 'Roboto', sans-serif;
+    color: #707070;
+}
+
+.filler {
+    border: 3px solid transparent;
+}
+.box {
+    border: 1px solid #707070;
+    box-shadow: 2px 5px 10px 1px #707070;
+    border-radius: 10px;
+}
+
+h1, h2 {
+    color:#094C8C;
+    font-weight: bold;
+}
+
+h1 {
+    margin: 1em 0 0 0;
+}
+
+h2 {
+    margin: 0 0 0 0;
+}
+
+hr {
+    height: 6px;
+    background: darkgrey;
+    margin: 3em 0 3em 0;
+}
+
+p {
+    font-family: 'Cabin', sans-serif;
+    margin-top: 1.5em;
+}
+
+a {
+    color: #0A5E97;
+    font-weight: bold;
+}
