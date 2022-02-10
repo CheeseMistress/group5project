@@ -90,8 +90,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="admin-manageaccounts.html" />
     <Content Include="chat.html" />
-    <Content Include="dashboard.html" />
+    <Content Include="dashboard-accountmgr.html" />
+    <Content Include="dashboard-employees.html" />
+    <Content Include="dashboard-results.html" />
+    <Content Include="dashboard-rewards.html" />
+    <Content Include="dashboard-surveys.html" />
     <Content Include="forgotpassword.html" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
@@ -99,7 +104,6 @@
     <Content Include="logoff.html" />
     <Content Include="newaccount.html" />
     <Content Include="ProjectServices.asmx" />
-    <Content Include="rewards.html" />
     <Content Include="styles.css" />
     <Content Include="Web.config" />
   </ItemGroup>
