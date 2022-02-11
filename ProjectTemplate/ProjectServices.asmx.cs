@@ -86,5 +86,26 @@ namespace ProjectTemplate
             return people.ToArray();
         }
 
+        [WebMethod]
+        public void CreateUser(string id, string pass, string first, string last, string company,
+            string address, string city, string state, string code, string country, string phone,
+            string email, string website)
+        {
+            // insert statement
+            string addUser = "insert into employers values (" + id + ",'" + pass + "'," + first + ",'"
+                + last + "'," + company + ",'" + address + "'," + city + ",'" + state + "'," + code + ",'"
+                + country + "'," + phone + ",'" + email + "'," + website + ")";
+
+            ////////////////////////////////////////////////////////////////////////
+            ///here's an example of using the getConString method!
+            ////////////////////////////////////////////////////////////////////////
+            MySqlConnection con = new MySqlConnection(getConString());
+            ////////////////////////////////////////////////////////////////////////
+
+            // connect and execute query 
+            MySqlCommand cmd = new MySqlCommand(addUser, con);
+            cmd.ExecuteNonQuery();
+        }
+
     }
 }
