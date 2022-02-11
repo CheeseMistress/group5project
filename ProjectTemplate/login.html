@@ -42,7 +42,6 @@
                             let loginParagraph = document.getElementById("loginParagraph");
                             loginParagraph.innerHTML = `<p><em>${responseFromServer[i].firstname}</em>, you have been successfully logged in!</p>`
                             valid = true;
-                            alert(responseFromServer[i].email);
                         }
                     }
 
@@ -100,12 +99,13 @@
 
         <label>Password: </label>
         <input id="pass" class="input"><br>
+        <div id="loginParagraph"></div>
     </section>
 
     <br><br>
     <section>
         <div id="button">
-            <button id="login" onclick="">Login</button><br><br>
+            <button id="login" onclick="Login()">Login</button><br><br>
         </div>
         <hr>
     </section>
