@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cabin&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cabin&family=Roboto:wght@400;700&display=swap"
+        rel="stylesheet">
 
     <!--Styling refers external style sheet to apply to all pages.-->
     <link href="styles.css" rel="stylesheet">
@@ -16,13 +18,22 @@
 
     <!--Home Page-->
     <script type="text/javascript">
+
+        function submitFunction() {
+            var resp = document.getElementById("resp").value;
+            document.getElementById("nl").innerHTML = document.getElementById("nl").innerHTML + "<br>" + resp;
+            document.getElementById("resp").value = "";
+        };
+
     </script>
 
 </head>
+
 <body>
     <header>
         <div class="row">
-            <div class="col-12"><a href="index.html"><img src=".\resources\pascal-home.png" style="width: 8vw; max-width: 30px;"></a></div>
+            <div class="col-12"><a href="index.html"><img src=".\resources\pascal-home.png"
+                        style="width: 8vw; max-width: 30px;"></a></div>
         </div>
 
     </header>
@@ -34,7 +45,14 @@
                 <img src=".\resources\pascal-avatar.png" style="display: block;
                 position: relative; left: 50%; max-width: 100%; /*transform: translate(-50%, -50%);*/">
             </div>
-            <div class="col-06 box" style="border: 3px solid #707070; height: 75vh; width: 50vw;"><!--chat box goes here--></div>
+            <div class="col-06 box" style="border: 3px solid #707070; height: 75vh; width: 50vw;">
+                <!--chat box goes here-->
+                <h2>Chatbox</h2>
+                <p id="nl">Hello!</p>
+                <input type="text" id="resp" value="">
+                <button onclick="submitFunction()">Send</button>
+                <br>
+            </div>
             <div class="col-03 filler"><br /></div>
         </div>
 
@@ -45,4 +63,5 @@
         </div>
     </main>
 </body>
+
 </html>
