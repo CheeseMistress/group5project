@@ -87,14 +87,13 @@ namespace ProjectTemplate
         }
 
         [WebMethod]
-        public void CreateUser(string id, string pass, string first, string last, string company,
-            string address, string city, string state, string code, string country, string phone,
-            string email, string website)
+        public void InsertUser(string id, string pass, string first, string last, string company,
+        string address, string city, string state, int code, string country, string phone,
+        string email, string website)
         {
             // insert statement
-            string addUser = "insert into employers values (" + id + ",'" + pass + "'," + first + ",'"
-                + last + "'," + company + ",'" + address + "'," + city + ",'" + state + "'," + code + ",'"
-                + country + "'," + phone + ",'" + email + "'," + website + ")";
+            string addUser = "INSERT INTO employers (userid, password, firstname, lastname, companyname, address, city, state, postalcode, country, phone, email, website) " +
+                "VALUES (@id, @pass, @first, @last, @company, @address, @city, @state, @code, @country, @phone, @email, @website)";
 
             ////////////////////////////////////////////////////////////////////////
             ///here's an example of using the getConString method!
@@ -102,9 +101,44 @@ namespace ProjectTemplate
             MySqlConnection con = new MySqlConnection(getConString());
             ////////////////////////////////////////////////////////////////////////
 
-            // connect and execute query 
-            MySqlCommand cmd = new MySqlCommand(addUser, con);
-            cmd.ExecuteNonQuery();
+            try
+            {
+                // open connection
+                con.Open();
+
+
+                // set up the command
+                MySqlCommand cmd = new MySqlCommand(addUser, con);
+
+
+                // Pass values to Parameters
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@pass", pass);
+                cmd.Parameters.AddWithValue("@first", first);
+                cmd.Parameters.AddWithValue("@last", last);
+                cmd.Parameters.AddWithValue("@company", company);
+                cmd.Parameters.AddWithValue("@address", address);
+                cmd.Parameters.AddWithValue("@city", city);
+                cmd.Parameters.AddWithValue("@state", state);
+                cmd.Parameters.AddWithValue("@code", code);
+                cmd.Parameters.AddWithValue("@country", country);
+                cmd.Parameters.AddWithValue("@phone", phone);
+                cmd.Parameters.AddWithValue("@email", email);
+                cmd.Parameters.AddWithValue("@website", website);
+                
+                // execute 
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                // close connection
+                con.Close();
+            }
+            finally
+            {
+                // close connection
+                con.Close();
+            }
         }
 
     }
