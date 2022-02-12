@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
+    <script type="text/javascript">
+        function TestButtonHandler() {
+            var webMethod = "ProjectServices.asmx/TestConnection";
+            var parameters = "{}";
+
+            //jQuery ajax method
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var responseFromServer = msg.d;
+                    alert(responseFromServer);
+                },
+                error: function (e) {
+                    alert("this code will only execute if javascript is unable to access the webservice");
+                }
+            });
+        }
+
+        //hhinker script for question page code
+        function getInputValue() {
+            // Selecting the input element and get its value 
+            var inputVal = document.getElementById("questionBox").value;
+
+            //hhinker ***Where should we send the data collected?**** Back to the database?
+            // Displaying the value
+            alert(inputVal);
+        }
+        //hhinker end script for question page code
+
+    </script>
+    <!--END OF YOUR OWN JAVASCRIPT-->
+
+    <!--AND YOUR OWN CSS CAN GO HERE AS WELL-->
+    <style>
+
+    </style>
+    <!--END OF YOUR OWN CSS-->
+</head>
+
+<body>
+
+    <!--hhinker BEGIN question page code-->
+
+    <h1>Pascal Questions</h1>
+    <form>
+        <section id="question">
+            <label>Please enter a question to be asked:</label>
+            <textarea id="questionBox" name="questionBox"></textarea>
+        </section>
+
+        <button type="submit" onclick=getInputValue()> Submit</button>
+        <button type="reset"> Reset</button>
+
+    </form>
+
+
+    <!--hhinker END question page code-->
+
+</body>
+
+</html>
