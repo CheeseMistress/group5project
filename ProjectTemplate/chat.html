@@ -16,13 +16,64 @@
     <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+    <!--Styling for visual separation of messages-->
+    <style>
+        #sendmsg {
+            margin-left: 25%;
+            margin-right: 25%;
+        }
+
+        .bubble {
+            padding: 1em;
+            text-align: left;
+            line-height: 1.5em;
+            border: 12px;
+            margin: auto;
+        }
+
+        #pascalchat {
+            height: 400px;
+            width: 400px;
+            overflow: auto;
+        }
+
+        #pascalmsg {
+            background-color: lightslategray;
+        }
+
+        #usermsg {
+            background-color: lightblue;
+        }
+    </style>
+
     <!--Home Page-->
     <script type="text/javascript">
 
         function submitFunction() {
+            createMsg();
+            pascalResp();
+        };
+
+        function createMsg() {
+            let newbubble = document.createElement('div');
+            newbubble.className = 'bubble';
+            let newchat = document.createElement('p');
+            newchat.id = 'usermsg';
             var resp = document.getElementById("resp").value;
-            document.getElementById("nl").innerHTML = document.getElementById("nl").innerHTML + "<br>" + resp;
-            document.getElementById("resp").value = "";
+            let text = document.createTextNode(resp);
+            newchat.appendChild(text);
+            document.getElementById("pascalchat").appendChild(newbubble).appendChild(newchat);
+        };
+
+        function pascalResp() {
+            let newbubble = document.createElement('div');
+            newbubble.className = 'bubble';
+            let newchat = document.createElement('p');
+            newchat.id = 'pascalmsg';
+            let resp = "Here is a response for you!";
+            let text = document.createTextNode(resp);
+            newchat.appendChild(text);
+            document.getElementById("pascalchat").appendChild(newbubble).appendChild(newchat);
         };
 
     </script>
@@ -48,9 +99,19 @@
             <div class="col-06 box" style="border: 3px solid #707070; height: 75vh; width: 50vw;">
                 <!--chat box goes here-->
                 <h2>Chatbox</h2>
-                <p id="nl">Hello!</p>
-                <input type="text" id="resp" value="">
-                <button onclick="submitFunction()">Send</button>
+                <div id="pascalchat">
+                    <div class="bubble">
+                        <p id="pascalmsg">Hello! How is your day going today?</p>
+                        <p id="pascalmsg">Please enter a number:<br>"1" - Amazing!<br> "2" - Good.<br> "3" - Bad.<br>
+                            "4" - Terrible!</p>
+                    </div>
+
+                </div>
+                <br>
+                <div id="sendmsg">
+                    <input type="text" id="resp" value="">
+                    <button onclick="submitFunction()">Send</button>
+                </div>
                 <br>
             </div>
             <div class="col-03 filler"><br /></div>
