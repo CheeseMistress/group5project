@@ -7,10 +7,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
-    <!--<script type="text/javascript">
-        function TestButtonHandler() {
-            var webMethod = "ProjectServices.asmx/TestConnection";
-            var parameters = "{}";
+        <script type="text/javascript">
+
+        // attempt control variable
+        var attempts = 0;
+
+        function Login() {
+            // reset valid each time login is called
+            let valid = false;
+
+            // get user input from DOM
+            let user = document.getElementById("user").value;
+            let pass = document.getElementById("pass").value;
+
+            // set up web method variables
+            let webMethod = "ProjectServices.asmx/GetUsers";
+            let parameters = "{}";
 
             //jQuery ajax method
             $.ajax({
@@ -20,18 +32,41 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (msg) {
-                    var responseFromServer = msg.d;
-                    alert(responseFromServer);
+                    // set array returned from web method to a local variable representing the array
+                    let responseFromServer = msg.d;
+
+                    // looping through the array of users and comparing to it to user input for validation
+                    // userid and password are attributes of a user class 
+                    for (let i = 0; i < responseFromServer.length; i++) {
+                        if (user == responseFromServer[i].userid && pass == responseFromServer[i].password) {
+                            let loginParagraph = document.getElementById("loginParagraph");
+                            loginParagraph.innerHTML = `<p><em>${responseFromServer[i].firstname}</em>, you have been successfully logged in!</p>`
+                            valid = true;
+                        }
+                    }
+
+                    // if userid and password do not match, update p and increment attempts
+                    if (valid == false)
+                    {
+                        let loginParagraph = document.getElementById("loginParagraph");
+                        loginParagraph.innerHTML = `<p>Login unsuccessful, please try again!</p>`
+                        attempts++;
+                    }
+
+                    // if attempts reaches more than 3, disable input/button
+                    if (attempts > 3)
+                    {
+                        document.getElementById("user").disabled = true;
+                        document.getElementById("pass").disabled = true;
+                        document.getElementById("login").disabled = true;
+                        loginParagraph.innerHTML = `<p>You exceeded the allowable amount of login requests!</p>`
+                    }    
                 },
                 error: function (e) {
                     alert("this code will only execute if javascript is unable to access the webservice");
-                }
+                }  
             });
         }
-    </script>-->
-    <!--kcox19 Home Page-->
-    <script type="text/javascript">
-        //LOG ON METHOD
     </script>
     <!--END OF YOUR OWN JAVASCRIPT-->
     <!--AND YOUR OWN CSS CAN GO HERE AS WELL-->
@@ -40,10 +75,23 @@
     <!--END OF YOUR OWN CSS-->
 </head>
 <body>
-    <!--<button onclick="javascript: TestButtonHandler();">Click here to test connection!</button>-->
+<!--    <!--<button onclick="javascript: TestButtonHandler();">Click here to test connection!</button>
     <header>
         <h1>Pascal Home Page</h1>
+    </header> -->
+
+    <!-- This is the page header.  This one is specific to this page. -->
+    <header>
+        <div class="row">
+            <div class="col-12"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
+        </div>
+
+        <div class="row">
+            <div class="col-12" style="text-align: center; margin: 2em 0 2em 0; padding: 5vh 0;">
+                <img src=".\resources\pascal-logo.png" style="width: 20%;">
+            </div>
     </header>
+
     <hr>
 
     <h2>Login</h2>
@@ -53,12 +101,13 @@
 
         <label>Password: </label>
         <input id="pass" class="input"><br>
+        <div id="loginParagraph"></div>
     </section>
 
     <br><br>
     <section>
         <div id="button">
-            <button id="login" onclick="">Login</button><br><br>
+            <button id="login" onclick="Login()">Login</button><br><br>
         </div>
         <hr>
     </section>
