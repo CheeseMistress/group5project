@@ -13,7 +13,56 @@
     <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <script type="text/javascript"></script>
+        <script type="text/javascript">
+        function AddUser() {
+            // get user input from DOM
+            let user = document.getElementById("usernew").value;
+            let pass = document.getElementById("passnew").value;
+            let fname = document.getElementById("fname").value;
+            let lname = document.getElementById("lname").value;
+            let comp = document.getElementById("comp").value;
+            let addy = document.getElementById("addy").value;
+            let cit = document.getElementById("cit").value;
+            let sta = document.getElementById("sta").value;
+            let pcode = document.getElementById("pcode").value;
+            let cntry = document.getElementById("cntry").value;
+            let pho = document.getElementById("pho").value;
+            let email = document.getElementById("email").value;
+            let site = document.getElementById("site").value;
+
+            // testing if inputs are not null should go here. Ex:
+            /*
+            if (Name == '') {
+            Messege = "Can not Blank Name";
+            }
+            */
+
+            // set up web method variables
+            let webMethod = "ProjectServices.asmx/InsertUser";
+            let parameters = "{    \"id\":\"" + encodeURI(user) + "\"," + "\"pass\":\"" + encodeURI(pass) + "\"," + "\"first\":\"" + encodeURI(fname) + "\"," + "\"last\":\"" + encodeURI(lname) + "\"," + "\"company\":\"" + encodeURI(comp) + "\"," + "\"address\":\"" + encodeURI(addy) + "\"," + "\"city\":\"" + encodeURI(cit) + "\"," + "\"state\":\"" + encodeURI(sta) + "\"," + "\"code\":\"" + encodeURI(pcode) + "\"," + "\"country\":\"" + encodeURI(cntry) + "\"," + "\"phone\":\"" + encodeURI(pho) + "\"," + "\"email\":\"" + encodeURI(email) + "\"," + "\"website\":\"" + encodeURI(site) + "\" }";
+
+            // do an alert to see data
+            alert(parameters);
+
+            //jQuery ajax method
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                processData: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    // set boolean from web method to a local variable representing the response
+                    let responseFromServer = msg.d;
+                    alert("Account has been requested!");
+                },
+                error: function (e) {
+                    alert("this code will only execute if javascript is unable to access the webservice");
+                }
+            });
+        }
+    </script>
 
 </head>
 
