@@ -89,11 +89,11 @@ namespace ProjectTemplate
         [WebMethod]
         public void InsertUser(string id, string pass, string first, string last, string company,
         string address, string city, string state, int code, string country, string phone,
-        string email, string website)
+        string email, string website, string status)
         {
             // insert statement
-            string addUser = "INSERT INTO employers (userid, password, firstname, lastname, companyname, address, city, state, postalcode, country, phone, email, website) " +
-                "VALUES (@id, @pass, @first, @last, @company, @address, @city, @state, @code, @country, @phone, @email, @website)";
+            string addUser = "INSERT INTO employers (userid, password, firstname, lastname, companyname, address, city, state, postalcode, country, phone, email, website, status) " +
+                "VALUES (@id, @pass, @first, @last, @company, @address, @city, @state, @code, @country, @phone, @email, @website, @status)";
 
             ////////////////////////////////////////////////////////////////////////
             ///here's an example of using the getConString method!
@@ -125,6 +125,7 @@ namespace ProjectTemplate
                 cmd.Parameters.AddWithValue("@phone", phone);
                 cmd.Parameters.AddWithValue("@email", email);
                 cmd.Parameters.AddWithValue("@website", website);
+                cmd.Parameters.AddWithValue("@status", status);
                 
                 // execute 
                 cmd.ExecuteNonQuery();
