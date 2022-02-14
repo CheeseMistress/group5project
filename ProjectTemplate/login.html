@@ -38,9 +38,18 @@
                     // looping through the array of users and comparing to it to user input for validation
                     // userid and password are attributes of a user class 
                     for (let i = 0; i < responseFromServer.length; i++) {
-                        if (user == responseFromServer[i].userid && pass == responseFromServer[i].password) {
+                        if (user == responseFromServer[i].userid && pass == responseFromServer[i].password && responseFromServer[i].status == '1') {
                             let loginParagraph = document.getElementById("loginParagraph");
                             loginParagraph.innerHTML = `<p><em>${responseFromServer[i].firstname}</em>, you have been successfully logged in!</p>`
+                            valid = true;
+                            // go to dashboard
+                            window.location.replace("dashboard-employees.html");
+                        }
+                        // if user is in database but has not yet been approved
+                        else if (user == responseFromServer[i].userid && pass == responseFromServer[i].password && responseFromServer[i].status == '0') {
+                            let loginParagraph = document.getElementById("loginParagraph");
+                            loginParagraph.innerHTML = `<p><em>${responseFromServer[i].firstname}</em>, your account has not yet been approved. </p>`
+                            // set to true even though account is not approved yet
                             valid = true;
                         }
                     }
@@ -48,9 +57,11 @@
                     // if userid and password do not match, update p and increment attempts
                     if (valid == false)
                     {
+                        attempts++
+                        attemptsLeft = 4 - attempts;
                         let loginParagraph = document.getElementById("loginParagraph");
-                        loginParagraph.innerHTML = `<p>Login unsuccessful, please try again!</p>`
-                        attempts++;
+                        loginParagraph.innerHTML = `<p>Login unsuccessful, please try again! Attempts Left: ` + attemptsLeft + `</p>`
+                        ;
                     }
 
                     // if attempts reaches more than 3, disable input/button
@@ -60,7 +71,7 @@
                         document.getElementById("pass").disabled = true;
                         document.getElementById("login").disabled = true;
                         loginParagraph.innerHTML = `<p>You exceeded the allowable amount of login requests!</p>`
-                    }    
+                    }     
                 },
                 error: function (e) {
                     alert("this code will only execute if javascript is unable to access the webservice");
