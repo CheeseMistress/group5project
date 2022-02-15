@@ -191,6 +191,86 @@ namespace ProjectTemplate
             // return an array of users 
             return unpeople.ToArray();
         }
+        
+        
+        [WebMethod]
+        public void ApproveUser(string id)
+        {
+            // update statement
+            string approveUser = "UPDATE employers SET STATUS = '1' WHERE userid = @id";
 
+            ////////////////////////////////////////////////////////////////////////
+            ///here's an example of using the getConString method!
+            ////////////////////////////////////////////////////////////////////////
+            MySqlConnection con = new MySqlConnection(getConString());
+            ////////////////////////////////////////////////////////////////////////
+
+            try
+            {
+                // open connection
+                con.Open();
+
+
+                // connect and execute query 
+                MySqlCommand cmd = new MySqlCommand(approveUser, con);
+
+
+                //Pass values to Parameters
+                cmd.Parameters.AddWithValue("@id", id);
+
+                // execute command
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                // close connection
+                con.Close();
+            }
+            finally
+            {
+                // close connection
+                con.Close();
+            }
+        }
+
+        [WebMethod]
+        public void DenyUser(string id)
+        {
+            // delete statement
+            string deleteUser = "DELETE FROM employers WHERE userid = @id";
+
+            ////////////////////////////////////////////////////////////////////////
+            ///here's an example of using the getConString method!
+            ////////////////////////////////////////////////////////////////////////
+            MySqlConnection con = new MySqlConnection(getConString());
+            ////////////////////////////////////////////////////////////////////////
+
+            try
+            {
+                // open connection
+                con.Open();
+
+
+                // connect and execute query 
+                MySqlCommand cmd = new MySqlCommand(deleteUser, con);
+
+
+                //Pass values to Parameters
+                cmd.Parameters.AddWithValue("@id", id);
+
+                // execute command
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                // close connection
+                con.Close();
+            }
+            finally
+            {
+                // close connection
+                con.Close();
+            }
+        }
     }
 }
