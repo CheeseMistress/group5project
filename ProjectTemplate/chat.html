@@ -49,11 +49,13 @@
     <!--Home Page-->
     <script type="text/javascript">
 
+        //Function that creates a user message and sends Pascal's response
         function submitFunction() {
             createMsg();
             pascalResp();
         };
-
+        
+        //create user message and bubble
         function createMsg() {
             let newbubble = document.createElement('div');
             newbubble.className = 'bubble';
@@ -64,16 +66,288 @@
             newchat.appendChild(text);
             document.getElementById("pascalchat").appendChild(newbubble).appendChild(newchat);
         };
-
-        function pascalResp() {
+        
+        //create pascal message and bubble
+        function pascalResp(ans) {
             let newbubble = document.createElement('div');
             newbubble.className = 'bubble';
             let newchat = document.createElement('p');
             newchat.id = 'pascalmsg';
-            let resp = "Here is a response for you!";
-            let text = document.createTextNode(resp);
+            let text = document.createTextNode(ans);
             newchat.appendChild(text);
             document.getElementById("pascalchat").appendChild(newbubble).appendChild(newchat);
+        };
+
+        //Go through survey questions with each button submission
+        function inputAns() {
+            // Survey has 5 sample questions
+            //1. How has your last week of work?
+            //2. Shortly explain answer.
+            //3. How many hours a week do you work?
+            //4. What is a change that you would like to be done to improve your work experience?
+            //5. What is your current satisfaction level with your job right now.
+
+            if (qcount > 6) {
+                let resp = "Congrats, you have reached the end of the survey!";
+                submitFunction(resp);
+            }
+            else {
+                let resp = questionSelect(qcount);
+                ++qcount;
+                submitFunction(resp);
+
+                questionAsk(qcount);
+            }
+        };
+
+        //Pascal Asks a new question
+        function questionAsk(num) {
+            switch (num) {
+                case 1:
+                    break;
+                case 2:
+                    text = "Shortly explain answer.";
+                    pascalResp(text);
+                    break;
+                case 3:
+                    text = "How many hours a week do you work?  Please enter a number:   '1' - 20 to 29 hours   '2' - 30 to 39 hours  '3' - 40 or more hours";
+                    pascalResp(text);
+                    break;
+                case 4:
+                    text = "What is a change that you would like to be done to improve your work experience?";
+                    pascalResp(text);
+                    break;
+                case 5:
+                    text = "What is your current satisfaction level with your job right now. Please enter a number:   '1' - Very Satisfied   '2' - Content  '3' - Dissatisfied   '4' - Very Dissatisfied";
+                    pascalResp(text);
+                    break;
+                default:
+                    let resp = "Congrats, you have reached the end of the survey!";
+                    pascalResp(resp);
+                    break;
+            }
+        };
+
+        //User answer is sent into one of the question funcitons
+        function questionSelect(num) {
+            switch (num) {
+                case 1:
+                    var choice = 0;
+                    var entry = document.getElementById("resp").value;
+                    var count = entry.length;
+                    if (count > 1) {
+                        choice = 0;
+                    }
+
+                    else {
+                        choice = parseInt(entry);
+                    }
+
+                    switch (choice) {
+                        case 1:
+                            val = true;
+                            resp = question1(choice);
+                            break;
+                        case 2:
+                            val = true;
+                            resp = question1(choice);
+                            break;
+                        case 3:
+                            val = true;
+                            resp = question1(choice);
+                            break;
+                        case 4:
+                            val = true;
+                            resp = question1(choice);
+                            break;
+                        default:
+                            val = false;
+                            resp = "Invalid Answer, try 1, 2, 3 or 4.";
+                            break;
+                    }
+                    return resp;
+                    break;
+                case 2:
+                    input = document.getElementById("resp").value;
+                    resp = question2(input);
+                    return resp;
+                    break;
+                case 3:
+                    var choice = 0;
+                    var entry = document.getElementById("resp").value;
+                    var count = entry.length;
+                    if (count > 1) {
+                        choice = 0;
+                    }
+
+                    else {
+                        choice = parseInt(entry);
+                    }
+
+                    switch (choice) {
+                        case 1:
+                            val = true;
+                            resp = question3(choice);
+                            break;
+                        case 2:
+                            val = true;
+                            resp = question3(choice);
+                            break;
+                        case 3:
+                            val = true;
+                            resp = question3(choice);
+                            break;
+                        case 4:
+                            val = true;
+                            resp = question3(choice);
+                            break;
+                        default:
+                            val = false;
+                            resp = "Invalid Answer, try 1, 2, 3 or 4.";
+                            break;
+                    }
+                    return resp;
+                    break;
+                case 4:
+                    input = document.getElementById("resp").value;
+                    resp = question4(input);
+                    return resp;
+                    break;
+                case 5:
+                    var choice = 0;
+                    var entry = document.getElementById("resp").value;
+                    var count = entry.length;
+                    if (count > 1) {
+                        choice = 0;
+                    }
+
+                    else {
+                        choice = parseInt(entry);
+                    }
+
+                    switch (choice) {
+                        case 1:
+                            val = true;
+                            resp = question5(choice);
+                            break;
+                        case 2:
+                            val = true;
+                            resp = question5(choice);
+                            break;
+                        case 3:
+                            val = true;
+                            resp = question5(choice);
+                            break;
+                        case 4:
+                            val = true;
+                            resp = question5(choice);
+                            break;
+                        default:
+                            val = false;
+                            resp = "Invalid Answer, try 1, 2, 3 or 4.";
+                            break;
+                    }
+                    return resp;
+                    break;
+                default:
+                    val = false;
+                    resp = "No more quesitons!";
+                    return resp;
+                    break;
+            };
+        };
+
+        //Example question 1
+        function question1(num) {
+            var q = "";
+            switch (num) {
+                case 1:
+                    typeDay = "amazing";
+                    break;
+                case 2:
+                    typeDay = "good";
+                    break;
+                case 3:
+                    typeDay = "bad";
+                    break;
+                case 4:
+                    typeDay = "terrible";
+                    break;
+                default:
+                    val = false;
+                    resp = "Invalid Answer, try 1, 2, 3 or 4.";
+                    break;
+            };
+
+            q = "You had a " + typeDay + " day...";
+            return q;
+        };
+
+        //Example question 2
+        function question2(input) {
+            console.log(input);
+            var q = "";
+
+            q = "Thank you for your answer.";
+            return q;
+        };
+
+        //Example question 3
+        function question3(num) {
+            var q = "";
+            switch (num) {
+                case 1:
+                    workHours = "20 to 29 hours";
+                    break;
+                case 2:
+                    workHours = "30 to 39 hours";
+                    break;
+                case 3:
+                    workHours = "40 or more hours";
+                    break;
+                default:
+                    val = false;
+                    resp = "Invalid Answer, try 1, 2 or 3.";
+                    break;
+            };
+
+            q = "You work " + workHours + " hours a week...";
+            return q;
+        };
+
+        //Example question 4
+        function question4(num) {
+            console.log(input);
+            var q = "";
+
+            q = "Thank you for your answer.";
+            return q;
+        };
+
+        //Example question 5
+        function question5(num) {
+            var q = "";
+            switch (num) {
+                case 1:
+                    satisfaction = "Very Satisfied";
+                    break;
+                case 2:
+                    satisfaction = "Content";
+                    break;
+                case 3:
+                    satisfaction = "Dissatisfied";
+                    break;
+                case 4:
+                    satisfaction = "Very Dissatisfied";
+                    break;
+                default:
+                    val = false;
+                    resp = "Invalid Answer, try 1, 2, 3 or 4.";
+                    break;
+            };
+
+            q = "You are " + satisfaction + " with your current job...";
+            return q;
         };
 
     </script>
