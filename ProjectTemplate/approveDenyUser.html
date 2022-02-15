@@ -28,6 +28,18 @@
 				}
 			});
 		}
+    //This is the function to appect a user
+    function accept(){
+        document.write('User approved!')
+    }
+
+     //This is the function to deny a user
+     function deny(){
+        document.write('User dennied!')
+    }
+
+
+
 	</script>
 	<!--END OF YOUR OWN JAVASCRIPT-->
 
@@ -51,15 +63,15 @@
 			</div>
 	</header>
 
-	<!--hhinker BEGIN logoff page code-->
+	<!--hhinker BEGIN approveDenyUser page code-->
 
-	<section id="logoff">
-		<h1>Logged Out!</h1>
-		<h2>Thank you for using Pascal</h2>
+	<section id="approveDenyUser">
+		<h1>Approve/Deny the user</h1>
 
-		<button type="button" onclick="window.location.href='login.html'">Sign in Again</button>
+		<button type="button" onclick="accept()">Approve</button>
+        <button type="button" onclick="deny()">Deny</button>
 	</section>
-	<!--hhinker END logoff page code-->
+	<!--hhinker END approveDenyUser page code-->
 
 </body>
 </html>
