@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8" />
 	<title></title>
@@ -28,6 +29,35 @@
 				}
 			});
 		}
+
+		//hhinker log off
+		//logs the user off both at the client and at the server
+		function LogOff() {
+
+			var webMethod = "AccountServices.asmx/LogOff";
+			$.ajax({
+				type: "POST",
+				url: webMethod,
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (msg) {
+					if (msg.d) {
+						//we logged off, so go back to logon page,
+						//stop checking messages
+						//and clear the chat panel
+						showPanel('logonPanel');
+						HideMenu();
+					}
+					else {
+					}
+				},
+				error: function (e) {
+					alert("boo...");
+				}
+			});
+		}
+		//hhinker end log off
+
 	</script>
 	<!--END OF YOUR OWN JAVASCRIPT-->
 
@@ -36,7 +66,8 @@
 
 	</style>
 	<!--END OF YOUR OWN CSS-->
-</head >
+</head>
+
 <body>
 
 	<!-- This is the page header.  This one is specific to this page. -->
@@ -62,4 +93,5 @@
 	<!--hhinker END logoff page code-->
 
 </body>
+
 </html>
