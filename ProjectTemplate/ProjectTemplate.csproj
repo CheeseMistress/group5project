@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="admin-manageaccounts.html" />
+    <Content Include="approveDenyUser.html" />
     <Content Include="chat.html" />
     <Content Include="dashboard-accountmgr.html" />
     <Content Include="dashboard-employees.html" />
