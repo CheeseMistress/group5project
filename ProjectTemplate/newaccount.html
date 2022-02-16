@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -9,31 +8,101 @@
     <link href="styles.css" rel="stylesheet">
     <title>Pascal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <script type="text/javascript"></script>
-
+    <script type="text/javascript">
+        function AddUser() {
+            // get user input from DOM
+            let user = document.getElementById("usernew").value;
+            let pass = document.getElementById("passnew").value;
+            let fname = document.getElementById("fname").value;
+            let lname = document.getElementById("lname").value;
+            let comp = document.getElementById("comp").value;
+            let addy = document.getElementById("addy").value;
+            let cit = document.getElementById("cit").value;
+            let sta = document.getElementById("sta").value;
+            let pcode = document.getElementById("pcode").value;
+            let cntry = document.getElementById("cntry").value;
+            let pho = document.getElementById("pho").value;
+            let email = document.getElementById("email").value;
+            let site = document.getElementById("site").value;
+            // testing if inputs are not null should go here. Ex:
+            /*
+            if (Name == '') {
+            Messege = "Can not Blank Name";
+            }
+            */
+            // set up web method variables
+            let webMethod = "ProjectServices.asmx/InsertUser";
+            let parameters = "{\"id\":\"" + encodeURI(user) + "\"," + "\"pass\":\"" + encodeURI(pass) + "\"," + "\"first\":\"" + encodeURI(fname) + "\"," + "\"last\":\"" + encodeURI(lname) + "\"," + "\"company\":\"" + encodeURI(comp) + "\"," + "\"address\":\"" + encodeURI(addy) + "\"," + "\"city\":\"" + encodeURI(cit) + "\"," + "\"state\":\"" + encodeURI(sta) + "\"," + "\"code\":\"" + encodeURI(pcode) + "\"," + "\"country\":\"" + encodeURI(cntry) + "\"," + "\"phone\":\"" + encodeURI(pho) + "\"," + "\"email\":\"" + encodeURI(email) + "\"," + "\"website\":\"" + encodeURI(site) + "\"," + "\"status\":\"" + encodeURI('0') + "\" }";
+            // do an alert to see data
+            alert(parameters);
+            //jQuery ajax method
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    // set boolean from web method to a local variable representing the response
+                    let responseFromServer = msg.d;
+                    alert("Account has been requested!");
+                },
+                error: function (e) {
+                    alert("this code will only execute if javascript is unable to access the webservice");
+                }
+            });
+        }
+    </script>
 </head>
-
 <body>
     <!-- This is the page header.  This one is specific to this page. -->
     <header>
         <div class="row">
             <div class="col-12"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
         </div>
-
         <div class="row">
             <div class="col-12" style="text-align: center; margin: 2em 0 2em 0; padding: 5vh 0;">
                 <img src=".\resources\pascal-logo.png" style="width: 20%;">
             </div>
+        </div>
     </header>
-
     <main>
-
+        <section>
+            <label>User: </label>
+            <input id="usernew" class="input"><br>
+            <label>Password: </label>
+            <input id="passnew" class="input"><br>
+            <label>First Name: </label>
+            <input id="fname" class="input"><br>
+            <label>Last Name: </label>
+            <input id="lname" class="input"><br>
+            <label>Company: </label>
+            <input id="comp" class="input"><br>
+            <label>Address: </label>
+            <input id="addy" class="input"><br>
+            <label>City: </label>
+            <input id="cit" class="input"><br>
+            <label>State: </label>
+            <input id="sta" class="input"><br>
+            <label>Postal Code: </label>
+            <input id="pcode" class="input"><br>
+            <label>Country: </label>
+            <input id="cntry" class="input"><br>
+            <label>Phone: </label>
+            <input id="pho" class="input"><br>
+            <label>Email: </label>
+            <input id="email" class="input"><br>
+            <label>Site: </label>
+            <input id="site" class="input"><br>
+        </section>
+        <section>
+            <div id="button">
+                <button id="adduser" onclick="AddUser()">Request Account</button><br><br>
+            </div>
+            <hr>
+        </section>
     </main>
-
 </body>
-
 </html>
