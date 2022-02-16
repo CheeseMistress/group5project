@@ -85,6 +85,7 @@ namespace ProjectTemplate
             // return an array of users 
             return people.ToArray();
         }
+
         [WebMethod]
         public void InsertUser(string id, string pass, string first, string last, string company,
         string address, string city, string state, int code, string country, string phone,
