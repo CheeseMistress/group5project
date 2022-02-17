@@ -272,5 +272,52 @@ namespace ProjectTemplate
                 con.Close();
             }
         }
+
+        [WebMethod]
+        public void InsertResponse(int q1, string q2, int q3, string q4, int q5)
+        {
+            // insert statement
+            string insertResponse = "INSERT INTO responses (time, question1, question2, question3, question4, question5) " +
+                "VALUES (@time, @q1, @q2, @q3, @q4, @q5)";
+
+            ////////////////////////////////////////////////////////////////////////
+            ///here's an example of using the getConString method!
+            ////////////////////////////////////////////////////////////////////////
+            MySqlConnection con = new MySqlConnection(getConString());
+            ////////////////////////////////////////////////////////////////////////
+
+            try
+            {
+                // open connection
+                con.Open();
+
+
+                // connect and execute query 
+                MySqlCommand cmd = new MySqlCommand(insertResponse, con);
+
+
+                // get current time
+                DateTime now = DateTime.Now;
+
+                //Pass values to Parameters
+                cmd.Parameters.AddWithValue("@time", now);
+                cmd.Parameters.AddWithValue("@q1", q1);
+                cmd.Parameters.AddWithValue("@q2", q2);
+                cmd.Parameters.AddWithValue("@q3", q3);
+                cmd.Parameters.AddWithValue("@q4", q4);
+                cmd.Parameters.AddWithValue("@q5", q5);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                // close connection
+                con.Close();
+            }
+            finally
+            {
+                // close connection
+                con.Close();
+            }
+        }
     }
 }
