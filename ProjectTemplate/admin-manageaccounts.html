@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
+    <script type="text/javascript">
+        function DisplayUnapprovedAccounts() {
+            var webMethod = "ProjectServices.asmx/GetUnapprovedUsers";
+            var parameters = "{}";
+            //jQuery ajax method
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var responseFromServer = msg.d;
+                    for (let i = 0; i < responseFromServer.length; i++) {
+                        alert("User:" + responseFromServer[i].userid + " Status:" + responseFromServer[i].status)
+                    }
+                },
+                error: function (e) {
+                    alert("this code will only execute if javascript is unable to access the webservice");
+                }
+            });
+        }
+        function ApproveAccount(user) {
+            var webMethod = "ProjectServices.asmx/ApproveUser";
+            var parameters = "{    \"id\":\"" + encodeURI(user) + "\" }";
+            //jQuery ajax method
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var responseFromServer = msg.d;
+                    alert("Account has been approved!");
+                },
+                error: function (e) {
+                    alert("this code will only execute if javascript is unable to access the webservice");
+                }
+            });
+        }
+        function DenyAccount(user) {
+            var webMethod = "ProjectServices.asmx/DenyUser";
+            var parameters = "{    \"id\":\"" + encodeURI(user) + "\" }";
+            //jQuery ajax method
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var responseFromServer = msg.d;
+                    alert("Account has been denied and the data has been removed from the database.");
+                },
+                error: function (e) {
+                    alert("this code will only execute if javascript is unable to access the webservice");
+                }
+            });
+        }
+    </script>
+    <!--END OF YOUR OWN JAVASCRIPT-->
+    <!--AND YOUR OWN CSS CAN GO HERE AS WELL-->
+    <style>
+    </style>
+    <!--END OF YOUR OWN CSS-->
+</head>
+<body onload="DisplayUnapprovedAccounts()">
+    <!-- This is the page header.  This one is specific to this page. -->
+    <header>
+        <div class="row">
+            <div class="col-12"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
+        </div>
+        <div class="row">
+            <div class="col-12" style="text-align: center; margin: 2em 0 2em 0; padding: 5vh 0;">
+                <img src=".\resources\pascal-logo.png" style="width: 20%;">
+            </div>
+    </header>
+    <!--hhinker BEGIN approveDenyUser page code-->
+    <section id="approveDenyUser">
+        <h1>Approve/Deny the user</h1>
+        <button type="button" onclick="accept()">Approve</button>
+        <button type="button" onclick="deny()">Deny</button>
+        <button type="button" onclick="DisplayUnapprovedAccounts()">Get Accounts</button>
+        <button type="button" onclick="ApproveAccount('TEST00')">Approve Account Test</button>
+        <button type="button" onclick="DenyAccount('TEST00')">Deny Account Test</button>
+    </section>
+    <!--hhinker END approveDenyUser page code-->
+</body>
+</html>

@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Pascal Home</title>
+    <title>Pascal</title>
     <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
-        <script type="text/javascript">
+    <script type="text/javascript">
 
         // attempt control variable
         var attempts = 0;
@@ -36,50 +36,55 @@
                     let responseFromServer = msg.d;
 
                     // looping through the array of users and comparing to it to user input for validation
-                    // userid and password are attributes of a user class 
+                    // userid and password are attributes of a user class
                     for (let i = 0; i < responseFromServer.length; i++) {
-                        if (user == responseFromServer[i].userid && pass == responseFromServer[i].password) {
+                        if (user == responseFromServer[i].userid && pass == responseFromServer[i].password && responseFromServer[i].status == '1') {
                             let loginParagraph = document.getElementById("loginParagraph");
                             loginParagraph.innerHTML = `<p><em>${responseFromServer[i].firstname}</em>, you have been successfully logged in!</p>`
+                            valid = true;
+                            // go to dashboard
+                            window.location.replace("dashboard-employees.html");
+                        }
+                        // if user is in database but has not yet been approved
+                        else if (user == responseFromServer[i].userid && pass == responseFromServer[i].password && responseFromServer[i].status == '0') {
+                            let loginParagraph = document.getElementById("loginParagraph");
+                            loginParagraph.innerHTML = `<p><em>${responseFromServer[i].firstname}</em>, your account has not yet been approved. </p>`
+                            // set to true even though account is not approved yet
                             valid = true;
                         }
                     }
 
                     // if userid and password do not match, update p and increment attempts
-                    if (valid == false)
-                    {
+                    if (valid == false) {
+                        attempts++
+                        attemptsLeft = 4 - attempts;
                         let loginParagraph = document.getElementById("loginParagraph");
-                        loginParagraph.innerHTML = `<p>Login unsuccessful, please try again!</p>`
-                        attempts++;
+                        loginParagraph.innerHTML = `<p>Login unsuccessful, please try again! Attempts Left: ` + attemptsLeft + `</p>`
+                            ;
                     }
 
                     // if attempts reaches more than 3, disable input/button
-                    if (attempts > 3)
-                    {
+                    if (attempts > 3) {
                         document.getElementById("user").disabled = true;
                         document.getElementById("pass").disabled = true;
                         document.getElementById("login").disabled = true;
                         loginParagraph.innerHTML = `<p>You exceeded the allowable amount of login requests!</p>`
-                    }    
+                    }
                 },
                 error: function (e) {
                     alert("this code will only execute if javascript is unable to access the webservice");
-                }  
+                }
             });
         }
     </script>
     <!--END OF YOUR OWN JAVASCRIPT-->
-    <!--AND YOUR OWN CSS CAN GO HERE AS WELL-->
-    <style>
-    </style>
-    <!--END OF YOUR OWN CSS-->
+
 </head>
 <body>
-<!--    <!--<button onclick="javascript: TestButtonHandler();">Click here to test connection!</button>
-    <header>
-        <h1>Pascal Home Page</h1>
-    </header> -->
-
+    <!--    <!--<button onclick="javascript: TestButtonHandler();">Click here to test connection!</button>
+        <header>
+            <h1>Pascal Home Page</h1>
+        </header> -->
     <!-- This is the page header.  This one is specific to this page. -->
     <header>
         <div class="row">
@@ -90,6 +95,7 @@
             <div class="col-12" style="text-align: center; margin: 2em 0 2em 0; padding: 5vh 0;">
                 <img src=".\resources\pascal-logo.png" style="width: 20%;">
             </div>
+        </div>
     </header>
 
     <hr>
@@ -121,4 +127,4 @@
 
 
 </body>
-    </html >
+</html>
