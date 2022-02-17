@@ -6,7 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cabin&family=Roboto:wght@400;700&display=swap"
-        rel="stylesheet">
+          rel="stylesheet">
 
     <!--Styling refers external style sheet to apply to all pages.-->
     <link href="styles.css" rel="stylesheet">
@@ -21,6 +21,7 @@
         h2 {
             text-align: center;
         }
+
         #sendmsg {
             margin-left: 25%;
             margin-right: 25%;
@@ -53,7 +54,7 @@
 
         #pascalmsg {
             background-color: lightgray;
-            height:auto;
+            height: auto;
             width: auto;
             max-width: 380px;
             border-radius: 30px 30px 30px 5px;
@@ -61,7 +62,7 @@
 
         #usermsg {
             background-color: lightblue;
-            height:auto;
+            height: auto;
             width: auto;
             max-width: 380px;
             border-radius: 30px 30px 5px 30px;
@@ -70,6 +71,35 @@
 
     <!--Home Page-->
     <script type="text/javascript">
+        // function to send survey responses
+        function SendResponse(q1, q2, q3, q4, q5) {
+            var webMethod = "ProjectServices.asmx/InsertResponse";
+            var parameters = "{\"q1\":\"" + encodeURI(q1) + "\"," + "\"q2\":\"" + encodeURI(q2) + "\"," + "\"q3\":\"" + encodeURI(q3) + "\"," + "\"q4\":\"" + encodeURI(q4) + "\"," + "\"q5\":\"" + encodeURI(q5) + "\"}";
+
+            //jQuery ajax method
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var responseFromServer = msg.d;
+                    alert("Response has been saved to the database!");
+                },
+                error: function (e) {
+                    alert("this code will only execute if javascript is unable to access the webservice");
+                }
+            });
+        }
+
+        // set up global survey response variables
+        var q1ans; 
+        var q2ans;
+        var q3ans;
+        var q4ans;
+        var q5ans;
+
         qcount = 1;
         finalOutput = ['How has your last week of work?'];
 
@@ -79,7 +109,7 @@
             pascalResp(pascalAnswer);
 
         };
-        
+
         //create user message and bubble
         function createMsg() {
             let newbubble = document.createElement('div');
@@ -92,7 +122,7 @@
             newchat.appendChild(text);
             document.getElementById("pascalchat").appendChild(newbubble).appendChild(newchat);
         };
-        
+
         //create pascal message and bubble
         function pascalResp(ans) {
             finalOutput.push(ans);
@@ -123,7 +153,6 @@
                 let resp = questionSelect(qcount);
                 ++qcount;
                 submitFunction(resp);
-
                 questionAsk(qcount);
             }
 
@@ -157,6 +186,7 @@
                 default:
                     let resp = "Congrats, you have reached the end of the survey!";
                     pascalResp(resp);
+                    SendResponse(q1ans, q2ans, q3ans, q4ans, q5ans);
                     break;
             }
         };
@@ -311,6 +341,9 @@
                     resp = "Invalid Answer, try 1, 2, 3 or 4.";
                     break;
             };
+            // set q1ans 
+            q1ans = num;
+            alert(q1ans);
 
             q = "You had a " + typeDay + " day...";
             return q;
@@ -320,6 +353,10 @@
         function question2(input) {
             console.log(input);
             var q = "";
+
+            // set q2ans
+            q2ans = input;
+            alert(q2ans);
 
             q = "Thank you for your answer.";
             return q;
@@ -344,14 +381,22 @@
                     break;
             };
 
+            // set q3ans
+            q3ans = num;
+            alert(q3ans);
+
             q = "You work " + workHours + " hours a week...";
             return q;
         };
 
         //Example question 4
-        function question4(num) {
+        function question4(input) {
             console.log(input);
             var q = "";
+
+            // set q4ans
+            q4ans = input;
+            alert(q4ans);
 
             q = "Thank you for your answer.";
             return q;
@@ -379,6 +424,10 @@
                     break;
             };
 
+            // set q5ans
+            q5ans = num;
+            alert(q5ans);
+
             q = "You are " + satisfaction + " with your current job...";
             return q;
         };
@@ -390,8 +439,12 @@
 <body>
     <header>
         <div class="row">
-            <div class="col-12"><a href="index.html"><img src=".\resources\pascal-home.png"
-                        style="width: 8vw; max-width: 30px;"></a></div>
+            <div class="col-12">
+                <a href="index.html">
+                    <img src=".\resources\pascal-home.png"
+                         style="width: 8vw; max-width: 30px;">
+                </a>
+            </div>
         </div>
 
     </header>
@@ -409,8 +462,10 @@
                 <div id="pascalchat">
                     <div class="bubble">
                         <p id="pascalmsg">Hello! How is your day going today?</p>
-                        <p id="pascalmsg">Please enter a number:<br>"1" - Amazing!<br> "2" - Good.<br> "3" - Bad.<br>
-                            "4" - Terrible!</p>
+                        <p id="pascalmsg">
+                            Please enter a number:<br>"1" - Amazing!<br> "2" - Good.<br> "3" - Bad.<br>
+                            "4" - Terrible!
+                        </p>
                     </div>
 
                 </div>
