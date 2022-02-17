@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cabin&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cabin&family=Roboto:wght@400;700&display=swap"
+          rel="stylesheet">
 
     <!--Styling refers external style sheet to apply to all pages.-->
     <link href="styles.css" rel="stylesheet">
@@ -14,15 +16,435 @@
     <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+    <!--Styling for visual separation of messages-->
+    <style>
+        h2 {
+            text-align: center;
+        }
+
+        #sendmsg {
+            margin-left: 25%;
+            margin-right: 25%;
+        }
+
+        .bubble {
+            line-height: 1.5em;
+            border: 12px;
+            margin: 12px;
+            width: 400px;
+            text-align: left;
+        }
+
+        #pascalchat p {
+            padding-left: 20px;
+            padding-right: 10px;
+        }
+
+        #usermsg p {
+            padding-left: 10px;
+            padding-right: 20px;
+        }
+
+        #pascalchat {
+            height: 400px;
+            max-width: inherit;
+            width: 500px;
+            overflow: auto;
+        }
+
+        #pascalmsg {
+            background-color: lightgray;
+            height: auto;
+            width: auto;
+            max-width: 380px;
+            border-radius: 30px 30px 30px 5px;
+        }
+
+        #usermsg {
+            background-color: lightblue;
+            height: auto;
+            width: auto;
+            max-width: 380px;
+            border-radius: 30px 30px 5px 30px;
+        }
+    </style>
+
     <!--Home Page-->
     <script type="text/javascript">
+        // function to send survey responses
+        function SendResponse(q1, q2, q3, q4, q5) {
+            var webMethod = "ProjectServices.asmx/InsertResponse";
+            var parameters = "{\"q1\":\"" + encodeURI(q1) + "\"," + "\"q2\":\"" + encodeURI(q2) + "\"," + "\"q3\":\"" + encodeURI(q3) + "\"," + "\"q4\":\"" + encodeURI(q4) + "\"," + "\"q5\":\"" + encodeURI(q5) + "\"}";
+
+            //jQuery ajax method
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var responseFromServer = msg.d;
+                    alert("Response has been saved to the database!");
+                },
+                error: function (e) {
+                    alert("this code will only execute if javascript is unable to access the webservice");
+                }
+            });
+        }
+
+        // set up global survey response variables
+        var q1ans; 
+        var q2ans;
+        var q3ans;
+        var q4ans;
+        var q5ans;
+
+        qcount = 1;
+        finalOutput = ['How has your last week of work?'];
+
+        //Function that creates a user message and sends Pascal's response
+        function submitFunction(pascalAnswer) {
+            createMsg();
+            pascalResp(pascalAnswer);
+
+        };
+
+        //create user message and bubble
+        function createMsg() {
+            let newbubble = document.createElement('div');
+            newbubble.className = 'bubble';
+            let newchat = document.createElement('p');
+            newchat.id = 'usermsg';
+            var resp = document.getElementById("resp").value;
+            finalOutput.push(resp);
+            let text = document.createTextNode(resp);
+            newchat.appendChild(text);
+            document.getElementById("pascalchat").appendChild(newbubble).appendChild(newchat);
+        };
+
+        //create pascal message and bubble
+        function pascalResp(ans) {
+            finalOutput.push(ans);
+            let newbubble = document.createElement('div');
+            newbubble.className = 'bubble';
+            let newchat = document.createElement('p');
+            newchat.id = 'pascalmsg';
+            let text = document.createTextNode(ans);
+            newchat.appendChild(text);
+            document.getElementById("pascalchat").appendChild(newbubble).appendChild(newchat);
+        };
+
+        //Go through survey questions with each button submission
+        function inputAns() {
+            // Survey has 5 sample questions
+            //1. How has your last week of work?
+            //2. Shortly explain answer.
+            //3. How many hours a week do you work?
+            //4. What is a change that you would like to be done to improve your work experience?
+            //5. What is your current satisfaction level with your job right now.
+
+            if (qcount >= 6) {
+                let resp = "Congrats, you have reached the end of the survey!";
+                submitFunction(resp);
+                alert(finalOutput);
+            }
+            else {
+                let resp = questionSelect(qcount);
+                ++qcount;
+                submitFunction(resp);
+                questionAsk(qcount);
+            }
+
+        };
+
+        //Pascal Asks a new question
+        function questionAsk(num) {
+            switch (num) {
+                case 1:
+                    break;
+                case 2:
+                    text = "Shortly explain answer.";
+                    pascalResp(text);
+                    break;
+                case 3:
+                    text = "How many hours a week do you work?";
+                    pascalResp(text);
+                    text2 = "Please enter a number:'1' - 20 to 29 hours; '2' - 30 to 39 hours; '3' - 40 or more hours";
+                    pascalResp(text2);
+                    break;
+                case 4:
+                    text = "What is a change that you would like to be done to improve your work experience?";
+                    pascalResp(text);
+                    break;
+                case 5:
+                    text = "What is your current satisfaction level with your job right now.";
+                    pascalResp(text);
+                    text2 = "Please enter a number:'1' - Very Satisfied; '2' - Satisfied; '3' - Dissatisfied; '4' - Very Dissatisfied";
+                    pascalResp(text2);
+                    break;
+                default:
+                    let resp = "Congrats, you have reached the end of the survey!";
+                    pascalResp(resp);
+                    SendResponse(q1ans, q2ans, q3ans, q4ans, q5ans);
+                    break;
+            }
+        };
+
+        //User answer is sent into one of the question funcitons
+        function questionSelect(num) {
+            switch (num) {
+                case 1:
+                    var choice = 0;
+                    var entry = document.getElementById("resp").value;
+                    var count = entry.length;
+                    if (count > 1) {
+                        choice = 0;
+                    }
+
+                    else {
+                        choice = parseInt(entry);
+                    }
+
+                    switch (choice) {
+                        case 1:
+                            val = true;
+                            resp = question1(choice);
+                            break;
+                        case 2:
+                            val = true;
+                            resp = question1(choice);
+                            break;
+                        case 3:
+                            val = true;
+                            resp = question1(choice);
+                            break;
+                        case 4:
+                            val = true;
+                            resp = question1(choice);
+                            break;
+                        default:
+                            val = false;
+                            resp = "Invalid Answer";
+                            break;
+                    }
+                    return resp;
+                    break;
+                case 2:
+                    input = document.getElementById("resp").value;
+                    resp = question2(input);
+                    return resp;
+                    break;
+                case 3:
+                    var choice = 0;
+                    var entry = document.getElementById("resp").value;
+                    var count = entry.length;
+                    if (count > 1) {
+                        choice = 0;
+                    }
+
+                    else {
+                        choice = parseInt(entry);
+                    }
+
+                    switch (choice) {
+                        case 1:
+                            val = true;
+                            resp = question3(choice);
+                            break;
+                        case 2:
+                            val = true;
+                            resp = question3(choice);
+                            break;
+                        case 3:
+                            val = true;
+                            resp = question3(choice);
+                            break;
+                        case 4:
+                            val = true;
+                            resp = question3(choice);
+                            break;
+                        default:
+                            val = false;
+                            resp = "Invalid Answer, try 1, 2, 3 or 4.";
+                            break;
+                    }
+                    return resp;
+                    break;
+                case 4:
+                    input = document.getElementById("resp").value;
+                    resp = question4(input);
+                    return resp;
+                    break;
+                case 5:
+                    var choice = 0;
+                    var entry = document.getElementById("resp").value;
+                    var count = entry.length;
+                    if (count > 1) {
+                        choice = 0;
+                    }
+
+                    else {
+                        choice = parseInt(entry);
+                    }
+
+                    switch (choice) {
+                        case 1:
+                            val = true;
+                            resp = question5(choice);
+                            break;
+                        case 2:
+                            val = true;
+                            resp = question5(choice);
+                            break;
+                        case 3:
+                            val = true;
+                            resp = question5(choice);
+                            break;
+                        case 4:
+                            val = true;
+                            resp = question5(choice);
+                            break;
+                        default:
+                            val = false;
+                            resp = "Invalid Answer, try 1, 2, 3 or 4.";
+                            break;
+                    }
+                    return resp;
+                    break;
+                default:
+                    val = false;
+                    resp = "No more quesitons!";
+                    return resp;
+                    break;
+            };
+        };
+
+        //Example question 1
+        function question1(num) {
+            var q = "";
+            switch (num) {
+                case 1:
+                    typeDay = "amazing";
+                    break;
+                case 2:
+                    typeDay = "good";
+                    break;
+                case 3:
+                    typeDay = "bad";
+                    break;
+                case 4:
+                    typeDay = "terrible";
+                    break;
+                default:
+                    val = false;
+                    resp = "Invalid Answer, try 1, 2, 3 or 4.";
+                    break;
+            };
+            // set q1ans 
+            q1ans = num;
+            alert(q1ans);
+
+            q = "You had a " + typeDay + " day...";
+            return q;
+        };
+
+        //Example question 2
+        function question2(input) {
+            console.log(input);
+            var q = "";
+
+            // set q2ans
+            q2ans = input;
+            alert(q2ans);
+
+            q = "Thank you for your answer.";
+            return q;
+        };
+
+        //Example question 3
+        function question3(num) {
+            var q = "";
+            switch (num) {
+                case 1:
+                    workHours = "20 to 29 hours";
+                    break;
+                case 2:
+                    workHours = "30 to 39 hours";
+                    break;
+                case 3:
+                    workHours = "40 or more hours";
+                    break;
+                default:
+                    val = false;
+                    resp = "Invalid Answer, try 1, 2 or 3.";
+                    break;
+            };
+
+            // set q3ans
+            q3ans = num;
+            alert(q3ans);
+
+            q = "You work " + workHours + " hours a week...";
+            return q;
+        };
+
+        //Example question 4
+        function question4(input) {
+            console.log(input);
+            var q = "";
+
+            // set q4ans
+            q4ans = input;
+            alert(q4ans);
+
+            q = "Thank you for your answer.";
+            return q;
+        };
+
+        //Example question 5
+        function question5(num) {
+            var q = "";
+            switch (num) {
+                case 1:
+                    satisfaction = "Very Satisfied";
+                    break;
+                case 2:
+                    satisfaction = "Content";
+                    break;
+                case 3:
+                    satisfaction = "Dissatisfied";
+                    break;
+                case 4:
+                    satisfaction = "Very Dissatisfied";
+                    break;
+                default:
+                    val = false;
+                    resp = "Invalid Answer, try 1, 2, 3 or 4.";
+                    break;
+            };
+
+            // set q5ans
+            q5ans = num;
+            alert(q5ans);
+
+            q = "You are " + satisfaction + " with your current job...";
+            return q;
+        };
+
     </script>
 
 </head>
+
 <body>
     <header>
         <div class="row">
-            <div class="col-12"><a href="index.html"><img src=".\resources\pascal-home.png" style="width: 8vw; max-width: 30px;"></a></div>
+            <div class="col-12">
+                <a href="index.html">
+                    <img src=".\resources\pascal-home.png"
+                         style="width: 8vw; max-width: 30px;">
+                </a>
+            </div>
         </div>
 
     </header>
@@ -34,7 +456,27 @@
                 <img src=".\resources\pascal-avatar.png" style="display: block;
                 position: relative; left: 50%; max-width: 100%; /*transform: translate(-50%, -50%);*/">
             </div>
-            <div class="col-06 box" style="border: 3px solid #707070; height: 75vh; width: 50vw;"><!--chat box goes here--></div>
+            <div class="col-06 box" style="border: 3px solid #707070; height: 75vh; width:500px; max-width: inherit;">
+                <!--chat box goes here-->
+                <h2>Survey</h2>
+                <div id="pascalchat">
+                    <div class="bubble">
+                        <p id="pascalmsg">Hello! How is your day going today?</p>
+                        <p id="pascalmsg">
+                            Please enter a number:<br>"1" - Amazing!<br> "2" - Good.<br> "3" - Bad.<br>
+                            "4" - Terrible!
+                        </p>
+                    </div>
+
+                </div>
+                <br>
+                <div id="sendmsg">
+                    <input type="text" id="resp" value="">
+                    <button onclick="inputAns()">Send</button>
+                    <!--<button onclick="inputAns()">Send</button>-->
+                </div>
+                <br>
+            </div>
             <div class="col-03 filler"><br /></div>
         </div>
 
@@ -45,4 +487,5 @@
         </div>
     </main>
 </body>
+
 </html>
