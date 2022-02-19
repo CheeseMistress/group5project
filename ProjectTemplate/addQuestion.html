@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
@@ -31,15 +31,41 @@
         }
 
         //hhinker script for question page code
-        function getInputValue() {
-            // Selecting the input element and get its value 
-            var inputVal = document.getElementById("questionBox").value;
+        let questions = [];
+        
+        const addQuestion = (ev) => {
+            ev.preventDefault();  //stops the form submitting
+            let question = {
+                UserQuestion: document.getElementById('questionBox').value
+            }
+            questions.push(question);
+            // to clear the form for the next entries
+            document.querySelector('form').reset();
 
-            //hhinker ***Where should we send the data collected?**** Back to the database?
-            // Displaying the value
-            alert(inputVal);
+            //this is for display purposes to make sure the text is diplayed as an object
+            console.warn('added', { questions });
+            let pre = document.querySelector('#msg pre');
+            pre.textContent = JSON.stringify(questions); 
+
+            // get input from the question box
+            var list = Object.values(question);
+
+            // start html table
+            var table = document.getElementsByTagName('table')[0];
+
+            // add a row to the table
+            var newRow = table.insertRow(table.rows.length);
+
+            // add cells to the row
+            var cell = newRow.insertCell(0);
+
+            // add values to the cells
+            cell.innerHTML = list;
         }
-        //hhinker end script for question page code
+            document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('btn').addEventListener('click', addQuestion);
+        });
+        //end of hhinker script for question page code
 
     </script>
     <!--END OF YOUR OWN JAVASCRIPT-->
@@ -53,22 +79,41 @@
 
 <body>
 
-    <!--hhinker BEGIN question page code-->
+    <!--hhinker BEGIN question page html-->
+    <header>
+    <button type="button" onclick="window.location.href='logoff.html'">Log Off</button>
+    </header>
 
-    <h1>Pascal Questions</h1>
+    <h1>Pascal Questions</h1> 
+    
     <form>
         <section id="question">
-            <label>Please enter a question to be asked:</label>
-            <textarea id="questionBox" name="questionBox"></textarea>
+            <label>Please enter a question to be asked:</label><br>
+            <textarea id="questionBox" name="questionBox" placeholder="Enter Question Here"></textarea>
         </section>
 
-        <button type="submit" onclick=getInputValue()> Submit</button>
-        <button type="reset"> Reset</button>
-
+        <div>
+            <button id="btn">Submit</button>
+            <button type="reset"> Reset</button>
+        </div>
+        <div id="msg">
+            <pre>
+                
+            </pre>
+        </div>
+        
     </form>
+    
+    <table border="1">
 
+        <tr>
+            <th id="qList">List of Questions</th>
+            
+        </tr>
 
-    <!--hhinker END question page code-->
+    </table>
+
+    <!--hhinker END question page html-->
 
 </body>
 
