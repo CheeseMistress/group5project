@@ -34,7 +34,7 @@
                 success: function (msg) {
                     // set array returned from web method to a local variable representing the array
                     let responseFromServer = msg.d;
-
+                    
                     // looping through the array of users and comparing to it to user input for validation
                     // userid and password are attributes of a user class
                     for (let i = 0; i < responseFromServer.length; i++) {
