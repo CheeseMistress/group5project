@@ -38,7 +38,7 @@
                     // looping through the array of users and comparing to it to user input for validation
                     // userid and password are attributes of a user class
                     for (let i = 0; i < responseFromServer.length; i++) {
-                        if (user == responseFromServer[i].userid && pass == responseFromServer[i].password && responseFromServer[i].status == '1') {
+                        if (user == decodeURI(responseFromServer[i].userid) && pass == decodeURI(responseFromServer[i].password) && responseFromServer[i].status == '1') {
                             let loginParagraph = document.getElementById("loginParagraph");
                             loginParagraph.innerHTML = `<p><em>${responseFromServer[i].firstname}</em>, you have been successfully logged in!</p>`
                             valid = true;
@@ -46,9 +46,9 @@
                             window.location.replace("dashboard-employees.html");
                         }
                         // if user is in database but has not yet been approved
-                        else if (user == responseFromServer[i].userid && pass == responseFromServer[i].password && responseFromServer[i].status == '0') {
+                        else if (user == decodeURI(responseFromServer[i].userid) && pass == decodeURI(responseFromServer[i].password) && responseFromServer[i].status == '0') {
                             let loginParagraph = document.getElementById("loginParagraph");
-                            loginParagraph.innerHTML = `<p><em>${responseFromServer[i].firstname}</em>, your account has not yet been approved. </p>`
+                            loginParagraph.innerHTML = `<p><em>${decodeURI(responseFromServer[i].firstname)}</em>, your account has not yet been approved. </p>`
                             // set to true even though account is not approved yet
                             valid = true;
                         }
