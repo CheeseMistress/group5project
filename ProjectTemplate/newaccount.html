@@ -69,40 +69,53 @@
         </div>
     </header>
     <main>
-        <section>
-            <label>User: </label>
-            <input id="usernew" class="input"><br>
-            <label>Password: </label>
-            <input id="passnew" class="input"><br>
-            <label>First Name: </label>
-            <input id="fname" class="input"><br>
-            <label>Last Name: </label>
-            <input id="lname" class="input"><br>
-            <label>Company: </label>
-            <input id="comp" class="input"><br>
-            <label>Address: </label>
-            <input id="addy" class="input"><br>
-            <label>City: </label>
-            <input id="cit" class="input"><br>
-            <label>State: </label>
-            <input id="sta" class="input"><br>
-            <label>Postal Code: </label>
-            <input id="pcode" class="input"><br>
-            <label>Country: </label>
-            <input id="cntry" class="input"><br>
-            <label>Phone: </label>
-            <input id="pho" class="input"><br>
-            <label>Email: </label>
-            <input id="email" class="input"><br>
-            <label>Site: </label>
-            <input id="site" class="input"><br>
-        </section>
-        <section>
-            <div id="button">
-                <button id="adduser" onclick="AddUser()">Request Account</button><br><br>
+
+        <div class="row">
+            <div class="col-08 box" style="padding: 10px;">
+                <div class="row">
+                    <div class="col-09"><h2>Get Started with Pascal...</h2></div>
+                    <div class="col-03"><a href="login.html">Already have an account?  Sign in.</a></div>
+                </div>
+                <div class="row">
+                    <form id="createuser">
+                        <label>Company: </label>
+                        <input id="comp"><br>
+                        <label>Website: </label>
+                        <input id="site" type="url"><br>
+                        <label>First Name: </label>
+                        <input id="fname" type="input"><br>
+                        <label>Last Name: </label>
+                        <input id="lname" type="input"><br>
+                        <label>Email: </label>
+                        <input id="email" type="email"><label>Re-enter Email: </label>
+                        <input type="email"><br>
+                        <label>Phone: </label>
+                        <input id="pho" type="tel"><br>
+                        <label>Address: </label>
+                        <input id="addy"><br>
+                        <label>City: </label>
+                        <input id="cit"><br>
+                        <label>State: </label>
+                        <input id="sta"><br>
+                        <label>Postal Code: </label>
+                        <input id="pcode" type="input"><br>
+                        <label>Country: </label>
+                        <input id="cntry"><br>
+                        <label>Create a Username: </label>
+                        <input id="usernew"><br>
+                        <label>Password: </label>
+                        <input id="passnew" type="password">
+                        <label>Re-enter Password: </label>
+                        <input type="password"><br />
+
+
+                        <button id="clear" onclick="document.getElementById('createuser').reset()">Clear Form</button>
+                        <button id="adduser" onclick="AddUser()">Request Account</button>
+                    </form>
+                </div>
+                
             </div>
-            <hr>
-        </section>
+        </div>
     </main>
 </body>
 </html>
