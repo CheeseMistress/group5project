@@ -12,6 +12,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript">
         function AddUser() {
+
             // get user input from DOM
             let user = document.getElementById("usernew").value;
             let pass = document.getElementById("passnew").value;
@@ -26,35 +27,81 @@
             let pho = document.getElementById("pho").value;
             let email = document.getElementById("email").value;
             let site = document.getElementById("site").value;
-            // testing if inputs are not null should go here. Ex:
-            /*
-            if (Name == '') {
-            Messege = "Can not Blank Name";
-            }
-            */
-            // set up web method variables
-            let webMethod = "ProjectServices.asmx/InsertUser";
-            let parameters = "{\"id\":\"" + encodeURI(user) + "\"," + "\"pass\":\"" + encodeURI(pass) + "\"," + "\"first\":\"" + encodeURI(fname) + "\"," + "\"last\":\"" + encodeURI(lname) + "\"," + "\"company\":\"" + encodeURI(comp) + "\"," + "\"address\":\"" + encodeURI(addy) + "\"," + "\"city\":\"" + encodeURI(cit) + "\"," + "\"state\":\"" + encodeURI(sta) + "\"," + "\"code\":\"" + encodeURI(pcode) + "\"," + "\"country\":\"" + encodeURI(cntry) + "\"," + "\"phone\":\"" + encodeURI(pho) + "\"," + "\"email\":\"" + encodeURI(email) + "\"," + "\"website\":\"" + encodeURI(site) + "\"," + "\"status\":\"" + encodeURI('0') + "\" }";
-            // do an alert to see data
-            alert(parameters);
-            //jQuery ajax method
-            $.ajax({
-                type: "POST",
-                url: webMethod,
-                data: parameters,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (msg) {
-                    // set boolean from web method to a local variable representing the response
-                    let responseFromServer = msg.d;
-                    alert("Account has been requested!");
-                },
-                error: function (e) {
-                    alert("this code will only execute if javascript is unable to access the webservice");
+            let repass = document.getElementById("repass").value;
+            let email2 = document.getElementById("email2").value;
+
+            let carryOn = true;
+
+            function validateForm() {
+                if (user && pass && fname && lname && comp && addy &&
+                    cit && sta && pcode && cntry && pho && email && site) {
+                    if (pass != repass) {
+                        alert("Try again. Passwords do not match.");
+                        carryOn = false;
+                    }
+                    else if (email !== email2) {
+                        alert("Try again. Emails do not match." + email + email2);
+                        carryOn = false;
+                    }
+                    else if (sta.length != 2) {
+                        alert("Try again. Please enter a two-character state.");
+                        carryOn = false;
+                    }
                 }
-            });
+                else {
+                    alert("Try again. Please complete all fields.")
+                    carryOn = false;
+                }
+            }
+
+            validateForm();
+
+            if (carryOn) {
+                // testing if inputs are not null should go here. Ex:
+                /*
+                if (Name == '') {
+                Messege = "Can not Blank Name";
+                }
+                */
+                // set up web method variables
+                let webMethod = "ProjectServices.asmx/InsertUser";
+                let parameters = "{\"id\":\"" + encodeURI(user) + "\"," + "\"pass\":\"" + encodeURI(pass) + "\"," + "\"first\":\"" + encodeURI(fname) + "\"," + "\"last\":\"" + encodeURI(lname) + "\"," + "\"company\":\"" + encodeURI(comp) + "\"," + "\"address\":\"" + encodeURI(addy) + "\"," + "\"city\":\"" + encodeURI(cit) + "\"," + "\"state\":\"" + encodeURI(sta) + "\"," + "\"code\":\"" + encodeURI(pcode) + "\"," + "\"country\":\"" + encodeURI(cntry) + "\"," + "\"phone\":\"" + encodeURI(pho) + "\"," + "\"email\":\"" + encodeURI(email) + "\"," + "\"website\":\"" + encodeURI(site) + "\"," + "\"status\":\"" + encodeURI('0') + "\" }";
+                // do an alert to see data
+                alert(parameters);
+                //jQuery ajax method
+                $.ajax({
+                    type: "POST",
+                    url: webMethod,
+                    data: parameters,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        // set boolean from web method to a local variable representing the response
+                        let responseFromServer = msg.d;
+                        alert("Success!  An account has been requested for " + user +"!");
+                    },
+                    error: function (e) {
+                        alert("Unable to access webservice.");
+                    }
+                });
+            }
         }
     </script>
+
+    <style>
+        label {
+            margin: 1vh 0;
+        }
+
+        input {
+            margin: 1vh 0;
+            width: 100%;
+        }
+
+        button {
+            font-size: 1vw;
+        }
+    </style>
 </head>
 <body>
     <!-- This is the page header.  This one is specific to this page. -->
@@ -71,10 +118,11 @@
     <main>
 
         <div class="row">
+            <div class="col-02 filler"></div>
             <div class="col-08 box" style="padding: 10px;">
                 <div class="row">
-                    <div class="col-09"><h2>Get Started with Pascal...</h2></div>
-                    <div class="col-03"><a href="login.html">Already have an account?  Sign in.</a></div>
+                    <div class="col-09"><h2 style="font-size: 5vh;">Get Started with Pascal...</h2></div>
+                    <div class="col-03" style="font-size: 2vw;"><a href="login.html">Already have an account?  Sign in.</a></div>
                 </div>
                 <div class="row">
                     <form id="createuser">
@@ -83,12 +131,12 @@
                         <label>Website: </label>
                         <input id="site" type="url"><br>
                         <label>First Name: </label>
-                        <input id="fname" type="input"><br>
+                        <input id="fname"><br>
                         <label>Last Name: </label>
-                        <input id="lname" type="input"><br>
+                        <input id="lname"><br>
                         <label>Email: </label>
                         <input id="email" type="email"><label>Re-enter Email: </label>
-                        <input type="email"><br>
+                        <input id="email2" type="email"><br>
                         <label>Phone: </label>
                         <input id="pho" type="tel"><br>
                         <label>Address: </label>
@@ -98,24 +146,29 @@
                         <label>State: </label>
                         <input id="sta"><br>
                         <label>Postal Code: </label>
-                        <input id="pcode" type="input"><br>
+                        <input id="pcode" type="text" maxlength="5"><br>
                         <label>Country: </label>
                         <input id="cntry"><br>
                         <label>Create a Username: </label>
-                        <input id="usernew"><br>
+                        <input id="usernew" maxlength="7"><br>
                         <label>Password: </label>
                         <input id="passnew" type="password">
                         <label>Re-enter Password: </label>
-                        <input type="password"><br />
+                        <input id="repass" type="password"><br />
 
-
-                        <button id="clear" onclick="document.getElementById('createuser').reset()">Clear Form</button>
-                        <button id="adduser" onclick="AddUser()">Request Account</button>
-                    </form>
+                        <div class="row">
+                            <div class="col-09 filler">&nbsp;</div>
+                            <div class="col-02" style="white-space: nowrap;">
+                                    <button id="clear" onclick="document.getElementById('createuser').reset()" style="background-color: #86BCAC">Clear Form</button>
+                                    <button id="adduser" onclick="AddUser()">Request Account</button>
+                            </div>
+                        </div>
+                    </form>                    
                 </div>
                 
             </div>
         </div>
+        <div class="col-02 filler"></div>
     </main>
 </body>
 </html>
