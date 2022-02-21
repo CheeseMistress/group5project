@@ -12,6 +12,8 @@
             var webMethod = "ProjectServices.asmx/GetUnapprovedUsers";
             var parameters = "{}";
 
+            var accounts = document.getElementById("approveDenyUser");
+
             //jQuery ajax method
             $.ajax({
                 type: "POST",
@@ -28,35 +30,77 @@
                         message.id = "nousers";
                         message.innerHTML = "There are currently no new accounts needing approval.";
                         document.body.appendChild(message);
+                    } else {
+                        var tbl = document.createElement("table");
+                        var tblBody = document.createElement("tbody");
+                        var row = document.createElement("tr");
+
+                        for (var i = 0; i < 7; i++) {
+                            if (i == 0) {
+                                var cell = document.createElement("th");
+                                var celltxt = document.createTextNode("Username");
+                                cell.appendChild(celltxt);
+                                row.appendChild(cell);
+                            } else if (i == 1) {
+                                var cell = document.createElement("th");
+                                var celltxt = document.createTextNode("First Name");
+                                cell.appendChild(celltxt);
+                                row.appendChild(cell);
+                            } else if (i == 2) {
+                                var cell = document.createElement("th");
+                                var celltxt = document.createTextNode("Last Name");
+                                cell.appendChild(celltxt);
+                                row.appendChild(cell);
+                            } else if (i == 3) {
+                                var cell = document.createElement("th");
+                                var celltxt = document.createTextNode("Company");
+                                cell.appendChild(celltxt);
+                                row.appendChild(cell);
+                            } else if (i == 4) {
+                                var cell = document.createElement("th");
+                                var celltxt = document.createTextNode("Status");
+                                cell.appendChild(celltxt);
+                                row.appendChild(cell);
+                            } else if (i == 5) {
+                                var cell = document.createElement("th");
+                                var celltxt = document.createTextNode("Approve");
+                                cell.appendChild(celltxt);
+                                row.appendChild(cell);
+                            } else {
+                                var cell = document.createElement("th");
+                                var celltxt = document.createTextNode("Delete");
+                                cell.appendChild(celltxt);
+                                row.appendChild(cell);
+                            }
+                        }
+                        tblBody.appendChild(row);
+                        tbl.appendChild(tblBody);
+                        accounts.appendChild(tbl);
                     }
 
                     // loop through the list of unapproved users and display them on the HTML page
                     for (let i = 0; i < responseFromServer.length; i++) {
-                        // display userid
+
                         var user = document.createElement('div');
                         user.id = "id";
                         user.innerHTML = "User ID: " + decodeURI(responseFromServer[i].userid);
                         document.body.appendChild(user);
 
-                        // display first name
                         var fname = document.createElement('div');
                         fname.id = "fname";
                         fname.innerHTML = "First Name: " + decodeURI(responseFromServer[i].firstname);
                         document.body.appendChild(fname);
 
-                        // display last name
                         var lname = document.createElement('div');
                         lname.id = "lname";
                         lname.innerHTML = "Last Name: " + decodeURI(responseFromServer[i].lastname);
                         document.body.appendChild(lname);
 
-                        // display company name
                         var compname = document.createElement('div');
                         compname.id = "compname";
                         compname.innerHTML = "Company: " + decodeURI(responseFromServer[i].companyname);
                         document.body.appendChild(compname);
 
-                        // display account status, this function only returns unapproved accounts, so we can just use a string saying "Unapproved"
                         var status = document.createElement('div');
                         status.id = "status";
                         status.innerHTML = "Status: Unapproved";
@@ -64,13 +108,11 @@
 
                         // create approve button
                         var approve = document.createElement('button');
-                        // name approve id "approveButton" plus index number to keep buttons unique from each other
+
                         approve.id = "approveButton" + i;
                         approve.innerHTML = "Approve";
                         approve.onclick = function () {
-                            // call approve account and send in user id
                             ApproveAccount(responseFromServer[i].userid);
-                            // disable all buttons for specific user once approved
                             disableButtons(i);
                         };
                         document.body.appendChild(approve);
@@ -84,7 +126,7 @@
                         deny.onclick = function () {
                             // call deny account and send in user id
                             DenyAccount(responseFromServer[i].userid);
-                            // disable all buttons for specific user once approved
+
                             disableButtons(i);
                         };
                         document.body.appendChild(deny);
@@ -150,6 +192,7 @@
     </style>
     <!--END OF YOUR OWN CSS-->
 </head>
+
 <body onload="DisplayUnapprovedAccounts()">
 
     <!-- This is the page header.  This one is specific to this page. -->
@@ -160,7 +203,7 @@
 
         <div class="row">
             <div class="col-12" style="text-align: center; margin: 2em 0 2em 0; padding: 5vh 0;">
-                <img src=".\resources\pascal-logo.png" style="width: 20%;">
+                <img src=".\resources\pascal-logo.png" style="width: 30%;">
             </div>
         </div>
     </header>
@@ -168,4 +211,5 @@
         <h1>New Accounts</h1>
     </section>
 </body>
+
 </html>
