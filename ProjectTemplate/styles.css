@@ -35,7 +35,7 @@ button {
     background-color: #0A5E97;
     color: #FFFFFF;
     border-radius: 5px;
-    padding: 5%;
+    padding: 5px;
     transition-duration: 0.2s;
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
@@ -70,9 +70,11 @@ body, .filler {
     border: 3px solid transparent;
 }
 .box {
+    padding: 10px;
     border: 1px solid #707070;
     box-shadow: 2px 5px 10px 1px #707070;
     border-radius: 10px;
+
 }
 
 h1, h2 {
@@ -102,4 +104,10 @@ p {
 a {
     color: #0A5E97;
     font-weight: bold;
+}
+
+label {
+    font-weight: bold;
+    margin-top: 2vh;
+    padding-top: 2vh;
 }
