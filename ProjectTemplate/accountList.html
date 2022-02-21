@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <title></title>
@@ -129,9 +130,25 @@
     <!--END OF YOUR OWN JAVASCRIPT-->
     <!--AND YOUR OWN CSS CAN GO HERE AS WELL-->
     <style>
+        #id,
+        #fname,
+        #lname,
+        #compname,
+        #status {
+            margin: auto;
+            display: table;
+        }
+
+        [id$=Button] {
+
+            width: 7.0em;
+            margin: 2px;
+            
+        }
     </style>
     <!--END OF YOUR OWN CSS-->
 </head>
+
 <body onload="DisplayUnapprovedAccounts()">
     <!-- This is the page header.  This one is specific to this page. -->
     <header>
@@ -148,4 +165,5 @@
         <h1>New Accounts</h1>
     </section>
 </body>
+
 </html>
