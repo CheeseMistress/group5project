@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -72,9 +72,9 @@
     <!--Home Page-->
     <script type="text/javascript">
         // function to send survey responses
-        function SendResponse(q1, q2, q3, q4, q5) {
+        function SendResponse(surveyid, r1, r2, r3, r4, r5) {
             var webMethod = "ProjectServices.asmx/InsertResponse";
-            var parameters = "{\"q1\":\"" + encodeURI(q1) + "\"," + "\"q2\":\"" + encodeURI(q2) + "\"," + "\"q3\":\"" + encodeURI(q3) + "\"," + "\"q4\":\"" + encodeURI(q4) + "\"," + "\"q5\":\"" + encodeURI(q5) + "\"}";
+            var parameters = "{\"surveyid\":\"" + encodeURI(surveyid) + "\"," + "\"r1\":\"" + encodeURI(r1) + "\"," + "\"r2\":\"" + encodeURI(r2) + "\"," + "\"r3\":\"" + encodeURI(r3) + "\"," + "\"r4\":\"" + encodeURI(r4) + "\"," + "\"r5\":\"" + encodeURI(r5) + "\"}";
 
             //jQuery ajax method
             $.ajax({
@@ -93,12 +93,36 @@
             });
         }
 
+        function GetQuestions() {
+            var webMethod = "ProjectServices.asmx/GetSurveyQuestions";
+            var parameters = "{}";
+
+            //jQuery ajax method
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var responseFromServer = msg.d;
+                    alert(responseFromServer[0].surveyid + " " + responseFromServer[0].question1);
+                    alert("Response has been saved to the database!");
+                },
+                error: function (e) {
+                    alert("this code will only execute if javascript is unable to access the webservice");
+                }
+            });
+        }
+
         // set up global survey response variables
-        var q1ans; 
-        var q2ans;
-        var q3ans;
-        var q4ans;
-        var q5ans;
+        var r1;
+        var r2;
+        var r3;
+        var r4;
+        var r5;
+
+
 
         qcount = 1;
         finalOutput = ['How has your last week of work?'];
@@ -162,6 +186,10 @@
         function questionAsk(num) {
             switch (num) {
                 case 1:
+                    text = "Hello! How is your day going today?"
+                    pascalResp(text);
+                    text2 = "Please enter a number:'1' - Amazing; '2' - Good; '3' - Bad;'4' - Terrible";
+                    pascalResp(text2)
                     break;
                 case 2:
                     text = "Shortly explain answer.";
@@ -186,7 +214,7 @@
                 default:
                     let resp = "Congrats, you have reached the end of the survey!";
                     pascalResp(resp);
-                    SendResponse(q1ans, q2ans, q3ans, q4ans, q5ans);
+                    SendResponse(13, r1, r2, r3, r4, r5);
                     break;
             }
         };
@@ -341,9 +369,9 @@
                     resp = "Invalid Answer, try 1, 2, 3 or 4.";
                     break;
             };
-            // set q1ans 
-            q1ans = num;
-            alert(q1ans);
+            // set response 1
+            r1 = num;
+            alert(r1);
 
             q = "You had a " + typeDay + " day...";
             return q;
@@ -355,8 +383,8 @@
             var q = "";
 
             // set q2ans
-            q2ans = input;
-            alert(q2ans);
+            r2 = input;
+            alert(r2);
 
             q = "Thank you for your answer.";
             return q;
@@ -381,9 +409,9 @@
                     break;
             };
 
-            // set q3ans
-            q3ans = num;
-            alert(q3ans);
+            // set response 2
+            r3 = num;
+            alert(r3);
 
             q = "You work " + workHours + " hours a week...";
             return q;
@@ -394,9 +422,9 @@
             console.log(input);
             var q = "";
 
-            // set q4ans
-            q4ans = input;
-            alert(q4ans);
+            // set response 4
+            r4 = input;
+            alert(r4);
 
             q = "Thank you for your answer.";
             return q;
@@ -424,9 +452,9 @@
                     break;
             };
 
-            // set q5ans
-            q5ans = num;
-            alert(q5ans);
+            // set response 5
+            r5 = num;
+            alert(r5);
 
             q = "You are " + satisfaction + " with your current job...";
             return q;
