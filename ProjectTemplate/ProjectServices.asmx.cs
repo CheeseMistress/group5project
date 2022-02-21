@@ -272,7 +272,7 @@ namespace ProjectTemplate
         }
 
         [WebMethod]
-        public void InsertResponse(int surveyid, int r1, string r2, int r3, string r4, int r5)
+        public void InsertResponse(int surveyid, string r1, string r2, string r3, string r4, string r5)
         {
             // insert statement
             string insertResponse = "INSERT INTO responses (surveyid, time, response1, response2, response3, response4, response5) " +
