@@ -173,3 +173,23 @@ label {
     margin-top: 2vh;
     padding-top: 2vh;
 }
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: smaller;
+}
+
+tr:hover {
+    background-color: lightgray;
+}
+
+th {
+    text-align: left;
+    background-color: lightgray;
+    padding: 3px;
+}
+
+td {
+    padding: 5px;
+}
