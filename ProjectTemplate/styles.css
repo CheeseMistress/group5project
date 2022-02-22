@@ -73,16 +73,42 @@ body, .filler {
 .filler {
     border: 3px solid transparent;
 }
+
 .box {
     padding: 10px;
     border: 1px solid #707070;
     box-shadow: 2px 5px 10px 1px #707070;
     border-radius: 10px;
+}
 
+.activetab {
+    padding: 10px;
+    border: none;
+    box-shadow: none;
+    border-radius: 10px 10px 0px 0px;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 10pt;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #094C8C;
+}
+
+.inactivetab {
+    padding: 10px;
+    border: none;
+    box-shadow: none;
+    border-radius: 10px 10px 0px 0px;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 10pt;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: #83B3DB;
 }
 
 h1, h2 {
-    color:#094C8C;
+    color: #094C8C;
     font-weight: bold;
 }
 
