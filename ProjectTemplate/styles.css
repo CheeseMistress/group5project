@@ -47,6 +47,10 @@ button {
         box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
     }
 
+    button:disabled {
+        background-color: lightgray;
+        box-shadow: none;
+    }
 .disabled {
     opacity: 0.6;
     cursor: not-allowed;
@@ -110,4 +114,24 @@ label {
     font-weight: bold;
     margin-top: 2vh;
     padding-top: 2vh;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: smaller;
+}
+
+tr:hover {
+    background-color: lightgray;
+}
+
+th {
+    text-align: left;
+    background-color: lightgray;
+    padding: 3px;
+}
+
+td {
+    padding: 5px;
 }
