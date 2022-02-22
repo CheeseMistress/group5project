@@ -32,7 +32,7 @@
                     if (responseFromServer.length == 0) {
                         var message = document.createElement('div');
                         message.id = "nousers";
-                        message.innerHTML = "There are currently no new accounts needing approval.";
+                        message.innerHTML = "<em>There are currently no new accounts needing approval.</em>";
                         document.body.appendChild(message);
                     } else {
                         var tbl = document.createElement("table");
@@ -72,7 +72,7 @@
                                 row.appendChild(cell);
                             } else {
                                 var cell = document.createElement("th");
-                                var celltxt = document.createTextNode("Delete");
+                                var celltxt = document.createTextNode("Deny");
                                 cell.appendChild(celltxt);
                                 row.appendChild(cell);
                             }
@@ -82,7 +82,7 @@
                         accounts.appendChild(tbl);
                     }
 
-                    // loop through the list of unapproved users and display them on the HTML page
+                    // loop through the list of unapproved users and display them on the HTML page in a table
                     for (let i = 0; i < responseFromServer.length; i++) {
 
                         var newrow = document.createElement("tr");
