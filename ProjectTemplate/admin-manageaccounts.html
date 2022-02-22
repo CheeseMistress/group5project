@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cabin&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
     <title>Pascal</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">itle>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -123,8 +123,18 @@
                         approvebtn.id = "approveButton" + i;
                         approvebtn.innerHTML = "Approve";
                         approvebtn.onclick = function () {
-                            ApproveAccount(responseFromServer[i].userid);
-                            disableButtons(i);
+                            // confirm then call approve account and send in user id
+                            let text = "This action will allow " + decodeURI(responseFromServer[i].userid)
+                                + " access to Pascal. Are you sure?";
+                            if (confirm(text) == true) {
+                                text = decodeURI(responseFromServer[i].userid) + " of " +
+                                    decodeURI(responseFromServer[i].companyname) + " has been approved."
+                                ApproveAccount(responseFromServer[i].userid);
+                                disableButtons(i);
+                            } else {
+                                text = "";
+                            }
+                            document.getElementById("feedback").innerHTML = text;
                         };
                         approve.appendChild(approvebtn);
                         newrow.appendChild(approve);
@@ -138,9 +148,17 @@
                         denybtn.id = "denyButton" + i;
                         denybtn.innerHTML = "Deny";
                         denybtn.onclick = function () {
-                            // call deny account and send in user id
-                            DenyAccount(responseFromServer[i].userid);
-                            disableButtons(i);
+                            // confirm then call deny account and send in user id
+                            let text = "This action will delete " + decodeURI(responseFromServer[i].userid)
+                                + " from the database.  Are you sure?";
+                            if (confirm(text) == true) {
+                                text = "Account request denied.  User record deleted."
+                                DenyAccount(responseFromServer[i].userid);
+                                disableButtons(i);
+                            } else {
+                                text = "";
+                            }
+                            document.getElementById("feedback").innerHTML = text;
                         };
                         deny.appendChild(denybtn);
                         newrow.appendChild(deny);
@@ -153,7 +171,7 @@
 
                 },
                 error: function (e) {
-                    alert("this code will only execute if javascript is unable to access the webservice");
+                    alert("This code will only execute if javascript is unable to access the webservice.");
                 }
             });
         }
@@ -223,9 +241,16 @@
             </div>
         </div>
     </header>
-    <section id="approveDenyUser">
-        <h1>New Accounts</h1>
-    </section>
+    <div class="row">
+        <div class="col-02 filler"></div>
+        <div class="col-08 box" style="padding: 10px 50px;">
+            <section id="feedback" style="font-style: italic;"></section>
+            <section id="approveDenyUser">
+                <h1>New Accounts</h1>
+            </section>
+        </div>
+        <div class="col-02 filler"></div>
+    </div>
 </body>
 
 </html>
