@@ -12,7 +12,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
-    <script type="text/javascript">function DisplayUnapprovedAccounts() {
+    <script type="text/javascript">
+        function DisplayUnapprovedAccounts() {
             var webMethod = "ProjectServices.asmx/GetUnapprovedUsers";
             var parameters = "{}";
 
@@ -220,7 +221,8 @@
                     alert("this code will only execute if javascript is unable to access the webservice");
                 }
             });
-        }</script>
+        }
+    </script>
 
     <style>
     </style>
@@ -237,16 +239,21 @@
 
         <div class="row">
             <div class="col-12" style="text-align: center; margin: 2em 0 2em 0; padding: 5vh 0;">
-                <img src=".\resources\pascal-logo.png" style="width: 30%;">
+                <img src=".\resources\pascal-logo.png" style="width: 30%;"><br />
+                <span>ADMIN ONLY - USER MANAGEMENT</span>
             </div>
         </div>
     </header>
     <div class="row">
         <div class="col-02 filler"></div>
         <div class="col-08 box" style="padding: 10px 50px;">
-            <section id="feedback" style="font-style: italic;"></section>
+            <section id="feedback" style="font-style: italic; font-size: smaller; text-align: center;"></section>
             <section id="approveDenyUser">
-                <h1>New Accounts</h1>
+                <h1>Account Requests</h1>
+            </section>
+            <!-- currentUsers section will call to display users with status of 1 -->
+            <section id="currentUsers">
+                <h1>Current Accounts</h1>
             </section>
         </div>
         <div class="col-02 filler"></div>
