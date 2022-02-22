@@ -6,7 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cabin&family=Roboto:wght@400;700&display=swap"
-        rel="stylesheet">
+          rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
     <title>Pascal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -68,7 +68,7 @@
                         resp1.id = "resp1id";
                         resp1.innerHTML = decodeURI(responseFromServer[i].response1);
                         document.newRow.appendChild(resp1);
-                        
+
                         // display response 2
                         var resp2 = document.createElement('td');
                         resp2.id = "resp2id";
@@ -116,7 +116,7 @@
         }
 
         table {
-            border: 1px  solid black;
+            border: 1px solid black;
         }
 
         th, td {
@@ -139,7 +139,8 @@
     <header>
         <div class="row">
             <div class="col-11"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
-            <div class="col-01" style="vertical-align: bottom; white-space: nowrap;"><a href="logoff.html">Log Out</a>
+            <div class="col-01" style="vertical-align: bottom; white-space: nowrap;">
+                <a href="logoff.html">Log Out</a>
             </div>
         </div>
 
@@ -150,20 +151,60 @@
     </header>
 
     <main>
-        <div id="resultsdiv" class="center">
-            <table id="resultTable" class="center">
-                <tr>
-                    <th>Response ID</th>
-                    <th>Survey ID</th>
-                    <th>Time</th>
-                    <th>Response 1</th>
-                    <th>Response 2</th>
-                    <th>Response 3</th>
-                    <th>Response 4</th>
-                    <th>Response 5</th>
-                </tr>
-            </table>
+        <div class="row">
+            <div class="col-01 filler"></div>
+            <a href="dashboard-results.html">
+                <div class="col-02 activetab">
+                    <span>Survey Results</span>
+                </div>
+            </a>
+            <a href="dashboard-surveys.html">
+                <div class="col-02 inactivetab">
+                    <span>Manage Surveys</span>
+                </div>
+            </a>
+            <a href="dashboard-rewards.html">
+                <div class="col-02 inactivetab">
+                    <span>Manage Rewards</span>
+                </div>
+            </a>
+            <a href="dashboard-employees.html">
+                <div class="col-02 inactivetab">
+                    <span>Manage Employees</span>
+                </div>
+            </a>
+            <a href="dashboard-accountmgr.html">
+                <div class="col-02 inactivetab">
+                    <span>Manage Account</span>
+                </div>
+            </a>
+            <div class="col-01 filler"></div>
         </div>
+        <div class="row">
+            <div class="col-01 filler"></div>
+            <div class="col-10" style="background-color: #094C8C; height: 1vh;"></div>
+            <div class="col-01 filler"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-01 filler"></div>
+            <div class="col-10 box" style="padding: 10px 50px; box-shadow: none; border-radius: 0px 0px 10px 10px;">
+                <div id="resultsdiv" class="center">
+                    <table id="resultTable" class="center">
+                        <tr>
+                            <th>Response ID</th>
+                            <th>Survey ID</th>
+                            <th>Time</th>
+                            <th>Response 1</th>
+                            <th>Response 2</th>
+                            <th>Response 3</th>
+                            <th>Response 4</th>
+                            <th>Response 5</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-01 filler"></div>
 
 
     </main>
