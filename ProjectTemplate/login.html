@@ -7,10 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Cabin&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
     <title>Pascal</title>
-    <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
     <script type="text/javascript">
 
         // attempt control variable
@@ -47,7 +45,7 @@
                             loginMessage.innerHTML = `<p><em>${responseFromServer[i].firstname}</em>, you have been successfully logged in!</p>`
                             valid = true;
                             // go to dashboard
-                            window.location.replace("dashboard-employees.html");
+                            window.location.replace("dashboard-results.html");
                         }
                         // if user is in database but has not yet been approved
                         else if (user == decodeURI(responseFromServer[i].userid) && pass == decodeURI(responseFromServer[i].password) && responseFromServer[i].status == '0') {
