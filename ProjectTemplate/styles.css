@@ -56,14 +56,6 @@ button {
     cursor: not-allowed;
 }
 
-/*body {
-    height: 100%;
-}
-
-body {
-    width: 100%;
-}*/
-
 body, .filler {
     background-color: transparent;
     font-family: 'Roboto', sans-serif;
