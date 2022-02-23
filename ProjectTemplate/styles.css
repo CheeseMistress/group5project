@@ -56,13 +56,13 @@ button {
     cursor: not-allowed;
 }
 
-body {
+/*body {
     height: 100%;
 }
 
 body {
     width: 100%;
-}
+}*/
 
 body, .filler {
     background-color: transparent;
