@@ -4,7 +4,7 @@ This project is a fun and new way to get employees to share how they really feel
 ## Description
 We created this project to make surveys fun again. We were tired of the same old surveys that everyone uses. This app is an interactive fun way to gage what your staff is really thinking.
 
-## Built Wiwith
+## Built With
 - C#
 - Javascript
 - JSON
