@@ -6,7 +6,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cabin&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
-    <title>Pascal</title>
+    <link rel="shortcut icon" type="image/png" href=".\resources\pascal-home.png" />
+    <title>Pascal - Create Account</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -78,7 +79,7 @@
                     success: function (msg) {
                         // set boolean from web method to a local variable representing the response
                         let responseFromServer = msg.d;
-                        alert("Success!  An account has been requested for " + user +"!");
+                        alert("Success!  An account has been requested for " + user + "!");
                     },
                     error: function (e) {
                         alert("Unable to access webservice.");
