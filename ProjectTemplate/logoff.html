@@ -2,7 +2,16 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title></title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Cabin&family=Roboto:wght@400;700&display=swap"
+		  rel="stylesheet">
+	<link href="styles.css" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href=".\resources\pascal-home.png" />
+	<title>Pascal - Log Out</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- redirects page after the specified number of seconds -->
+	<meta http-equiv="refresh" content="3;url=index.html" />
 	<!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -30,36 +39,35 @@
 		}
 	</script>
 	<!--END OF YOUR OWN JAVASCRIPT-->
-
 	<!--AND YOUR OWN CSS CAN GO HERE AS WELL-->
 	<style>
-
 	</style>
 	<!--END OF YOUR OWN CSS-->
-</head >
+</head>
 <body>
 
 	<!-- This is the page header.  This one is specific to this page. -->
 	<header>
-		<div class="row">
-			<div class="col-12"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
-		</div>
+		<div class="col-10"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
+		<div class="col-02" style="white-space: nowrap; margin-top: 5px; text-align: center;"><a href="login.html" style="vertical-align: bottom;">Sign In</a></div>
 
 		<div class="row">
 			<div class="col-12" style="text-align: center; margin: 2em 0 2em 0; padding: 5vh 0;">
-				<img src=".\resources\pascal-logo.png" style="width: 20%;">
+				<img src=".\resources\pascal-logo.png" style="width: 30%;">
 			</div>
+		</div>
 	</header>
 
-	<!--hhinker BEGIN logoff page code-->
 
-	<section id="logoff">
-		<h1>Logged Out!</h1>
-		<h2>Thank you for using Pascal</h2>
+	<div class="col-04 filler"></div>
+	<div class="col-04 box" style="text-align: center;" id="logoff">
+		<h2>You have been signed out.</h2>
+		<p>Thank you for using Pascal!<br />You will be brought to the home page in a few moments.</p>
+		<img src=".\resources\loading-icon.gif" style="width: 20%;"/><br />
+		<a href="index.html" style="font-size: smaller; font-weight: normal;">Click here if you're not redirected.</a>
+	</div>
+	<div class="col-04 filler"></div>
 
-		<button type="button" onclick="window.location.href='index.html'">Sign in Again</button>
-	</section>
-	<!--hhinker END logoff page code-->
 
 </body>
 </html>
