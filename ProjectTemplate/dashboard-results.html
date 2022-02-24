@@ -6,7 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cabin&family=Roboto:wght@400;700&display=swap"
-          rel="stylesheet">
+        rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
     <title>Pascal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,59 +39,59 @@
 
                     // loop through the list of results and display them on the HTML page
                     for (let i = 0; i < responseFromServer.length; i++) {
-
+                        
                         // Create table row
                         let newRow = document.createElement('tr');
                         newRow.id = "row" + i;
-                        document.getElementById(resultTable).appendChild(newRow);
-
+                        document.getElementById("resultTable").appendChild(newRow);
+                        
                         // display response ID
                         var resp = document.createElement('td');
                         resp.id = "respId";
                         resp.innerHTML = decodeURI(responseFromServer[i].responseid);
-                        document.newRow.appendChild(resp);
-
+                        document.getElementById("resultTable").appendChild(resp);
+                        
                         // display survey ID
                         var survey = document.createElement('td');
                         survey.id = "surveyId";
                         survey.innerHTML = decodeURI(responseFromServer[i].surveyid);
-                        document.newRow.appendChild(survey);
-
+                        document.getElementById("resultTable").appendChild(survey);
+                        
                         // display time
                         var timeComplete = document.createElement('td');
                         timeComplete.id = "timeId";
                         timeComplete.innerHTML = decodeURI(responseFromServer[i].time);
-                        document.newRow.appendChild(timeComplete);
-
+                        document.getElementById("resultTable").appendChild(timeComplete);
+                        
                         // display response 1
                         var resp1 = document.createElement('td');
                         resp1.id = "resp1id";
                         resp1.innerHTML = decodeURI(responseFromServer[i].response1);
-                        document.newRow.appendChild(resp1);
-
+                        document.getElementById("resultTable").appendChild(resp1);
+                        
                         // display response 2
                         var resp2 = document.createElement('td');
                         resp2.id = "resp2id";
                         resp2.innerHTML = decodeURI(responseFromServer[i].response2);
-                        document.newRow.appendChild(resp2);
-
+                        document.getElementById("resultTable").appendChild(resp2);
+                        
                         // display response 3
                         var resp3 = document.createElement('td');
                         resp3.id = "resp3id";
                         resp3.innerHTML = decodeURI(responseFromServer[i].response3);
-                        document.newRow.appendChild(resp3);
-
+                        document.getElementById("resultTable").appendChild(resp3);
+                        
                         // display response 4
                         var resp4 = document.createElement('td');
                         resp4.id = "resp4id";
                         resp4.innerHTML = decodeURI(responseFromServer[i].response4);
-                        document.newRow.appendChild(resp4);
-
+                        document.getElementById("resultTable").appendChild(resp4);
+                        
                         // display response 5
                         var resp5 = document.createElement('td');
                         resp5.id = "resp5id";
                         resp5.innerHTML = decodeURI(responseFromServer[i].response5);
-                        document.newRow.appendChild(resp5);
+                        document.getElementById("resultTable").appendChild(resp5);
                     }
                 },
                 error: function (e) {
@@ -134,81 +134,81 @@
 
 </head>
 
-<body>
-    <!-- This is the page header. This is universal to all logged-in pages. -->
-    <header>
-        <div class="row">
-            <div class="col-11"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
-            <div class="col-01" style="vertical-align: bottom; white-space: nowrap;">
-                <a href="logoff.html">Log Out</a>
+<body onload="SurveyResults()"></body>">
+<!-- This is the page header. This is universal to all logged-in pages. -->
+<header>
+    <div class="row">
+        <div class="col-11"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
+        <div class="col-01" style="vertical-align: bottom; white-space: nowrap;">
+            <a href="logoff.html">Log Out</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12" style="text-align: center; margin: 2em 0 2em 0; padding: 5vh 0;">
+            <img src=".\resources\pascal-logo.png" style="width: 20%;">
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="row">
+        <div class="col-01 filler"></div>
+        <a href="dashboard-results.html">
+            <div class="col-02 activetab">
+                <span>Survey Results</span>
+            </div>
+        </a>
+        <a href="dashboard-surveys.html">
+            <div class="col-02 inactivetab">
+                <span>Manage Surveys</span>
+            </div>
+        </a>
+        <a href="dashboard-rewards.html">
+            <div class="col-02 inactivetab">
+                <span>Manage Rewards</span>
+            </div>
+        </a>
+        <a href="dashboard-employees.html">
+            <div class="col-02 inactivetab">
+                <span>Manage Employees</span>
+            </div>
+        </a>
+        <a href="dashboard-accountmgr.html">
+            <div class="col-02 inactivetab">
+                <span>Manage Account</span>
+            </div>
+        </a>
+        <div class="col-01 filler"></div>
+    </div>
+    <div class="row">
+        <div class="col-01 filler"></div>
+        <div class="col-10" style="background-color: #094C8C; height: 1vh;"></div>
+        <div class="col-01 filler"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-01 filler"></div>
+        <div class="col-10 box" style="padding: 10px 50px; box-shadow: none; border-radius: 0px 0px 10px 10px;">
+            <div id="resultsdiv" class="center">
+                <table id="resultTable" class="center">
+                    <tr>
+                        <th>Response ID</th>
+                        <th>Survey ID</th>
+                        <th>Time</th>
+                        <th>Response 1</th>
+                        <th>Response 2</th>
+                        <th>Response 3</th>
+                        <th>Response 4</th>
+                        <th>Response 5</th>
+                    </tr>
+                </table>
             </div>
         </div>
+        <div class="col-01 filler"></div>
+    </div>
 
-        <div class="row">
-            <div class="col-12" style="text-align: center; margin: 2em 0 2em 0; padding: 5vh 0;">
-                <img src=".\resources\pascal-logo.png" style="width: 20%;">
-            </div>
-        </div>
-    </header>
-
-    <main>
-        <div class="row">
-            <div class="col-01 filler"></div>
-            <a href="dashboard-results.html">
-                <div class="col-02 activetab">
-                    <span>Survey Results</span>
-                </div>
-            </a>
-            <a href="dashboard-surveys.html">
-                <div class="col-02 inactivetab">
-                    <span>Manage Surveys</span>
-                </div>
-            </a>
-            <a href="dashboard-rewards.html">
-                <div class="col-02 inactivetab">
-                    <span>Manage Rewards</span>
-                </div>
-            </a>
-            <a href="dashboard-employees.html">
-                <div class="col-02 inactivetab">
-                    <span>Manage Employees</span>
-                </div>
-            </a>
-            <a href="dashboard-accountmgr.html">
-                <div class="col-02 inactivetab">
-                    <span>Manage Account</span>
-                </div>
-            </a>
-            <div class="col-01 filler"></div>
-        </div>
-        <div class="row">
-            <div class="col-01 filler"></div>
-            <div class="col-10" style="background-color: #094C8C; height: 1vh;"></div>
-            <div class="col-01 filler"></div>
-        </div>
-
-        <div class="row">
-            <div class="col-01 filler"></div>
-            <div class="col-10 box" style="padding: 10px 50px; box-shadow: none; border-radius: 0px 0px 10px 10px;">
-                <div id="resultsdiv" class="center">
-                    <table id="resultTable" class="center">
-                        <tr>
-                            <th>Response ID</th>
-                            <th>Survey ID</th>
-                            <th>Time</th>
-                            <th>Response 1</th>
-                            <th>Response 2</th>
-                            <th>Response 3</th>
-                            <th>Response 4</th>
-                            <th>Response 5</th>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="col-01 filler"></div>
-        </div>
-
-    </main>
+</main>
 
 </body>
 
