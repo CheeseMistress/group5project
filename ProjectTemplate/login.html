@@ -2,12 +2,15 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Pascal Home</title>
-    <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href=".\resources\pascal-home.png" />
+    <title>Pascal - Login</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-    <!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
-        <script type="text/javascript">
+    <script type="text/javascript">
 
         // attempt control variable
         var attempts = 0;
@@ -36,50 +39,62 @@
                     let responseFromServer = msg.d;
 
                     // looping through the array of users and comparing to it to user input for validation
-                    // userid and password are attributes of a user class 
+                    // userid and password are attributes of a user class
                     for (let i = 0; i < responseFromServer.length; i++) {
-                        if (user == responseFromServer[i].userid && pass == responseFromServer[i].password) {
-                            let loginParagraph = document.getElementById("loginParagraph");
-                            loginParagraph.innerHTML = `<p><em>${responseFromServer[i].firstname}</em>, you have been successfully logged in!</p>`
+                        if (user == decodeURI(responseFromServer[i].userid) && pass == decodeURI(responseFromServer[i].password) && responseFromServer[i].status == '1') {
+                            let loginMessage = document.getElementById("loginMessage");
+                            loginMessage.innerHTML = `<p><em>${responseFromServer[i].firstname}</em>, you have been successfully logged in!</p>`
+                            valid = true;
+                            // go to dashboard
+                            window.location.replace("dashboard-results.html");
+                        }
+                        // if user is in database but has not yet been approved
+                        else if (user == decodeURI(responseFromServer[i].userid) && pass == decodeURI(responseFromServer[i].password) && responseFromServer[i].status == '0') {
+                            let loginMessage = document.getElementById("loginMessage");
+                            loginMessage.innerHTML = `<p><em>${decodeURI(responseFromServer[i].firstname)}</em>, your account has not yet been approved. </p>`
+                            // set to true even though account is not approved yet
                             valid = true;
                         }
                     }
 
                     // if userid and password do not match, update p and increment attempts
-                    if (valid == false)
-                    {
-                        let loginParagraph = document.getElementById("loginParagraph");
-                        loginParagraph.innerHTML = `<p>Login unsuccessful, please try again!</p>`
-                        attempts++;
+                    if (valid == false) {
+                        attempts++
+                        attemptsLeft = 4 - attempts;
+                        let loginMessage = document.getElementById("loginMessage");
+                        loginMessage.innerHTML = `Login unsuccessful, please try again! <br> Attempts Left: ` + attemptsLeft + ``
+                            ;
                     }
 
                     // if attempts reaches more than 3, disable input/button
-                    if (attempts > 3)
-                    {
+                    if (attempts > 3) {
                         document.getElementById("user").disabled = true;
                         document.getElementById("pass").disabled = true;
                         document.getElementById("login").disabled = true;
-                        loginParagraph.innerHTML = `<p>You exceeded the allowable amount of login requests!</p>`
-                    }    
+                        loginMessage.innerHTML = `<p>You exceeded the allowable amount of login requests!</p>`
+                    }
                 },
                 error: function (e) {
                     alert("this code will only execute if javascript is unable to access the webservice");
-                }  
+                }
             });
         }
     </script>
     <!--END OF YOUR OWN JAVASCRIPT-->
-    <!--AND YOUR OWN CSS CAN GO HERE AS WELL-->
     <style>
+
+
+        input {
+            margin: 0 0 2vh 0;
+            width: 100%;
+        }
     </style>
-    <!--END OF YOUR OWN CSS-->
 </head>
 <body>
-<!--    <!--<button onclick="javascript: TestButtonHandler();">Click here to test connection!</button>
-    <header>
-        <h1>Pascal Home Page</h1>
-    </header> -->
-
+    <!--    <!--<button onclick="javascript: TestButtonHandler();">Click here to test connection!</button>
+        <header>
+            <h1>Pascal Home Page</h1>
+        </header> -->
     <!-- This is the page header.  This one is specific to this page. -->
     <header>
         <div class="row">
@@ -88,37 +103,32 @@
 
         <div class="row">
             <div class="col-12" style="text-align: center; margin: 2em 0 2em 0; padding: 5vh 0;">
-                <img src=".\resources\pascal-logo.png" style="width: 20%;">
+                <img src=".\resources\pascal-logo.png" style="width: 30%;">
             </div>
+        </div>
     </header>
 
-    <hr>
 
-    <h2>Login</h2>
-    <section id="section1">
-        <label>Username: </label>
-        <input id="user" class="input"><br>
+    <div class="row">
+        <div class="col-04 filler"></div>
+        <div class="col-04 box">
+            <div class="row"><h2 style="margin-bottom: 2vh;">Sign In</h2></div>
+            <div class="row"><label>Username</label></div>
+            <div class="row"><input id="user" maxlength="7"></div>
 
-        <label>Password: </label>
-        <input id="pass" class="input"><br>
-        <div id="loginParagraph"></div>
-    </section>
+            <div class="row"><label>Password</label></div>
+            <div class="row"><input id="pass" type="password"></div>
 
-    <br><br>
-    <section>
-        <div id="button">
-            <button id="login" onclick="Login()">Login</button><br><br>
+            <div class="row">
+                <div class="col-12" style="text-align: center; height: 6vh; font-size:8pt;" id="loginMessage"></div>
+                <button id="login" onclick="Login()" style="font-size: 10pt; width: 100%;">Sign In</button>
+                <div class="col-12" style="text-align: center;"><a href="forgotpassword.html" style="font-size: 8pt;">Forgot Password?</a></div>
+            </div>
+
         </div>
-        <hr>
-    </section>
-
-    <section>
-        <h2>NAVIGATION</h2>
-        <a href="" target="_blank">About Page</a>
-        <a href="" target="_blank">Pascal Chat</a>
-        <a href="" target="_blank">Home</a>
-    </section>
+        <div class="col-04 filler"></div>
+    </div>
 
 
 </body>
-    </html >
+</html>

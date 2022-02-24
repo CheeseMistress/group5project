@@ -1,39 +1,175 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cabin&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
-    <title>Pascal</title>
+    <link rel="shortcut icon" type="image/png" href=".\resources\pascal-home.png" />
+    <title>Pascal - Create Account</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function AddUser() {
 
-    <script type="text/javascript"></script>
+            // get user input from DOM
+            let user = document.getElementById("usernew").value;
+            let pass = document.getElementById("passnew").value;
+            let fname = document.getElementById("fname").value;
+            let lname = document.getElementById("lname").value;
+            let comp = document.getElementById("comp").value;
+            let addy = document.getElementById("addy").value;
+            let cit = document.getElementById("cit").value;
+            let sta = document.getElementById("sta").value;
+            let pcode = document.getElementById("pcode").value;
+            let cntry = document.getElementById("cntry").value;
+            let pho = document.getElementById("pho").value;
+            let email = document.getElementById("email").value;
+            let site = document.getElementById("site").value;
+            let repass = document.getElementById("repass").value;
+            let email2 = document.getElementById("email2").value;
 
+            let carryOn = true;
+
+            function validateForm() {
+                if (user && pass && fname && lname && comp && addy &&
+                    cit && sta && pcode && cntry && pho && email && site) {
+                    if (pass != repass) {
+                        alert("Try again. Passwords do not match.");
+                        carryOn = false;
+                    }
+                    else if (email !== email2) {
+                        alert("Try again. Emails do not match." + email + email2);
+                        carryOn = false;
+                    }
+                    else if (sta.length != 2) {
+                        alert("Try again. Please enter a two-character state.");
+                        carryOn = false;
+                    }
+                }
+                else {
+                    alert("Try again. Please complete all fields.")
+                    carryOn = false;
+                }
+            }
+
+            validateForm();
+
+            if (carryOn) {
+                // testing if inputs are not null should go here. Ex:
+                /*
+                if (Name == '') {
+                Messege = "Can not Blank Name";
+                }
+                */
+                // set up web method variables
+                let webMethod = "ProjectServices.asmx/InsertUser";
+                let parameters = "{\"id\":\"" + encodeURI(user) + "\"," + "\"pass\":\"" + encodeURI(pass) + "\"," + "\"first\":\"" + encodeURI(fname) + "\"," + "\"last\":\"" + encodeURI(lname) + "\"," + "\"company\":\"" + encodeURI(comp) + "\"," + "\"address\":\"" + encodeURI(addy) + "\"," + "\"city\":\"" + encodeURI(cit) + "\"," + "\"state\":\"" + encodeURI(sta) + "\"," + "\"code\":\"" + encodeURI(pcode) + "\"," + "\"country\":\"" + encodeURI(cntry) + "\"," + "\"phone\":\"" + encodeURI(pho) + "\"," + "\"email\":\"" + encodeURI(email) + "\"," + "\"website\":\"" + encodeURI(site) + "\"," + "\"status\":\"" + encodeURI('0') + "\" }";
+                // do an alert to see data
+                alert(parameters);
+                //jQuery ajax method
+                $.ajax({
+                    type: "POST",
+                    url: webMethod,
+                    data: parameters,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        // set boolean from web method to a local variable representing the response
+                        let responseFromServer = msg.d;
+                        alert("Success!  An account has been requested for " + user + "!");
+                    },
+                    error: function (e) {
+                        alert("Unable to access webservice.");
+                    }
+                });
+            }
+        }
+    </script>
+
+    <style>
+        label {
+            margin: 1vh 0;
+        }
+
+        input {
+            margin: 1vh 0;
+            width: 100%;
+        }
+
+        button {
+            font-size: 1vw;
+        }
+    </style>
 </head>
-
 <body>
     <!-- This is the page header.  This one is specific to this page. -->
     <header>
         <div class="row">
             <div class="col-12"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
         </div>
-
         <div class="row">
             <div class="col-12" style="text-align: center; margin: 2em 0 2em 0; padding: 5vh 0;">
-                <img src=".\resources\pascal-logo.png" style="width: 20%;">
+                <img src=".\resources\pascal-logo.png" style="width: 30%;">
             </div>
+        </div>
     </header>
-
     <main>
 
+        <div class="row">
+            <div class="col-02 filler"></div>
+            <div class="col-08 box">
+                <div class="row">
+                    <div class="col-09"><h2 style="font-size: 5vw;">Get Started with Pascal...</h2></div>
+                    <div class="col-03" style="font-size: 10pt;"><a href="login.html">Already have an account?<br />Sign in.</a></div>
+                </div>
+                <div class="row" style="padding-top: 2vh;">
+                    <form id="createuser">
+                        <label>Company: </label>
+                        <input id="comp"><br>
+                        <label>Website: </label>
+                        <input id="site" type="url"><br>
+                        <label>First Name: </label>
+                        <input id="fname"><br>
+                        <label>Last Name: </label>
+                        <input id="lname"><br>
+                        <label>Email: </label>
+                        <input id="email" type="email"><label>Re-enter Email: </label>
+                        <input id="email2" type="email"><br>
+                        <label>Phone: </label>
+                        <input id="pho" type="tel"><br>
+                        <label>Address: </label>
+                        <input id="addy"><br>
+                        <label>City: </label>
+                        <input id="cit"><br>
+                        <label>State: </label>
+                        <input id="sta" maxlength="2"><br>
+                        <label>Postal Code: </label>
+                        <input id="pcode" type="text" maxlength="5"><br>
+                        <label>Country: </label>
+                        <input id="cntry"><br>
+                        <label>Create a Username: </label>
+                        <input id="usernew" maxlength="7"><br>
+                        <label>Password: </label>
+                        <input id="passnew" type="password">
+                        <label>Re-enter Password: </label>
+                        <input id="repass" type="password"><br />
+
+                        <div class="row">
+                            <div class="col-09 filler">&nbsp;</div>
+                            <div class="col-02" style="white-space: nowrap;">
+                                    <button id="clear" onclick="document.getElementById('createuser').reset()" style="background-color: #86BCAC">Clear Form</button>
+                                    <button id="adduser" onclick="AddUser()">Request Account</button>
+                            </div>
+                        </div>
+                    </form>                    
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-02 filler"></div>
     </main>
-
 </body>
-
 </html>

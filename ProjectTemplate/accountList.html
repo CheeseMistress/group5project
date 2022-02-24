@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
+    <script type="text/javascript">
+        function DisplayUnapprovedAccounts() {
+            var webMethod = "ProjectServices.asmx/GetUnapprovedUsers";
+            var parameters = "{}";
+            //jQuery ajax method
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var responseFromServer = msg.d;
+                    // if there are no accounts in the database that are unapproved, display a message
+                    if (responseFromServer.length == 0) {
+                        var message = document.createElement('div');
+                        message.id = "nousers";
+                        message.innerHTML = "There are currently no new accounts needing approval.";
+                        document.body.appendChild(message);
+                    }
+                    // loop through the list of unapproved users and display them on the HTML page
+                    for (let i = 0; i < responseFromServer.length; i++) {
+                        // display userid
+                        var user = document.createElement('div');
+                        user.id = "id";
+                        user.innerHTML = "User ID: " + decodeURI(responseFromServer[i].userid);
+                        document.body.appendChild(user);
+                        // display first name
+                        var fname = document.createElement('div');
+                        fname.id = "fname";
+                        fname.innerHTML = "First Name: " + decodeURI(responseFromServer[i].firstname);
+                        document.body.appendChild(fname);
+                        // display last name
+                        var lname = document.createElement('div');
+                        lname.id = "lname";
+                        lname.innerHTML = "Last Name: " + decodeURI(responseFromServer[i].lastname);
+                        document.body.appendChild(lname);
+                        // display company name
+                        var compname = document.createElement('div');
+                        compname.id = "compname";
+                        compname.innerHTML = "Company: " + decodeURI(responseFromServer[i].companyname);
+                        document.body.appendChild(compname);
+                        // display account status, this function only returns unapproved accounts, so we can just use a string saying "Unapproved"
+                        var status = document.createElement('div');
+                        status.id = "status";
+                        status.innerHTML = "Status: Unapproved";
+                        document.body.appendChild(status);
+                        // create approve button
+                        var approve = document.createElement('button');
+                        // name approve id "approveButton" plus index number to keep buttons unique from each other
+                        approve.id = "approveButton" + i;
+                        approve.innerHTML = "Approve";
+                        approve.onclick = function () {
+                            // call approve account and send in user id
+                            ApproveAccount(responseFromServer[i].userid);
+                            // disable all buttons for specific user once approved
+                            disableButtons(i);
+                        };
+                        document.body.appendChild(approve);
+                        // create deny button
+                        var deny = document.createElement('button');
+                        // name deny id "denyButton" plus index number to keep buttons unique from each other
+                        deny.id = "denyButton" + i;
+                        deny.innerHTML = "Deny";
+                        deny.onclick = function () {
+                            // call deny account and send in user id
+                            DenyAccount(responseFromServer[i].userid);
+                            // disable all buttons for specific user once approved 
+                            disableButtons(i);
+                        };
+                        document.body.appendChild(deny);
+                    }
+                },
+                error: function (e) {
+                    alert("this code will only execute if javascript is unable to access the webservice");
+                }
+            });
+        }
+        function disableButtons(i) {
+            // grabs the unique approve and deny buttons based on index
+            document.getElementById("approveButton" + i).disabled = true;
+            document.getElementById("denyButton" + i).disabled = true;
+        }
+        function ApproveAccount(user) {
+            var webMethod = "ProjectServices.asmx/ApproveUser";
+            var parameters = "{    \"id\":\"" + encodeURI(user) + "\" }";
+            //jQuery ajax method
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    alert("Account has been approved!");
+                },
+                error: function (e) {
+                    alert("this code will only execute if javascript is unable to access the webservice");
+                }
+            });
+        }
+        function DenyAccount(user) {
+            var webMethod = "ProjectServices.asmx/DenyUser";
+            var parameters = "{    \"id\":\"" + encodeURI(user) + "\" }";
+            //jQuery ajax method
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    alert("Account has been denied and the data has been removed from the database.");
+                },
+                error: function (e) {
+                    alert("this code will only execute if javascript is unable to access the webservice");
+                }
+            });
+        }
+    </script>
+    <!--END OF YOUR OWN JAVASCRIPT-->
+    <!--AND YOUR OWN CSS CAN GO HERE AS WELL-->
+    <style>
+        #id,
+        #fname,
+        #lname,
+        #compname,
+        #status {
+            margin: auto;
+            display: table;
+        }
+
+        [id$=Button] {
+
+            width: 7.0em;
+            margin: 2px;
+            
+        }
+    </style>
+    <!--END OF YOUR OWN CSS-->
+</head>
+
+<body onload="DisplayUnapprovedAccounts()">
+    <!-- This is the page header.  This one is specific to this page. -->
+    <header>
+        <div class="row">
+            <div class="col-12"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
+        </div>
+        <div class="row">
+            <div class="col-12" style="text-align: center; margin: 2em 0 2em 0; padding: 5vh 0;">
+                <img src=".\resources\pascal-logo.png" style="width: 20%;">
+            </div>
+        </div>
+    </header>
+    <section id="approveDenyUser">
+        <h1>New Accounts</h1>
+    </section>
+</body>
+
+</html>
