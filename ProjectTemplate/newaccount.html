@@ -9,8 +9,8 @@
     <link rel="shortcut icon" type="image/png" href=".\resources\pascal-home.png" />
     <title>Pascal - Create Account</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
     <script type="text/javascript">
         function AddUser() {
 
@@ -158,10 +158,9 @@
                         <input id="repass" type="password"><br />
 
                         <div class="row">
-                            <div class="col-09 filler">&nbsp;</div>
-                            <div class="col-02" style="white-space: nowrap;">
+                            <div class="col-12" style="white-space: nowrap; margin-right: 5px; text-align: right;">
                                     <button id="clear" onclick="document.getElementById('createuser').reset()" style="background-color: #86BCAC">Clear Form</button>
-                                    <button id="adduser" onclick="AddUser()">Request Account</button>
+                                    <button id="adduser" onclick="AddUser()" >Request Account</button>
                             </div>
                         </div>
                     </form>                    
