@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -9,9 +9,9 @@
 
     <!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
     <script type="text/javascript">
-        function TestButtonHandler() {
-            var webMethod = "ProjectServices.asmx/TestConnection";
-            var parameters = "{}";
+        function SendQuestions(q1, q2, q3, q4, q5) {
+            let webMethod = "ProjectServices.asmx/InsertSurvey";
+            let parameters = "{\"q1\":\"" + encodeURI(q1) + "\"," + "\"q2\":\"" + encodeURI(q2) + "\"," + "\"q3\":\"" + encodeURI(q3) + "\"," + "\"q4\":\"" + encodeURI(q4) + "\"," + "\"q5\":\"" + encodeURI(q5) + "\" }";
 
             //jQuery ajax method
             $.ajax({
@@ -21,8 +21,9 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (msg) {
-                    var responseFromServer = msg.d;
-                    alert(responseFromServer);
+                    // set boolean from web method to a local variable representing the response
+                    let responseFromServer = msg.d;
+                    alert("Survey has been saved to database.");
                 },
                 error: function (e) {
                     alert("this code will only execute if javascript is unable to access the webservice");
@@ -32,12 +33,13 @@
 
         //hhinker script for question page code
         let questions = [];
-        
+
+        // counter variable
+        let counter = 0;
+
         const addQuestion = (ev) => {
             ev.preventDefault();  //stops the form submitting
-            let question = {
-                UserQuestion: document.getElementById('questionBox').value
-            }
+            let question = document.getElementById('questionBox').value
             questions.push(question);
             // to clear the form for the next entries
             document.querySelector('form').reset();
@@ -45,10 +47,10 @@
             //this is for display purposes to make sure the text is diplayed as an object
             console.warn('added', { questions });
             let pre = document.querySelector('#msg pre');
-            pre.textContent = JSON.stringify(questions); 
+            pre.textContent = JSON.stringify(questions);
 
             // get input from the question box
-            var list = Object.values(question);
+            var list = question;
 
             // start a html table
             var table = document.getElementsByTagName('table')[0];
@@ -61,18 +63,27 @@
 
             // add text values to the cells
             cell.innerHTML = list;
+
+            // increment counter
+            counter++;
+
+            // if user sends 5 questions, disable button so no more can be sent
+            if (counter == 5) {
+                document.getElementById("btn").disabled = true;
+                document.getElementById("msg").innerHTML = "You have entered five questions - your survey has been saved!";
+                SendQuestions(questions[0], questions[1], questions[2], questions[3], questions[4]);
+            }
+
         }
-            document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('btn').addEventListener('click', addQuestion);
         });
         //end of hhinker script for question page code
 
     </script>
     <!--END OF YOUR OWN JAVASCRIPT-->
-
     <!--AND YOUR OWN CSS CAN GO HERE AS WELL-->
     <style>
-
     </style>
     <!--END OF YOUR OWN CSS-->
 </head>
@@ -81,14 +92,14 @@
 
     <!--hhinker BEGIN question page html-->
     <header>
-    <button type="button" onclick="window.location.href='logoff.html'">Log Off</button>
+        <button type="button" onclick="window.location.href='logoff.html'">Log Off</button>
     </header>
 
-    <h1>Pascal Questions</h1> 
-    
+    <h1>Pascal Questions</h1>
+
     <form>
         <section id="question">
-            <label>Please enter a question to be asked:</label><br>
+            <label>Please enter five questions to be asked in your survey:</label><br>
             <textarea id="questionBox" name="questionBox" placeholder="Enter Question Here"></textarea>
         </section>
 
@@ -101,14 +112,14 @@
                 
             </pre>
         </div>
-        
+
     </form>
-    
+
     <table border="1">
 
         <tr>
             <th id="qList">List of Questions</th>
-            
+
         </tr>
 
     </table>
