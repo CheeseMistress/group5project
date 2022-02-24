@@ -99,6 +99,7 @@
     <Content Include="dashboard-surveys.html" />
     <Content Include="forgotpassword.html" />
     <Content Include="Global.asax" />
+    <Content Include="forgotpassword2.html" />
     <Content Include="index.html" />
     <Content Include="login.html" />
     <Content Include="logoff.html" />
