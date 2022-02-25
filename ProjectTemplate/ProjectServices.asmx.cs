@@ -447,5 +447,45 @@ namespace ProjectTemplate
             return surveylist.ToArray();
         }
 
+        [WebMethod]
+        public void UpdatePassword(string id, string password)
+        {
+            // update statement
+            string updatePassword = "UPDATE employers SET PASSWORD = @password WHERE userid = @id";
+
+            ////////////////////////////////////////////////////////////////////////
+            ///here's an example of using the getConString method!
+            ////////////////////////////////////////////////////////////////////////
+            MySqlConnection con = new MySqlConnection(getConString());
+            ////////////////////////////////////////////////////////////////////////
+
+            try
+            {
+                // open connection
+                con.Open();
+
+
+                // connect and execute query 
+                MySqlCommand cmd = new MySqlCommand(updatePassword, con);
+
+                //Pass values to Parameters
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@password", password);
+
+                // execute command
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                // close connection
+                con.Close();
+            }
+            finally
+            {
+                // close connection
+                con.Close();
+            }
+        }
+
     }
 }
