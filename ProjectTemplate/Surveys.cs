@@ -8,6 +8,7 @@ namespace ProjectTemplate
     public class Surveys
     {
         public string surveyid;
+        public string userid;
         public string question1;
         public string question2;
         public string question3;

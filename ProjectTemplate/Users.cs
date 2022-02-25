@@ -22,5 +22,6 @@ namespace ProjectTemplate
         public string email;
         public string website;
         public string status;
+        public string admin;
     }
 }

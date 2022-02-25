@@ -41,7 +41,7 @@ namespace ProjectTemplate
         [WebMethod]
         public Users[] GetUsers()
         {
-            string testQuery = "select * from employers";
+            string testQuery = "select * from users";
 
             ////////////////////////////////////////////////////////////////////////
             ///here's an example of using the getConString method!
@@ -54,7 +54,7 @@ namespace ProjectTemplate
             MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
 
             // create a data table and fill it with our data from query
-            DataTable table = new DataTable() { TableName = "Employers" };
+            DataTable table = new DataTable() { TableName = "Users" };
             adapter.Fill(table);
 
             // create a list of users
@@ -79,6 +79,7 @@ namespace ProjectTemplate
                 user.email = table.Rows[i].ItemArray[11].ToString();
                 user.website = table.Rows[i].ItemArray[12].ToString();
                 user.status = table.Rows[i].ItemArray[13].ToString();
+                user.admin = table.Rows[i].ItemArray[14].ToString();
 
                 // add to people list
                 people.Add(user);
@@ -89,12 +90,12 @@ namespace ProjectTemplate
 
         [WebMethod]
         public void InsertUser(string id, string pass, string first, string last, string company,
-        string address, string city, string state, int code, string country, string phone,
-        string email, string website, string status)
+        string address, string city, string state, string code, string country, string phone,
+        string email, string website, string status, string admin)
         {
             // insert statement
-            string addUser = "INSERT INTO employers (userid, password, firstname, lastname, companyname, address, city, state, postalcode, country, phone, email, website, status) " +
-                "VALUES (@id, @pass, @first, @last, @company, @address, @city, @state, @code, @country, @phone, @email, @website, @status)";
+            string addUser = "INSERT INTO users (userid, password, firstname, lastname, companyname, address, city, state, postalcode, country, phone, email, website, status, admin) " +
+                "VALUES (@id, @pass, @first, @last, @company, @address, @city, @state, @code, @country, @phone, @email, @website, @status, @admin)";
 
             ////////////////////////////////////////////////////////////////////////
             ///here's an example of using the getConString method!
@@ -113,20 +114,21 @@ namespace ProjectTemplate
 
 
                 //Pass values to Parameters
-                cmd.Parameters.AddWithValue("@id", id);
-                cmd.Parameters.AddWithValue("@pass", pass);
-                cmd.Parameters.AddWithValue("@first", first);
-                cmd.Parameters.AddWithValue("@last", last);
-                cmd.Parameters.AddWithValue("@company", company);
-                cmd.Parameters.AddWithValue("@address", address);
-                cmd.Parameters.AddWithValue("@city", city);
-                cmd.Parameters.AddWithValue("@state", state);
-                cmd.Parameters.AddWithValue("@code", code);
-                cmd.Parameters.AddWithValue("@country", country);
-                cmd.Parameters.AddWithValue("@phone", phone);
-                cmd.Parameters.AddWithValue("@email", email);
-                cmd.Parameters.AddWithValue("@website", website);
-                cmd.Parameters.AddWithValue("@status", status);
+                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
+                cmd.Parameters.AddWithValue("@pass", HttpUtility.UrlDecode(pass));
+                cmd.Parameters.AddWithValue("@first", HttpUtility.UrlDecode(first));
+                cmd.Parameters.AddWithValue("@last", HttpUtility.UrlDecode(last));
+                cmd.Parameters.AddWithValue("@company", HttpUtility.UrlDecode(company));
+                cmd.Parameters.AddWithValue("@address", HttpUtility.UrlDecode(address));
+                cmd.Parameters.AddWithValue("@city", HttpUtility.UrlDecode(city));
+                cmd.Parameters.AddWithValue("@state", HttpUtility.UrlDecode(state));
+                cmd.Parameters.AddWithValue("@code", HttpUtility.UrlDecode(code));
+                cmd.Parameters.AddWithValue("@country", HttpUtility.UrlDecode(country));
+                cmd.Parameters.AddWithValue("@phone", HttpUtility.UrlDecode(phone));
+                cmd.Parameters.AddWithValue("@email", HttpUtility.UrlDecode(email));
+                cmd.Parameters.AddWithValue("@website", HttpUtility.UrlDecode(website));
+                cmd.Parameters.AddWithValue("@status", HttpUtility.UrlDecode(status));
+                cmd.Parameters.AddWithValue("@admin", HttpUtility.UrlDecode(admin));
                 cmd.ExecuteNonQuery();
             }
             catch (Exception)
@@ -145,7 +147,7 @@ namespace ProjectTemplate
         [WebMethod]
         public Users[] GetUnapprovedUsers()
         {
-            string query = "select * from employers where status ='0'";
+            string query = "select * from users where status ='0'";
 
             ////////////////////////////////////////////////////////////////////////
             ///here's an example of using the getConString method!
@@ -183,6 +185,7 @@ namespace ProjectTemplate
                 user.email = table.Rows[i].ItemArray[11].ToString();
                 user.website = table.Rows[i].ItemArray[12].ToString();
                 user.status = table.Rows[i].ItemArray[13].ToString();
+                user.admin = table.Rows[i].ItemArray[14].ToString();
 
                 // add to people list
                 unpeople.Add(user);
@@ -195,7 +198,7 @@ namespace ProjectTemplate
         public void ApproveUser(string id)
         {
             // update statement
-            string approveUser = "UPDATE employers SET STATUS = '1' WHERE userid = @id";
+            string approveUser = "UPDATE users SET STATUS = '1' WHERE userid = @id";
 
             ////////////////////////////////////////////////////////////////////////
             ///here's an example of using the getConString method!
@@ -214,7 +217,7 @@ namespace ProjectTemplate
 
 
                 //Pass values to Parameters
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
 
                 // execute command
                 cmd.ExecuteNonQuery();
@@ -235,7 +238,7 @@ namespace ProjectTemplate
         public void DenyUser(string id)
         {
             // delete statement
-            string deleteUser = "DELETE FROM employers WHERE userid = @id";
+            string deleteUser = "DELETE FROM users WHERE userid = @id";
 
             ////////////////////////////////////////////////////////////////////////
             ///here's an example of using the getConString method!
@@ -254,7 +257,7 @@ namespace ProjectTemplate
 
 
                 //Pass values to Parameters
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
 
                 // execute command
                 cmd.ExecuteNonQuery();
@@ -300,11 +303,11 @@ namespace ProjectTemplate
                 //Pass values to Parameters
                 cmd.Parameters.AddWithValue("@surveyid", surveyid);
                 cmd.Parameters.AddWithValue("@time", now);
-                cmd.Parameters.AddWithValue("@r1", r1);
-                cmd.Parameters.AddWithValue("@r2", r2);
-                cmd.Parameters.AddWithValue("@r3", r3);
-                cmd.Parameters.AddWithValue("@r4", r4);
-                cmd.Parameters.AddWithValue("@r5", r5);
+                cmd.Parameters.AddWithValue("@r1", HttpUtility.UrlDecode(r1));
+                cmd.Parameters.AddWithValue("@r2", HttpUtility.UrlDecode(r2));
+                cmd.Parameters.AddWithValue("@r3", HttpUtility.UrlDecode(r3));
+                cmd.Parameters.AddWithValue("@r4", HttpUtility.UrlDecode(r4));
+                cmd.Parameters.AddWithValue("@r5", HttpUtility.UrlDecode(r5));
                 cmd.ExecuteNonQuery();
             }
             catch (Exception)
@@ -364,11 +367,11 @@ namespace ProjectTemplate
         }
 
         [WebMethod]
-        public void InsertSurvey(string q1, string q2, string q3, string q4, string q5)
+        public void InsertSurvey(string id, string q1, string q2, string q3, string q4, string q5)
         {
             // insert statement
-            string insertResponse = "INSERT INTO surveys (question1, question2, question3, question4, question5) " +
-                "VALUES (@q1, @q2, @q3, @q4, @q5)";
+            string insertResponse = "INSERT INTO surveys (userid, question1, question2, question3, question4, question5) " +
+                "VALUES (@id, @q1, @q2, @q3, @q4, @q5)";
 
             ////////////////////////////////////////////////////////////////////////
             ///here's an example of using the getConString method!
@@ -386,11 +389,12 @@ namespace ProjectTemplate
                 MySqlCommand cmd = new MySqlCommand(insertResponse, con);
 
                 //Pass values to Parameters
-                cmd.Parameters.AddWithValue("@q1", q1);
-                cmd.Parameters.AddWithValue("@q2", q2);
-                cmd.Parameters.AddWithValue("@q3", q3);
-                cmd.Parameters.AddWithValue("@q4", q4);
-                cmd.Parameters.AddWithValue("@q5", q5);
+                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
+                cmd.Parameters.AddWithValue("@q1", HttpUtility.UrlDecode(q1));
+                cmd.Parameters.AddWithValue("@q2", HttpUtility.UrlDecode(q2));
+                cmd.Parameters.AddWithValue("@q3", HttpUtility.UrlDecode(q3));
+                cmd.Parameters.AddWithValue("@q4", HttpUtility.UrlDecode(q4));
+                cmd.Parameters.AddWithValue("@q5", HttpUtility.UrlDecode(q5));
                 cmd.ExecuteNonQuery();
             }
             catch (Exception)
@@ -434,11 +438,12 @@ namespace ProjectTemplate
                 // create new survey with data from datatable
                 Surveys survey = new Surveys();
                 survey.surveyid = table.Rows[i].ItemArray[0].ToString();
-                survey.question1 = table.Rows[i].ItemArray[1].ToString();
-                survey.question2 = table.Rows[i].ItemArray[2].ToString();
-                survey.question3 = table.Rows[i].ItemArray[3].ToString();
-                survey.question4 = table.Rows[i].ItemArray[4].ToString();
-                survey.question5 = table.Rows[i].ItemArray[5].ToString();
+                survey.userid = table.Rows[i].ItemArray[1].ToString();
+                survey.question1 = table.Rows[i].ItemArray[2].ToString();
+                survey.question2 = table.Rows[i].ItemArray[3].ToString();
+                survey.question3 = table.Rows[i].ItemArray[4].ToString();
+                survey.question4 = table.Rows[i].ItemArray[5].ToString();
+                survey.question5 = table.Rows[i].ItemArray[6].ToString();
 
                 // add to list of surveys
                 surveylist.Add(survey);
@@ -451,7 +456,7 @@ namespace ProjectTemplate
         public void UpdatePassword(string id, string password)
         {
             // update statement
-            string updatePassword = "UPDATE employers SET PASSWORD = @password WHERE userid = @id";
+            string updatePassword = "UPDATE users SET PASSWORD = @password WHERE userid = @id";
 
             ////////////////////////////////////////////////////////////////////////
             ///here's an example of using the getConString method!
@@ -469,8 +474,8 @@ namespace ProjectTemplate
                 MySqlCommand cmd = new MySqlCommand(updatePassword, con);
 
                 //Pass values to Parameters
-                cmd.Parameters.AddWithValue("@id", id);
-                cmd.Parameters.AddWithValue("@password", password);
+                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
+                cmd.Parameters.AddWithValue("@password", HttpUtility.UrlDecode(password));
 
                 // execute command
                 cmd.ExecuteNonQuery();

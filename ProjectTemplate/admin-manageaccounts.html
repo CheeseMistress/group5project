@@ -89,25 +89,25 @@
 
                         var user = document.createElement('td');
                         user.id = "id";
-                        var usercontent = document.createTextNode(decodeURI(responseFromServer[i].userid));
+                        var usercontent = document.createTextNode(responseFromServer[i].userid);
                         user.appendChild(usercontent);
                         newrow.appendChild(user);
 
                         var fname = document.createElement('td');
                         fname.id = "fname";
-                        var fnamecontent = document.createTextNode(decodeURI(responseFromServer[i].firstname));
+                        var fnamecontent = document.createTextNode(responseFromServer[i].firstname);
                         fname.appendChild(fnamecontent);
                         newrow.appendChild(fname);
 
                         var lname = document.createElement('td');
                         lname.id = "lname";
-                        var lnamecontent = document.createTextNode(decodeURI(responseFromServer[i].lastname));
+                        var lnamecontent = document.createTextNode(responseFromServer[i].lastname);
                         lname.appendChild(lnamecontent);
                         newrow.appendChild(lname);
 
                         var compname = document.createElement('td');
                         compname.id = "compname";
-                        var compnamecontent = document.createTextNode(decodeURI(responseFromServer[i].companyname));
+                        var compnamecontent = document.createTextNode(responseFromServer[i].companyname);
                         compname.appendChild(compnamecontent);
                         newrow.appendChild(compname);
 
@@ -124,11 +124,11 @@
                         approvebtn.innerHTML = "Approve";
                         approvebtn.onclick = function () {
                             // confirm then call approve account and send in user id
-                            let text = "This action will allow " + decodeURI(responseFromServer[i].userid)
+                            let text = "This action will allow " + responseFromServer[i].userid
                                 + " access to Pascal. Are you sure?";
                             if (confirm(text) == true) {
-                                text = decodeURI(responseFromServer[i].userid) + " of " +
-                                    decodeURI(responseFromServer[i].companyname) + " has been approved."
+                                text = responseFromServer[i].userid + " of " +
+                                    responseFromServer[i].companyname + " has been approved."
                                 ApproveAccount(responseFromServer[i].userid);
                                 disableButtons(i);
                             } else {
@@ -149,7 +149,7 @@
                         denybtn.innerHTML = "Deny";
                         denybtn.onclick = function () {
                             // confirm then call deny account and send in user id
-                            let text = "This action will delete " + decodeURI(responseFromServer[i].userid)
+                            let text = "This action will delete " + responseFromServer[i].userid
                                 + " from the database.  Are you sure?";
                             if (confirm(text) == true) {
                                 text = "Account request denied.  User record deleted."
