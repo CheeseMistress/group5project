@@ -18,7 +18,7 @@ We created this project to make surveys fun again. We were tired of the same old
 - Heath Hinker
 
 ## Contributing
-Pull requests are welcome. For major changes, please please let a team member know what you would like to change.
+Pull requests are welcome. For major changes, please let a team member know what you would like to change.
 
 - Clone the repository
 - Add your changes
