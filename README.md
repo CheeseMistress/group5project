@@ -18,6 +18,12 @@ We created this project to make surveys fun again. We were tired of the same old
 - Heath Hinker
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Pull requests are welcome. For major changes, please please let a team member know what you would like to change.
+
+- Clone the repository
+- Add your changes
+- Commit with a note
+- Push
+- Create a pull request 
 
 Please make sure to update tests as appropriate.
