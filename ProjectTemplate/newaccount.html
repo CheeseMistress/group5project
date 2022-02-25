@@ -130,37 +130,37 @@
                         <label>Company: </label>
                         <input id="comp"><br>
                         <label>Website: </label>
-                        <input id="site" type="url"><br>
+                        <input id="site" type="url" required><br>
                         <label>First Name: </label>
-                        <input id="fname"><br>
+                        <input id="fname" required><br>
                         <label>Last Name: </label>
-                        <input id="lname"><br>
+                        <input id="lname" required><br>
                         <label>Email: </label>
-                        <input id="email" type="email"><label>Re-enter Email: </label>
-                        <input id="email2" type="email"><br>
+                        <input id="email" type="email" required><label>Re-enter Email: </label>
+                        <input id="email2" type="email" required><br>
                         <label>Phone: </label>
-                        <input id="pho" type="tel"><br>
+                        <input id="pho" type="tel" required><br>
                         <label>Address: </label>
-                        <input id="addy"><br>
+                        <input id="addy" required><br>
                         <label>City: </label>
-                        <input id="cit"><br>
+                        <input id="cit" required><br>
                         <label>State: </label>
-                        <input id="sta" maxlength="2"><br>
+                        <input id="sta" maxlength="2" required><br>
                         <label>Postal Code: </label>
-                        <input id="pcode" type="text" maxlength="5"><br>
+                        <input id="pcode" type="text" maxlength="5" required><br>
                         <label>Country: </label>
-                        <input id="cntry"><br>
+                        <input id="cntry" required><br>
                         <label>Create a Username: </label>
-                        <input id="usernew" maxlength="7"><br>
+                        <input id="usernew" maxlength="7" required><br>
                         <label>Password: </label>
-                        <input id="passnew" type="password">
+                        <input id="passnew" type="password" minlength="8" maxlength="45" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
                         <label>Re-enter Password: </label>
-                        <input id="repass" type="password"><br />
+                        <input id="repass" type="password" required><br />
 
                         <div class="row">
                             <div class="col-12" style="white-space: nowrap; margin-right: 5px; text-align: right;">
                                     <button id="clear" onclick="document.getElementById('createuser').reset()" style="background-color: #86BCAC">Clear Form</button>
-                                    <button id="adduser" onclick="AddUser()" >Request Account</button>
+                                    <button id="adduser" onclick="AddUser()">Request Account</button>
                             </div>
                         </div>
                     </form>                    
