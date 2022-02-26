@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
@@ -39,63 +39,76 @@
 
                     // loop through the list of results and display them on the HTML page
                     for (let i = 0; i < responseFromServer.length; i++) {
-
                         // Create table row
                         let newRow = document.createElement('tr');
                         newRow.id = "row" + i;
-                        document.getElementById(resultTable).appendChild(newRow);
-
+                        document.getElementById("resultTable").appendChild(newRow);
                         // display response ID
                         var resp = document.createElement('td');
                         resp.id = "respId";
                         resp.innerHTML = decodeURI(responseFromServer[i].responseid);
-                        document.newRow.appendChild(resp);
-
+                        document.getElementById("resultTable").appendChild(resp);
                         // display survey ID
                         var survey = document.createElement('td');
                         survey.id = "surveyId";
                         survey.innerHTML = decodeURI(responseFromServer[i].surveyid);
-                        document.newRow.appendChild(survey);
-
+                        document.getElementById("resultTable").appendChild(survey);
                         // display time
                         var timeComplete = document.createElement('td');
                         timeComplete.id = "timeId";
                         timeComplete.innerHTML = decodeURI(responseFromServer[i].time);
-                        document.newRow.appendChild(timeComplete);
-
+                        document.getElementById("resultTable").appendChild(timeComplete);
                         // display response 1
                         var resp1 = document.createElement('td');
                         resp1.id = "resp1id";
                         resp1.innerHTML = decodeURI(responseFromServer[i].response1);
-                        document.newRow.appendChild(resp1);
-
+                        document.getElementById("resultTable").appendChild(resp1);
                         // display response 2
                         var resp2 = document.createElement('td');
                         resp2.id = "resp2id";
                         resp2.innerHTML = decodeURI(responseFromServer[i].response2);
-                        document.newRow.appendChild(resp2);
-
+                        document.getElementById("resultTable").appendChild(resp2);
                         // display response 3
                         var resp3 = document.createElement('td');
                         resp3.id = "resp3id";
                         resp3.innerHTML = decodeURI(responseFromServer[i].response3);
-                        document.newRow.appendChild(resp3);
-
+                        document.getElementById("resultTable").appendChild(resp3);
                         // display response 4
                         var resp4 = document.createElement('td');
                         resp4.id = "resp4id";
                         resp4.innerHTML = decodeURI(responseFromServer[i].response4);
-                        document.newRow.appendChild(resp4);
-
+                        document.getElementById("resultTable").appendChild(resp4);
                         // display response 5
                         var resp5 = document.createElement('td');
                         resp5.id = "resp5id";
                         resp5.innerHTML = decodeURI(responseFromServer[i].response5);
-                        document.newRow.appendChild(resp5);
+                        document.getElementById("resultTable").appendChild(resp5);
                     }
                 },
                 error: function (e) {
                     alert("this code will only execute if javascript is unable to access the webservice");
+                }
+            });
+        }
+
+        function LogOff() {
+            var webMethod = "ProjectServices.asmx/LogOff";
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    if (msg.d) {
+                        //we logged off, so go back to logon page,
+                        alert("You have been signed out. Thank you for using Pascal! You will be brought to the home page.");
+                        window.location.replace("index.html");
+                    }
+                    else {
+                    }
+                },
+                error: function (e) {
+                    alert("boo...");
                 }
             });
         }
@@ -134,13 +147,13 @@
 
 </head>
 
-<body>
+<body onload="SurveyResults()">
     <!-- This is the page header. This is universal to all logged-in pages. -->
     <header>
         <div class="row">
             <div class="col-11"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
             <div class="col-01" style="vertical-align: bottom; white-space: nowrap;">
-                <a href="logoff.html">Log Out</a>
+                <a href="#" onclick="LogOff()">Log Out</a>
             </div>
         </div>
 

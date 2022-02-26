@@ -227,6 +227,28 @@
                 }
             });
         }
+
+        function LogOff() {
+            var webMethod = "ProjectServices.asmx/LogOff";
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    if (msg.d) {
+                        //we logged off, so go back to logon page,
+                        alert("You have been signed out. Thank you for using Pascal! You will be brought to the home page.");
+                        window.location.replace("index.html");
+                    }
+                    else {
+                    }
+                },
+                error: function (e) {
+                    alert("boo...");
+                }
+            });
+        }
     </script>
 
 </head>
@@ -237,6 +259,7 @@
     <header>
         <div class="row">
             <div class="col-12"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
+            <a href="#" onclick="LogOff()">log off</a>
         </div>
 
         <div class="row">

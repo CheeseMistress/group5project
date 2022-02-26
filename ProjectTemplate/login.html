@@ -15,18 +15,14 @@
         // attempt control variable
         var attempts = 0;
 
-        function Login() {
+        function Login(id, pass) {
             // reset valid each time login is called
             let valid = false;
 
-            // get user input from DOM
-            let user = document.getElementById("user").value;
-            let pass = document.getElementById("pass").value;
-
             // set up web method variables
-            let webMethod = "ProjectServices.asmx/GetUsers";
-            let parameters = "{}";
-
+            let webMethod = "ProjectServices.asmx/LogOn";
+            var parameters = "{\"id\":\"" + encodeURI(id) + "\",\"pass\":\"" + encodeURI(pass) + "\"}";
+            alert(parameters);
             //jQuery ajax method
             $.ajax({
                 type: "POST",
@@ -35,26 +31,27 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (msg) {
-                    // set array returned from web method to a local variable representing the array
-                    let responseFromServer = msg.d;
-
-                    // looping through the array of users and comparing to it to user input for validation
-                    // userid and password are attributes of a user class
-                    for (let i = 0; i < responseFromServer.length; i++) {
-                        if (user == decodeURI(responseFromServer[i].userid) && pass == decodeURI(responseFromServer[i].password) && responseFromServer[i].status == '1') {
+                    responseFromServer = msg.d;
+                    alert(responseFromServer[0].admin);
+                    if (responseFromServer) {
+                        valid = true;
+                        // go to dashboard
+                        if (responseFromServer[0].admin == 1 && responseFromServer[0].status == 1) {
                             let loginMessage = document.getElementById("loginMessage");
-                            loginMessage.innerHTML = `<p><em>${responseFromServer[i].firstname}</em>, you have been successfully logged in!</p>`
-                            valid = true;
-                            // go to dashboard
+                            loginMessage.innerHTML = `<p>You have been successfully logged in!</p>`
+                            window.location.replace("admin-manageaccounts.html");
+                        }
+                        else if (responseFromServer[0].status == 1) {
+                            let loginMessage = document.getElementById("loginMessage");
+                            loginMessage.innerHTML = `<p>You have been successfully logged in!</p>`
                             window.location.replace("dashboard-results.html");
                         }
-                        // if user is in database but has not yet been approved
-                        else if (user == decodeURI(responseFromServer[i].userid) && pass == decodeURI(responseFromServer[i].password) && responseFromServer[i].status == '0') {
-                            let loginMessage = document.getElementById("loginMessage");
-                            loginMessage.innerHTML = `<p><em>${decodeURI(responseFromServer[i].firstname)}</em>, your account has not yet been approved. </p>`
-                            // set to true even though account is not approved yet
-                            valid = true;
+                        else {
+                            alert("Your account has not yet been approved.");
                         }
+                    }
+                    else {
+                        alert("Log On Failed!");
                     }
 
                     // if userid and password do not match, update p and increment attempts
@@ -79,6 +76,7 @@
                 }
             });
         }
+
     </script>
 
     <style>
@@ -103,26 +101,28 @@
         </div>
     </header>
 
+    <form onsubmit="Login($('#user').val(), $('#pass').val()); return false;">
+        <div class="row">
+            <div class="col-04 filler"></div>
+            <div class="col-04 box">
+                <div class="row"><h2 style="margin-bottom: 2vh;">Sign In</h2></div>
+                <div class="row"><label>Username</label></div>
+                <div class="row"><input id="user" maxlength="7"></div>
 
-    <div class="row">
-        <div class="col-04 filler"></div>
-        <div class="col-04 box">
-            <div class="row"><h2 style="margin-bottom: 2vh;">Sign In</h2></div>
-            <div class="row"><label>Username</label></div>
-            <div class="row"><input id="user" maxlength="7"></div>
+                <div class="row"><label>Password</label></div>
+                <div class="row"><input id="pass" type="password"></div>
 
-            <div class="row"><label>Password</label></div>
-            <div class="row"><input id="pass" type="password"></div>
+                <div class="row">
+                    <div class="col-12" style="text-align: center; height: 6vh; font-size:8pt;" id="loginMessage"></div>
+                    <button id="login" style="font-size: 10pt; width: 100%;">Sign In</button>
+                    <div class="col-12" style="text-align: center;"><a href="forgotpassword.html" style="font-size: 8pt;">Forgot Password?</a></div>
+                </div>
 
-            <div class="row">
-                <div class="col-12" style="text-align: center; height: 6vh; font-size:8pt;" id="loginMessage"></div>
-                <button id="login" onclick="Login()" style="font-size: 10pt; width: 100%;">Sign In</button>
-                <div class="col-12" style="text-align: center;"><a href="forgotpassword.html" style="font-size: 8pt;">Forgot Password?</a></div>
             </div>
-
+            <div class="col-04 filler"></div>
         </div>
-        <div class="col-04 filler"></div>
-    </div>
+    </form>
+
 
 
 </body>

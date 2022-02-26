@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -13,8 +13,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-        function TestButtonHandler() {
-            var webMethod = "ProjectServices.asmx/TestConnection";
+        function Questions() {
+            var webMethod = "ProjectServices.asmx/GetSurveyQuestionsId";
             var parameters = "{}";
 
             //jQuery ajax method
@@ -26,23 +26,96 @@
                 dataType: "json",
                 success: function (msg) {
                     var responseFromServer = msg.d;
-                    alert(responseFromServer);
+
+                    // if there are no survey results in the database, display a message
+                    if (responseFromServer.length == 0) {
+                        var message = document.createElement('div');
+                        message.id = "noresult";
+                        message.innerHTML = "There are currently no surveys.";
+                        document.body.appendChild(message);
+                    }
+
+                    // loop through the list of results and display them on the HTML page
+                    for (let i = 0; i < responseFromServer.length; i++) {
+                        // Create table row
+                        let newRow = document.createElement('tr');
+                        newRow.id = "row" + i;
+                        document.getElementById("resultTable").appendChild(newRow);
+                        // display survey id
+                        var survey = document.createElement('td');
+                        survey.id = "survId";
+                        survey.innerHTML = decodeURI(responseFromServer[i].surveyid);
+                        document.getElementById("resultTable").appendChild(survey);
+                        // display user id
+                        var userid = document.createElement('td');
+                        userid.id = "userId";
+                        userid.innerHTML = decodeURI(responseFromServer[i].userid);
+                        document.getElementById("resultTable").appendChild(userid);
+                        // display question 1
+                        var q1 = document.createElement('td');
+                        q1.id = "q1";
+                        q1.innerHTML = decodeURI(responseFromServer[i].question1);
+                        document.getElementById("resultTable").appendChild(q1);
+                        // display question 2
+                        var q2 = document.createElement('td');
+                        q2.id = "q2";
+                        q2.innerHTML = decodeURI(responseFromServer[i].question2);
+                        document.getElementById("resultTable").appendChild(q2);
+                        // display question 3
+                        var q3 = document.createElement('td');
+                        q3.id = "q3";
+                        q3.innerHTML = decodeURI(responseFromServer[i].question3);
+                        document.getElementById("resultTable").appendChild(q3);
+                        // display question 4
+                        var q4 = document.createElement('td');
+                        q4.id = "q4";
+                        q4.innerHTML = decodeURI(responseFromServer[i].question4);
+                        document.getElementById("resultTable").appendChild(q4);
+                        // display question 5
+                        var q5 = document.createElement('td');
+                        q5.id = "q5";
+                        q5.innerHTML = decodeURI(responseFromServer[i].question5);
+                        document.getElementById("resultTable").appendChild(q5);
+                    }
                 },
                 error: function (e) {
                     alert("this code will only execute if javascript is unable to access the webservice");
                 }
             });
         }
+
+        function LogOff() {
+            var webMethod = "ProjectServices.asmx/LogOff";
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    if (msg.d) {
+                        //we logged off, so go back to logon page,
+                        alert("You have been signed out. Thank you for using Pascal! You will be brought to the home page.");
+                        window.location.replace("index.html");
+                    }
+                    else {
+                    }
+                },
+                error: function (e) {
+                    alert("boo...");
+                }
+            });
+        }
+
     </script>
 
 </head>
-<body>
+<body onload="Questions()">
     <!-- This is the page header. This is universal to all logged-in pages. -->
     <header>
         <div class="row">
             <div class="col-11"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
             <div class="col-01" style="vertical-align: bottom; white-space: nowrap;">
-                <a href="logoff.html">Log Out</a>
+                <a href="#" onclick="LogOff()">Log Out</a>
             </div>
         </div>
 
@@ -91,7 +164,19 @@
         <div class="row">
             <div class="col-01 filler"></div>
             <div class="col-10 box" style="padding: 10px 50px; box-shadow: none; border-radius: 0px 0px 10px 10px;">
-                <!-- manage surveys content goes here -->
+                <div id="resultsdiv" class="center">
+                    <table id="resultTable" class="center">
+                        <tr>
+                            <th>Survey ID</th>
+                            <th>User ID</th>
+                            <th>Question 1</th>
+                            <th>Question 2</th>
+                            <th>Question 3</th>
+                            <th>Question 4</th>
+                            <th>Question 5</th>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </main>

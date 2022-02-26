@@ -34,11 +34,73 @@ namespace ProjectTemplate
         }
         ////////////////////////////////////////////////////////////////////////
 
+        [WebMethod(EnableSession = true)]
+        public Users[] LogOn(string id, string pass)
+        {
+            // SQL query
+            string sqlSelect = "SELECT userid, status, admin FROM users WHERE userid=@id and password=@pass";
+
+            // set up connection object to be ready to use our connection string 
+            MySqlConnection con = new MySqlConnection(getConString());
+            // set up our command object to use our connection, and our query
+            MySqlCommand cmd = new MySqlCommand(sqlSelect, con);
+
+            // tell our command to replace parameters with real values 
+            // we decode them because they came to us via the web so they were encoded for transmission
+            cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
+            cmd.Parameters.AddWithValue("@pass", HttpUtility.UrlDecode(pass));
+
+            //a data adapter acts like a bridge between our command object and 
+            //the data we are trying to get back and put in a table object
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(cmd);
+
+            //here's the table we want to fill with the results from our query
+            DataTable sqlDt = new DataTable();
+
+            //here we go filling it!
+            sqlDa.Fill(sqlDt);
+            //check to see if any rows were returned.  If they were, it means it's 
+            //a legit account
+            if (sqlDt.Rows.Count > 0)
+            {
+                // if we found an account, store id and admin status 
+                Session["userid"] = sqlDt.Rows[0]["userid"];
+                Session["admin"] = sqlDt.Rows[0]["admin"];
+
+                // create a list of users
+                List<Users> people = new List<Users>();
+
+                // create new user with data from datatable
+                Users user = new Users();
+                user.userid = sqlDt.Rows[0].ItemArray[0].ToString();
+                user.status = sqlDt.Rows[0].ItemArray[1].ToString();
+                user.admin = sqlDt.Rows[0].ItemArray[2].ToString();
+
+                // add to people list
+                people.Add(user);
+
+                // return the result
+                return people.ToArray();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        [WebMethod(EnableSession = true)]
+        public bool LogOff()
+        {
+            // if they log off, then we remove the session, that way if they access again later they have
+            // to log back in in order for their ID to be in the session
+            Session.Abandon();
+            return true;
+        }
 
         /////////////////////////////////////////////////////////////////////////
         //don't forget to include this decoration above each method that you want
         //to be exposed as a web service!
-        [WebMethod]
+        [WebMethod(EnableSession = true)]
         public Users[] GetUsers()
         {
             string testQuery = "select * from users";
@@ -144,135 +206,152 @@ namespace ProjectTemplate
         }
 
 
-        [WebMethod]
+        [WebMethod(EnableSession = true)]
         public Users[] GetUnapprovedUsers()
         {
-            string query = "select * from users where status ='0'";
-
-            ////////////////////////////////////////////////////////////////////////
-            ///here's an example of using the getConString method!
-            ////////////////////////////////////////////////////////////////////////
-            MySqlConnection con = new MySqlConnection(getConString());
-            ////////////////////////////////////////////////////////////////////////
-
-            // connect and execute query 
-            MySqlCommand cmd = new MySqlCommand(query, con);
-            MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-
-            // create a data table and fill it with our data from query
-            DataTable table = new DataTable() { TableName = "UnapprovedUsers" };
-            adapter.Fill(table);
-
-            // create a list of users
-            List<Users> unpeople = new List<Users>();
-
-            // loop to create a new user based on # of rows in data table
-            for (int i = 0; i < table.Rows.Count; i++)
+            // checking if they are logged in and also an admin to view account requests
+            if (Session["userid"] != null && Convert.ToInt32(Session["admin"]) == 1)
             {
-                // create new user with data from datatable
-                Users user = new Users();
-                user.userid = table.Rows[i].ItemArray[0].ToString();
-                user.password = table.Rows[i].ItemArray[1].ToString();
-                user.firstname = table.Rows[i].ItemArray[2].ToString();
-                user.lastname = table.Rows[i].ItemArray[3].ToString();
-                user.companyname = table.Rows[i].ItemArray[4].ToString();
-                user.address = table.Rows[i].ItemArray[5].ToString();
-                user.city = table.Rows[i].ItemArray[6].ToString();
-                user.state = table.Rows[i].ItemArray[7].ToString();
-                user.postalcode = table.Rows[i].ItemArray[8].ToString();
-                user.country = table.Rows[i].ItemArray[9].ToString();
-                user.phone = table.Rows[i].ItemArray[10].ToString();
-                user.email = table.Rows[i].ItemArray[11].ToString();
-                user.website = table.Rows[i].ItemArray[12].ToString();
-                user.status = table.Rows[i].ItemArray[13].ToString();
-                user.admin = table.Rows[i].ItemArray[14].ToString();
+                string query = "select * from users where status ='0'";
 
-                // add to people list
-                unpeople.Add(user);
+                ////////////////////////////////////////////////////////////////////////
+                ///here's an example of using the getConString method!
+                ////////////////////////////////////////////////////////////////////////
+                MySqlConnection con = new MySqlConnection(getConString());
+                ////////////////////////////////////////////////////////////////////////
+
+                // connect and execute query 
+                MySqlCommand cmd = new MySqlCommand(query, con);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+
+                // create a data table and fill it with our data from query
+                DataTable table = new DataTable() { TableName = "UnapprovedUsers" };
+                adapter.Fill(table);
+
+                // create a list of users
+                List<Users> unpeople = new List<Users>();
+
+                // loop to create a new user based on # of rows in data table
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    // create new user with data from datatable
+                    Users user = new Users();
+                    user.userid = table.Rows[i].ItemArray[0].ToString();
+                    user.password = table.Rows[i].ItemArray[1].ToString();
+                    user.firstname = table.Rows[i].ItemArray[2].ToString();
+                    user.lastname = table.Rows[i].ItemArray[3].ToString();
+                    user.companyname = table.Rows[i].ItemArray[4].ToString();
+                    user.address = table.Rows[i].ItemArray[5].ToString();
+                    user.city = table.Rows[i].ItemArray[6].ToString();
+                    user.state = table.Rows[i].ItemArray[7].ToString();
+                    user.postalcode = table.Rows[i].ItemArray[8].ToString();
+                    user.country = table.Rows[i].ItemArray[9].ToString();
+                    user.phone = table.Rows[i].ItemArray[10].ToString();
+                    user.email = table.Rows[i].ItemArray[11].ToString();
+                    user.website = table.Rows[i].ItemArray[12].ToString();
+                    user.status = table.Rows[i].ItemArray[13].ToString();
+                    user.admin = table.Rows[i].ItemArray[14].ToString();
+
+                    // add to people list
+                    unpeople.Add(user);
+                }
+                // return an array of users 
+                return unpeople.ToArray();
             }
-            // return an array of users 
-            return unpeople.ToArray();
+            else
+            {
+                // if they are not logged in, return empty array
+                return new Users[0];
+            }
         }
 
-        [WebMethod]
+
+        [WebMethod(EnableSession = true)]
         public void ApproveUser(string id)
         {
-            // update statement
-            string approveUser = "UPDATE users SET STATUS = '1' WHERE userid = @id";
-
-            ////////////////////////////////////////////////////////////////////////
-            ///here's an example of using the getConString method!
-            ////////////////////////////////////////////////////////////////////////
-            MySqlConnection con = new MySqlConnection(getConString());
-            ////////////////////////////////////////////////////////////////////////
-
-            try
+            if (Convert.ToInt32(Session["admin"]) == 1)
             {
-                // open connection
-                con.Open();
+                // update statement
+                string approveUser = "UPDATE users SET STATUS = '1' WHERE userid = @id";
+
+                ////////////////////////////////////////////////////////////////////////
+                ///here's an example of using the getConString method!
+                ////////////////////////////////////////////////////////////////////////
+                MySqlConnection con = new MySqlConnection(getConString());
+                ////////////////////////////////////////////////////////////////////////
+
+                try
+                {
+                    // open connection
+                    con.Open();
 
 
-                // connect and execute query 
-                MySqlCommand cmd = new MySqlCommand(approveUser, con);
+                    // connect and execute query 
+                    MySqlCommand cmd = new MySqlCommand(approveUser, con);
 
 
-                //Pass values to Parameters
-                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
+                    //Pass values to Parameters
+                    cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
 
-                // execute command
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception)
-            {
-                // close connection
-                con.Close();
-            }
-            finally
-            {
-                // close connection
-                con.Close();
+                    // execute command
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    // close connection
+                    con.Close();
+                }
+                finally
+                {
+                    // close connection
+                    con.Close();
+                }
             }
         }
 
-        [WebMethod]
+        [WebMethod(EnableSession = true)]
         public void DenyUser(string id)
         {
-            // delete statement
-            string deleteUser = "DELETE FROM users WHERE userid = @id";
-
-            ////////////////////////////////////////////////////////////////////////
-            ///here's an example of using the getConString method!
-            ////////////////////////////////////////////////////////////////////////
-            MySqlConnection con = new MySqlConnection(getConString());
-            ////////////////////////////////////////////////////////////////////////
-
-            try
+            if (Session["userid"] != null && Convert.ToInt32(Session["admin"]) == 1)
             {
-                // open connection
-                con.Open();
+                // delete statement
+                string deleteUser = "DELETE FROM users WHERE userid = @id";
+
+                ////////////////////////////////////////////////////////////////////////
+                ///here's an example of using the getConString method!
+                ////////////////////////////////////////////////////////////////////////
+                MySqlConnection con = new MySqlConnection(getConString());
+                ////////////////////////////////////////////////////////////////////////
+
+                try
+                {
+                    // open connection
+                    con.Open();
 
 
-                // connect and execute query 
-                MySqlCommand cmd = new MySqlCommand(deleteUser, con);
+                    // connect and execute query 
+                    MySqlCommand cmd = new MySqlCommand(deleteUser, con);
 
 
-                //Pass values to Parameters
-                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
+                    //Pass values to Parameters
+                    cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
 
-                // execute command
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception)
-            {
-                // close connection
-                con.Close();
-            }
-            finally
-            {
-                // close connection
-                con.Close();
+                    // execute command
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    // close connection
+                    con.Close();
+                }
+                finally
+                {
+                    // close connection
+                    con.Close();
+                }
             }
         }
+
 
         [WebMethod]
         public void InsertResponse(int surveyid, string r1, string r2, string r3, string r4, string r5)
@@ -323,91 +402,162 @@ namespace ProjectTemplate
         }
 
 
-        [WebMethod]
+        [WebMethod(EnableSession = true)]
         public Responses[] GetSurveyResults()
         {
-            string query = "select * from responses";
-
-            ////////////////////////////////////////////////////////////////////////
-            ///here's an example of using the getConString method!
-            ////////////////////////////////////////////////////////////////////////
-            MySqlConnection con = new MySqlConnection(getConString());
-            ////////////////////////////////////////////////////////////////////////
-
-            // connect and execute query 
-            MySqlCommand cmd = new MySqlCommand(query, con);
-            MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-
-            // create a data table and fill it with our data from query
-            DataTable table = new DataTable() { TableName = "resultstable" };
-            adapter.Fill(table);
-
-            // create a list of survey results
-            List<Responses> results = new List<Responses>();
-
-            // loop to create a new user based on # of rows in data table
-            for (int i = 0; i < table.Rows.Count; i++)
+            if (Session["userid"] != null)
             {
-                // create new user with data from datatable
-                Responses result = new Responses();
-                result.responseid = table.Rows[i].ItemArray[0].ToString();
-                result.surveyid = table.Rows[i].ItemArray[1].ToString();
-                result.time = table.Rows[i].ItemArray[2].ToString();
-                result.response1 = table.Rows[i].ItemArray[3].ToString();
-                result.response2 = table.Rows[i].ItemArray[4].ToString();
-                result.response3 = table.Rows[i].ItemArray[5].ToString();
-                result.response4 = table.Rows[i].ItemArray[6].ToString();
-                result.response5 = table.Rows[i].ItemArray[7].ToString();
+                // get session id
+                var id = Session["userid"].ToString();
 
-                // add to list of surveys
-                results.Add(result);
-            }
-            // return an array of users 
-            return results.ToArray();
-        }
+                string query = "SELECT responses.responseid, responses.surveyid, responses.time, responses.response1, responses.response2, responses.response3, responses.response4, responses.response5 FROM responses, surveys WHERE responses.surveyid = surveys.surveyid AND surveys.userid=" + "'" + id + "'";
 
-        [WebMethod]
-        public void InsertSurvey(string id, string q1, string q2, string q3, string q4, string q5)
-        {
-            // insert statement
-            string insertResponse = "INSERT INTO surveys (userid, question1, question2, question3, question4, question5) " +
-                "VALUES (@id, @q1, @q2, @q3, @q4, @q5)";
-
-            ////////////////////////////////////////////////////////////////////////
-            ///here's an example of using the getConString method!
-            ////////////////////////////////////////////////////////////////////////
-            MySqlConnection con = new MySqlConnection(getConString());
-            ////////////////////////////////////////////////////////////////////////
-
-            try
-            {
-                // open connection
-                con.Open();
-
+                ////////////////////////////////////////////////////////////////////////
+                ///here's an example of using the getConString method!
+                ////////////////////////////////////////////////////////////////////////
+                MySqlConnection con = new MySqlConnection(getConString());
+                ////////////////////////////////////////////////////////////////////////
 
                 // connect and execute query 
-                MySqlCommand cmd = new MySqlCommand(insertResponse, con);
+                MySqlCommand cmd = new MySqlCommand(query, con);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
 
-                //Pass values to Parameters
-                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
-                cmd.Parameters.AddWithValue("@q1", HttpUtility.UrlDecode(q1));
-                cmd.Parameters.AddWithValue("@q2", HttpUtility.UrlDecode(q2));
-                cmd.Parameters.AddWithValue("@q3", HttpUtility.UrlDecode(q3));
-                cmd.Parameters.AddWithValue("@q4", HttpUtility.UrlDecode(q4));
-                cmd.Parameters.AddWithValue("@q5", HttpUtility.UrlDecode(q5));
-                cmd.ExecuteNonQuery();
+                // create a data table and fill it with our data from query
+                DataTable table = new DataTable() { TableName = "resultstable" };
+                adapter.Fill(table);
+
+                // create a list of survey results
+                List<Responses> results = new List<Responses>();
+
+                // loop to create a new user based on # of rows in data table
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    // create new user with data from datatable
+                    Responses result = new Responses();
+                    result.responseid = table.Rows[i].ItemArray[0].ToString();
+                    result.surveyid = table.Rows[i].ItemArray[1].ToString();
+                    result.time = table.Rows[i].ItemArray[2].ToString();
+                    result.response1 = table.Rows[i].ItemArray[3].ToString();
+                    result.response2 = table.Rows[i].ItemArray[4].ToString();
+                    result.response3 = table.Rows[i].ItemArray[5].ToString();
+                    result.response4 = table.Rows[i].ItemArray[6].ToString();
+                    result.response5 = table.Rows[i].ItemArray[7].ToString();
+
+                    // add to list of surveys
+                    results.Add(result);
+                }
+                // return an array of users 
+                return results.ToArray();
             }
-            catch (Exception)
+            else
             {
-                // close connection
-                con.Close();
+                return null;
             }
-            finally
+
+        }
+
+
+        [WebMethod(EnableSession = true)]
+        public void InsertSurvey(string q1, string q2, string q3, string q4, string q5)
+        {
+            if (Session["userid"] != null)
             {
-                // close connection
-                con.Close();
+                // insert statement
+                string insertResponse = "INSERT INTO surveys (userid, question1, question2, question3, question4, question5) " +
+                "VALUES (@id, @q1, @q2, @q3, @q4, @q5)";
+
+                ////////////////////////////////////////////////////////////////////////
+                ///here's an example of using the getConString method!
+                ////////////////////////////////////////////////////////////////////////
+                MySqlConnection con = new MySqlConnection(getConString());
+                ////////////////////////////////////////////////////////////////////////
+
+                try
+                {
+                    // open connection
+                    con.Open();
+
+
+                    // connect and execute query 
+                    MySqlCommand cmd = new MySqlCommand(insertResponse, con);
+
+                    // get session id
+                    var id = Session["userid"].ToString();
+
+                    //Pass values to Parameters
+                    cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
+                    cmd.Parameters.AddWithValue("@q1", HttpUtility.UrlDecode(q1));
+                    cmd.Parameters.AddWithValue("@q2", HttpUtility.UrlDecode(q2));
+                    cmd.Parameters.AddWithValue("@q3", HttpUtility.UrlDecode(q3));
+                    cmd.Parameters.AddWithValue("@q4", HttpUtility.UrlDecode(q4));
+                    cmd.Parameters.AddWithValue("@q5", HttpUtility.UrlDecode(q5));
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    // close connection
+                    con.Close();
+                }
+                finally
+                {
+                    // close connection
+                    con.Close();
+                }
             }
         }
+
+        [WebMethod(EnableSession = true)]
+        public Surveys[] GetSurveyQuestionsId()
+        {
+            if (Session["userid"] != null)
+            {
+                // get session id
+                var id = Session["userid"].ToString();
+
+                string query = "select * from surveys where userid=" + "'" + id + "'";
+
+                ////////////////////////////////////////////////////////////////////////
+                ///here's an example of using the getConString method!
+                ////////////////////////////////////////////////////////////////////////
+                MySqlConnection con = new MySqlConnection(getConString());
+                ////////////////////////////////////////////////////////////////////////
+
+                // connect and execute query 
+                MySqlCommand cmd = new MySqlCommand(query, con);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+
+                // create a data table and fill it with our data from query
+                DataTable table = new DataTable() { TableName = "surveystable" };
+                adapter.Fill(table);
+
+                // create a list of survey questions
+                List<Surveys> surveylist = new List<Surveys>();
+
+                // loop to create a new survey based on # of rows in data table
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    // create new survey with data from datatable
+                    Surveys survey = new Surveys();
+                    survey.surveyid = table.Rows[i].ItemArray[0].ToString();
+                    survey.userid = table.Rows[i].ItemArray[1].ToString();
+                    survey.question1 = table.Rows[i].ItemArray[2].ToString();
+                    survey.question2 = table.Rows[i].ItemArray[3].ToString();
+                    survey.question3 = table.Rows[i].ItemArray[4].ToString();
+                    survey.question4 = table.Rows[i].ItemArray[5].ToString();
+                    survey.question5 = table.Rows[i].ItemArray[6].ToString();
+
+                    // add to list of surveys
+                    surveylist.Add(survey);
+                }
+                // return an array of surveys
+                return surveylist.ToArray();
+            }
+            else
+            {
+                return null;
+            }
+        }
+                
 
 
         [WebMethod]
