@@ -28,62 +28,141 @@
                 dataType: "json",
                 success: function (msg) {
                     var responseFromServer = msg.d;
+                    var results = document.getElementById("resultsdiv");
 
                     // if there are no survey results in the database, display a message
                     if (responseFromServer.length == 0) {
-                        var message = document.createElement('div');
-                        message.id = "noresult";
-                        message.innerHTML = "There are currently no results.";
-                        document.body.appendChild(message);
-                    }
+                        results.innerHTML = "<p>There are currently no results.</div>";
+                    } else {
+                        
+                        var tbl = document.createElement("table");
+                        var tblBody = document.createElement("tbody");
+                        var row = document.createElement("tr");
 
-                    // loop through the list of results and display them on the HTML page
-                    for (let i = 0; i < responseFromServer.length; i++) {
-                        // Create table row
-                        let newRow = document.createElement('tr');
-                        newRow.id = "row" + i;
-                        document.getElementById("resultTable").appendChild(newRow);
-                        // display response ID
-                        var resp = document.createElement('td');
-                        resp.id = "respId";
-                        resp.innerHTML = decodeURI(responseFromServer[i].responseid);
-                        document.getElementById("resultTable").appendChild(resp);
-                        // display survey ID
-                        var survey = document.createElement('td');
-                        survey.id = "surveyId";
-                        survey.innerHTML = decodeURI(responseFromServer[i].surveyid);
-                        document.getElementById("resultTable").appendChild(survey);
-                        // display time
-                        var timeComplete = document.createElement('td');
-                        timeComplete.id = "timeId";
-                        timeComplete.innerHTML = decodeURI(responseFromServer[i].time);
-                        document.getElementById("resultTable").appendChild(timeComplete);
-                        // display response 1
-                        var resp1 = document.createElement('td');
-                        resp1.id = "resp1id";
-                        resp1.innerHTML = decodeURI(responseFromServer[i].response1);
-                        document.getElementById("resultTable").appendChild(resp1);
-                        // display response 2
-                        var resp2 = document.createElement('td');
-                        resp2.id = "resp2id";
-                        resp2.innerHTML = decodeURI(responseFromServer[i].response2);
-                        document.getElementById("resultTable").appendChild(resp2);
-                        // display response 3
-                        var resp3 = document.createElement('td');
-                        resp3.id = "resp3id";
-                        resp3.innerHTML = decodeURI(responseFromServer[i].response3);
-                        document.getElementById("resultTable").appendChild(resp3);
-                        // display response 4
-                        var resp4 = document.createElement('td');
-                        resp4.id = "resp4id";
-                        resp4.innerHTML = decodeURI(responseFromServer[i].response4);
-                        document.getElementById("resultTable").appendChild(resp4);
-                        // display response 5
-                        var resp5 = document.createElement('td');
-                        resp5.id = "resp5id";
-                        resp5.innerHTML = decodeURI(responseFromServer[i].response5);
-                        document.getElementById("resultTable").appendChild(resp5);
+                        for (var i = 0; i < 8; i++) {
+                            switch (i) {
+                                case 0:
+                                    var cell = document.createElement("th");
+                                    var celltxt = document.createTextNode("Response ID");
+                                    cell.appendChild(celltxt);
+                                    row.appendChild(cell);
+                                    break;
+                                case 1:
+                                    var cell = document.createElement("th");
+                                    var celltxt = document.createTextNode("Survey ID");
+                                    cell.appendChild(celltxt);
+                                    row.appendChild(cell);
+                                    break;
+                                case 2:
+                                    var cell = document.createElement("th");
+                                    var celltxt = document.createTextNode("Time");
+                                    cell.appendChild(celltxt);
+                                    row.appendChild(cell);
+                                    break;
+                                case 3:
+                                    var cell = document.createElement("th");
+                                    var celltxt = document.createTextNode("Response 1");
+                                    cell.appendChild(celltxt);
+                                    row.appendChild(cell);
+                                    break;
+                                case 4:
+                                    var cell = document.createElement("th");
+                                    var celltxt = document.createTextNode("Response 2");
+                                    cell.appendChild(celltxt);
+                                    row.appendChild(cell);
+                                    break;
+                                case 5:
+                                    var cell = document.createElement("th");
+                                    var celltxt = document.createTextNode("Response 3");
+                                    cell.appendChild(celltxt);
+                                    row.appendChild(cell);
+                                    break;
+                                case 6:
+                                    var cell = document.createElement("th");
+                                    var celltxt = document.createTextNode("Response 4");
+                                    cell.appendChild(celltxt);
+                                    row.appendChild(cell);
+                                    break;
+                                case 7:
+                                    var cell = document.createElement("th");
+                                    var celltxt = document.createTextNode("Response 5");
+                                    cell.appendChild(celltxt);
+                                    row.appendChild(cell);
+                                    break;
+                            }
+                        }
+                        tblBody.appendChild(row);
+                        tbl.appendChild(tblBody);
+                        results.appendChild(tbl);
+
+                        // loop through the list of results and display them on the HTML page
+                        for (let i = 0; i < responseFromServer.length; i++) {
+                            // create new row
+                            var newrow = document.createElement("tr");
+
+                            // add response ID to row
+                            var resp = document.createElement('td');
+                            resp.id = "respId";
+                            var respcontent = document.createTextNode(decodeURI(responseFromServer[i].responseid));
+                            resp.appendChild(respcontent);
+                            newrow.appendChild(resp);
+                            
+                            // add survey ID
+                            var survey = document.createElement('td');
+                            survey.id = "surveyId";
+                            var surveycontent = document.createTextNode(decodeURI(responseFromServer[i].surveyid));
+                            survey.appendChild(surveycontent);
+                            newrow.appendChild(survey);
+
+                            // add time
+                            var timeComplete = document.createElement('td');
+                            timeComplete.id = "timeId";
+                            var timecontent = document.createTextNode(decodeURI(responseFromServer[i].time));
+                            timeComplete.appendChild(timecontent);
+                            newrow.appendChild(timeComplete);
+
+                            // add response 1
+                            var resp1 = document.createElement('td');
+                            resp1.id = "resp1id";
+                            var resp1content = document.createTextNode(decodeURI(responseFromServer[i].response1));
+                            resp1.appendChild(resp1content);
+                            newrow.appendChild(resp1);
+
+                            // display response 2
+                            var resp2 = document.createElement('td');
+                            resp2.id = "resp2id";
+                            var resp2content = document.createTextNode(decodeURI(responseFromServer[i].response2));
+                            resp2.appendChild(resp2content);
+                            newrow.appendChild(resp2);
+
+                            // display response 3
+                            var resp3 = document.createElement('td');
+                            resp3.id = "resp3id";
+                            var resp3content = document.createTextNode(decodeURI(responseFromServer[i].response3));
+                            resp3.appendChild(resp3content);
+                            newrow.appendChild(resp3);
+
+                            // display response 4
+                            var resp4 = document.createElement('td');
+                            resp4.id = "resp4id";
+                            var resp4content = document.createTextNode(decodeURI(responseFromServer[i].response4));
+                            resp4.appendChild(resp4content);
+                            newrow.appendChild(resp4);
+
+                            // display response 5
+                            var resp5 = document.createElement('td');
+                            resp5.id = "resp5id";
+                            var resp5content = document.createTextNode(decodeURI(responseFromServer[i].response5));
+                            resp5.appendChild(resp5content);
+                            newrow.appendChild(resp5);
+
+                            // add newrow to table
+                            tblBody.appendChild(newrow);
+                            tbl.appendChild(tblBody);
+                            results.appendChild(tbl);
+                        }
                     }
+                    
                 },
                 error: function (e) {
                     alert("this code will only execute if javascript is unable to access the webservice");
@@ -174,7 +253,7 @@
             <div class="col-01 filler"></div>
             <div class="col-10 box" style="padding: 10px 50px; box-shadow: none; border-radius: 0px 0px 10px 10px;">
                 <div id="resultsdiv" class="center">
-                    <table id="resultTable" class="center">
+                    <!--<table id="resultTable" class="center">
                         <tr>
                             <th>Response ID</th>
                             <th>Survey ID</th>
@@ -185,7 +264,7 @@
                             <th>Response 4</th>
                             <th>Response 5</th>
                         </tr>
-                    </table>
+                    </table>-->
                 </div>
             </div>
             <div class="col-01 filler"></div>
