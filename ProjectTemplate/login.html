@@ -22,7 +22,6 @@
             // set up web method variables
             let webMethod = "ProjectServices.asmx/LogOn";
             var parameters = "{\"id\":\"" + encodeURI(id) + "\",\"pass\":\"" + encodeURI(pass) + "\"}";
-            alert(parameters);
             //jQuery ajax method
             $.ajax({
                 type: "POST",
@@ -32,7 +31,6 @@
                 dataType: "json",
                 success: function (msg) {
                     responseFromServer = msg.d;
-                    alert(responseFromServer[0].admin);
                     if (responseFromServer) {
                         valid = true;
                         // go to dashboard
