@@ -13,23 +13,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-        function TestButtonHandler() {
-            var webMethod = "ProjectServices.asmx/TestConnection";
-            var parameters = "{}";
-
-            //jQuery ajax method
+        function LogOff() {
+            var webMethod = "ProjectServices.asmx/LogOff";
             $.ajax({
                 type: "POST",
                 url: webMethod,
-                data: parameters,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (msg) {
-                    var responseFromServer = msg.d;
-                    alert(responseFromServer);
+                    if (msg.d) {
+                        // redirect to logoff landing
+                        window.location.replace("logoff.html");
+                    }
+                    else {
+                    }
                 },
                 error: function (e) {
-                    alert("this code will only execute if javascript is unable to access the webservice");
+                    alert("boo...");
                 }
             });
         }
@@ -42,7 +42,7 @@
         <div class="row">
             <div class="col-11"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
             <div class="col-01" style="vertical-align: bottom; white-space: nowrap;">
-                <a href="logoff.html">Log Out</a>
+                <a href="#" onclick="LogOff()">Log Out</a>
             </div>
         </div>
 

@@ -100,9 +100,8 @@
                 dataType: "json",
                 success: function (msg) {
                     if (msg.d) {
-                        //we logged off, so go back to logon page,
-                        alert("You have been signed out. Thank you for using Pascal! You will be brought to the home page.");
-                        window.location.replace("index.html");
+                        // redirect to logoff landing
+                        window.location.replace("logoff.html");
                     }
                     else {
                     }
@@ -115,35 +114,6 @@
 
     </script>
 
-    <!--<style>
-        .center {
-            margin: auto;
-            display: table;
-        }
-
-        #resultsdiv {
-            height: auto;
-            max-width: inherit;
-            width: max-content;
-            overflow: auto;
-        }
-
-        table {
-            border: 1px solid black;
-        }
-
-        th, td {
-            text-align: center;
-            padding-left: 4px;
-            padding-right: 4px;
-            border-bottom: 1px solid black;
-        }
-
-        th {
-            background-color: lightblue;
-            color: white;
-        }
-    </style>-->
 
 </head>
 
