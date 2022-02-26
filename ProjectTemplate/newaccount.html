@@ -66,7 +66,25 @@
                 */
                 // set up web method variables
                 let webMethod = "ProjectServices.asmx/InsertUser";
-                let parameters = "{\"id\":\"" + encodeURI(user) + "\"," + "\"pass\":\"" + encodeURI(pass) + "\"," + "\"first\":\"" + encodeURI(fname) + "\"," + "\"last\":\"" + encodeURI(lname) + "\"," + "\"company\":\"" + encodeURI(comp) + "\"," + "\"address\":\"" + encodeURI(addy) + "\"," + "\"city\":\"" + encodeURI(cit) + "\"," + "\"state\":\"" + encodeURI(sta) + "\"," + "\"code\":\"" + encodeURI(pcode) + "\"," + "\"country\":\"" + encodeURI(cntry) + "\"," + "\"phone\":\"" + encodeURI(pho) + "\"," + "\"email\":\"" + encodeURI(email) + "\"," + "\"website\":\"" + encodeURI(site) + "\"," + "\"status\":\"" + encodeURI('0') + "\"," +  "\"admin\":\"" + encodeURI('0') + "\" }";
+                let parameters = {
+                    id: encodeURI(user),
+                    pass: encodeURI(pass),
+                    first: encodeURI(fname),
+                    last: encodeURI(lname),
+                    company: encodeURI(comp),
+                    address: encodeURI(addy),
+                    city: encodeURI(cit),
+                    state: encodeURI(sta),
+                    code: encodeURI(pcode),
+                    country: encodeURI(cntry),
+                    phone: encodeURI(pho),
+                    email: encodeURI(email),
+                    website: encodeURI(site),
+                    status: encodeURI('0'),
+                    admin: encodeURI('0')
+                }
+                const params = JSON.stringify(parameters)
+
                 // do an alert to see data
                 alert(parameters);
                 //jQuery ajax method
