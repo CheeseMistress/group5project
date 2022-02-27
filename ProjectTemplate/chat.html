@@ -9,18 +9,24 @@
           rel="stylesheet">
     <!--Styling refers external style sheet to apply to all pages.-->
     <link href="styles.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href=".\resources\pascal-home.png" />
     <title>Pascal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <!--Styling for visual separation of messages-->
     <style>
+        window {
+            min-width: 740px;
+        }
+
         h2 {
             text-align: center;
         }
 
         #chatbox {
             position: relative;
+            min-width: 375px;
         }
 
         #sendmsg {
@@ -49,9 +55,9 @@
         }
 
         #pascalchat {
-            margin: 0 20px;
-            max-height: inherit;
-            max-width: inherit;
+            margin: 0 15px;
+            height: 50vh;
+            width: 45vw;
             overflow: auto;
         }
 
@@ -74,7 +80,6 @@
         div {
             overflow: visible;
         }
-
     </style>
 
     <script type="text/javascript">
@@ -99,6 +104,8 @@
                 }
             });
         }
+
+        var indexNumber;
 
         // get survey questions and create drop down ****UPDATE METHOD NAME****
         function GetQuestions() {
@@ -138,7 +145,7 @@
                         drop.appendChild(el);
                     }
 
-                    // add blank option 
+                    // add blank option
                     var blank = null;
                     var opt = document.createElement("option");
                     opt.textContent = blank;
@@ -147,7 +154,7 @@
 
                     opt.selected = "selected";
 
-                    // if the drop down selection changes, update DOM accordingly 
+                    // if the drop down selection changes, update DOM accordingly
                     document.getElementById("drop").onchange = function () {
                         // get the value of the selected option
                         var sur = document.getElementById("drop").value;
@@ -162,8 +169,16 @@
                             // update pascal msg div
                             document.getElementById("pascalmsg").innerHTML = "Hello! How is your day going today? <br> Please enter a number: <br>'1' - Amazing! <br>'2' - Good. <br>'3' - Bad. <br>'4' - Terrible!";
 
-                            // add click function to send button
                             var button = document.getElementById("send");
+
+                            getElementById("resp").addEventListener("keyup", function (event) {
+                                if (event.keyCode === 13) {
+                                    event.preventDefault();
+                                    button.click();
+                                }
+                            });
+
+                            // add click function to send button
                             button.addEventListener('click', () => {
                                 inputAns();
                             })
@@ -506,14 +521,22 @@
                         else {
                             alert("You chose survey " + sur);
 
+                            resp.focus();
+
                             // disable drop down once user selects survey to lock them in
                             document.getElementById("drop").disabled = true;
 
                             // set question variable
                             qcount = 1;
 
+                            for (i = 0; i < responseFromServer.length; i++) {
+                                if (decodeURI(responseFromServer[i].surveyid) == sur) {
+                                    indexNumber = i
+                                }
+                            }
+
                             // update pascal msg div to first question
-                            document.getElementById("pascalmsg").innerHTML = decodeURI(responseFromServer[sur-1].question1);
+                            document.getElementById("pascalmsg").innerHTML = decodeURI(responseFromServer[indexNumber].question1);
 
 
                             // add click function to send button
@@ -521,6 +544,8 @@
                             button.addEventListener('click', () => {
                                 inputAns();
                             })
+
+                            
 
                             //Function that creates a user message and sends Pascal's response
                             function submit(pascalAnswer) {
@@ -558,8 +583,9 @@
                                         newbubble.removeChild(typingImg);
                                         document.getElementById("pascalchat").appendChild(newbubble).appendChild(newchat);
                                     }, 2000);
-                                    
                                 }
+                                resp.value = '';
+                                resp.focus();
                                 typingDelay();
                             };
 
@@ -572,8 +598,12 @@
                                 else {
                                     let resp = questionSelect(qcount);
                                     ++qcount;
-                                    submit(resp);
-                                    questionAsk(qcount);
+                                    if (resp) {
+                                        submit(resp);
+                                        questionAsk(qcount);
+                                    } else {
+                                        alert("Please enter an answer.");
+                                    }
                                 }
 
                             };
@@ -582,23 +612,23 @@
                             function questionAsk(num) {
                                 switch (num) {
                                     case 1:
-                                        text = decodeURI(responseFromServer[sur-1].question1);
+                                        text = decodeURI(responseFromServer[indexNumber].question1);
                                         pascalResp(text);
                                         break;
                                     case 2:
-                                        text = decodeURI(responseFromServer[sur-1].question2);
+                                        text = decodeURI(responseFromServer[indexNumber].question2);
                                         pascalResp(text);
                                         break;
                                     case 3:
-                                        text = decodeURI(responseFromServer[sur-1].question3);
+                                        text = decodeURI(responseFromServer[indexNumber].question3);
                                         pascalResp(text);
                                         break;
                                     case 4:
-                                        text = decodeURI(responseFromServer[sur-1].question4);
+                                        text = decodeURI(responseFromServer[indexNumber].question4);
                                         pascalResp(text);
                                         break;
                                     case 5:
-                                        text = decodeURI(responseFromServer[sur-1].question5);
+                                        text = decodeURI(responseFromServer[indexNumber].question5);
                                         pascalResp(text);
                                         break;
                                     default:
@@ -691,7 +721,7 @@
                 </div>
                 <br>
                 <div id="sendmsg">
-                    <input type="text" id="resp" value=""/>
+                    <input type="text" id="resp" required/>
                     <button id="send">Send</button>
                 </div>
                 <br>
