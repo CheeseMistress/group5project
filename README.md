@@ -2,7 +2,7 @@
 This project is a fun and new way to get employees to share how they really feel about working for you!
 
 ## Description
-We created this project to make surveys fun again. We were tired of the same old surveys that everyone uses. This app is an interactive fun way to gage what your staff is really thinking.
+We created this project to make surveys fun again. We were tired of the same old surveys that everyone uses. This app is an interactive fun way to gage what your staff is really thinking. With Pascal you can create custom made surveys to tailored to your employees. 
 
 ## Built With
 - C#
