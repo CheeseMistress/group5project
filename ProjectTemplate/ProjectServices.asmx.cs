@@ -1079,5 +1079,49 @@ namespace ProjectTemplate
                 con.Close();
             }
         }
+
+        // UNTESTED method to remove/delete a survey from database
+        [WebMethod(EnableSession = true)]
+        public void DeleteSurvey(string sid)
+        {
+            if (Session["userid"] != null)
+            {
+                // delete statement
+                string deleteSurvey = "DELETE FROM surveys WHERE surveyid = @sid";
+
+                ////////////////////////////////////////////////////////////////////////
+                ///here's an example of using the getConString method!
+                ////////////////////////////////////////////////////////////////////////
+                MySqlConnection con = new MySqlConnection(getConString());
+                ////////////////////////////////////////////////////////////////////////
+
+                try
+                {
+                    // open connection
+                    con.Open();
+
+
+                    // connect and execute query 
+                    MySqlCommand cmd = new MySqlCommand(deleteSurvey, con);
+
+
+                    //Pass values to Parameters
+                    cmd.Parameters.AddWithValue("@sid", HttpUtility.UrlDecode(sid));
+
+                    // execute command
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    // close connection
+                    con.Close();
+                }
+                finally
+                {
+                    // close connection
+                    con.Close();
+                }
+            }
+        }
     }
 }

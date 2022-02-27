@@ -29,8 +29,6 @@
                     var responseFromServer = msg.d;
                     var feedback = document.getElementById("feedback");
 
-                    console.log(responseFromServer);
-
                     // if there are no survey results in the database, display a message
                     if (responseFromServer.length == 0) {
                         var feedbackP = document.createElement("p");
@@ -47,7 +45,7 @@
                         var tblBody = document.createElement("tbody");
                         var newRow = document.createElement("tr");
 
-                        for (var i = 0; i < 6; i++) {
+                        for (var i = 0; i < 8; i++) {
                             var cell = document.createElement("th");
                             switch (i) {
                                 case 0:
@@ -67,6 +65,12 @@
                                     break;
                                 case 5:
                                     var cellTxt = document.createTextNode("Question 5");
+                                    break;
+                                case 6:
+                                    var cellTxt = document.createTextNode("Edit");
+                                    break;
+                                case 7:
+                                    var cellTxt = document.createTextNode("Delete");
                                     break;
                             }
                             cell.appendChild(cellTxt);
@@ -123,6 +127,52 @@
                             q5.appendChild(q5Content);
                             newRow.appendChild(q5);
 
+                            // display edit pencil
+                            var edit = document.createElement('td');
+                            edit.align = 'center';
+                            var editContent = document.createElement("img");
+                            editContent.src = '.\\resources\\pencil.png';
+                            editContent.width = 20;
+                            editContent.onclick = function () { /*function to call to edit survey*/ };
+                            edit.appendChild(editContent);
+                            newRow.appendChild(edit);
+
+                            // display x
+                            var deleteCell = document.createElement('td');
+                            deleteCell.align = 'center';
+                            var deleteContent = document.createElement("img");
+                            deleteContent.src = '.\\resources\\x-mark.png';
+                            deleteContent.width = 15;
+                            deleteContent.onclick = function () {
+                                var confirmation = confirm("Are you sure you want to delete this survey?  This cannot be undone.");
+                                /*function to call to delete survey*/
+                                if (confirmation) {
+                                    var webMethod = "ProjectServices.asmx/DeleteSurvey";
+                                    var parameters = {
+                                        sid: encodeURI(responseFromServer[i].surveyid)
+                                    }
+                                    const params = JSON.stringify(parameters)
+
+                                    //jQuery ajax method
+                                    $.ajax({
+                                        type: "POST",
+                                        url: webMethod,
+                                        data: params,
+                                        contentType: "application/json; charset=utf-8",
+                                        dataType: "json",
+                                        success: function (msg) {
+                                            console.log("Survey deleted.")
+                                        },
+                                        error: function (xhr) {
+                                            console.log(xhr.responseText);
+                                            alert("Unable to reach server.  See console for error details.");
+                                        }
+                                    });
+                                }
+                            };
+                            deleteCell.appendChild(deleteContent);
+                            newRow.appendChild(deleteCell);
+
                             // add newRow to table
                             tblBody.appendChild(newRow);
                             tbl.appendChild(tblBody);
@@ -131,7 +181,7 @@
                     
                     }
                 },
-                error: function (xhr, status, error) {
+                error: function (xhr) {
                     console.log(xhr.responseText);
                     alert("Unable to reach server.  See console for error details.");
                 }
@@ -191,7 +241,6 @@
             submitBtn.style = "padding: 10px 15px;";
             submitBtn.onclick = function () {
                 questionNumber++;
-                console.log(questionNumber);
                 newQuestion = qEntry.value;
 
                 let questionsList = document.createElement("div");

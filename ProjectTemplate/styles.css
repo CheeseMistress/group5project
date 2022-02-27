@@ -166,3 +166,7 @@ td {
     padding: 0 .5vw;
     white-space: nowrap;
 }
+
+div {
+    overflow: hidden auto;
+}
