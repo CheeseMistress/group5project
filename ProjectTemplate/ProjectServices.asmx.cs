@@ -642,5 +642,443 @@ namespace ProjectTemplate
             }
         }
 
+        [WebMethod]
+        public void UpdateFirst(string id, string firstname)
+        {
+            // update statement
+            string updateFirst = "UPDATE users SET firstname = @firstname WHERE userid = @id";
+
+            ////////////////////////////////////////////////////////////////////////
+            ///here's an example of using the getConString method!
+            ////////////////////////////////////////////////////////////////////////
+            MySqlConnection con = new MySqlConnection(getConString());
+            ////////////////////////////////////////////////////////////////////////
+
+            try
+            {
+                // open connection
+                con.Open();
+
+
+                // connect and execute query 
+                MySqlCommand cmd = new MySqlCommand(updateFirst, con);
+
+                //Pass values to Parameters
+                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
+                cmd.Parameters.AddWithValue("@firstname", HttpUtility.UrlDecode(firstname));
+
+                // execute command
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                // close connection
+                con.Close();
+            }
+            finally
+            {
+                // close connection
+                con.Close();
+            }
+        }
+
+        [WebMethod]
+        public void UpdateLast(string id, string lastname)
+        {
+            // update statement
+            string updateLast = "UPDATE users SET lastname = @lastname WHERE userid = @id";
+
+            ////////////////////////////////////////////////////////////////////////
+            ///here's an example of using the getConString method!
+            ////////////////////////////////////////////////////////////////////////
+            MySqlConnection con = new MySqlConnection(getConString());
+            ////////////////////////////////////////////////////////////////////////
+
+            try
+            {
+                // open connection
+                con.Open();
+
+
+                // connect and execute query 
+                MySqlCommand cmd = new MySqlCommand(updateLast, con);
+
+                //Pass values to Parameters
+                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
+                cmd.Parameters.AddWithValue("@lastname", HttpUtility.UrlDecode(lastname));
+
+                // execute command
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                // close connection
+                con.Close();
+            }
+            finally
+            {
+                // close connection
+                con.Close();
+            }
+        }
+
+        [WebMethod]
+        public void UpdateAddress(string id, string address)
+        {
+            // update statement
+            string updateAddress = "UPDATE users SET ADDRESS = @address WHERE userid = @id";
+
+            ////////////////////////////////////////////////////////////////////////
+            ///here's an example of using the getConString method!
+            ////////////////////////////////////////////////////////////////////////
+            MySqlConnection con = new MySqlConnection(getConString());
+            ////////////////////////////////////////////////////////////////////////
+
+            try
+            {
+                // open connection
+                con.Open();
+
+
+                // connect and execute query 
+                MySqlCommand cmd = new MySqlCommand(updateAddress, con);
+
+                //Pass values to Parameters
+                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
+                cmd.Parameters.AddWithValue("@address", HttpUtility.UrlDecode(address));
+
+                // execute command
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                // close connection
+                con.Close();
+            }
+            finally
+            {
+                // close connection
+                con.Close();
+            }
+        }
+
+        [WebMethod]
+        public void UpdateCity(string id, string city)
+        {
+            // update statement
+            string updateCity = "UPDATE users SET CITY = @city WHERE userid = @id";
+
+            ////////////////////////////////////////////////////////////////////////
+            ///here's an example of using the getConString method!
+            ////////////////////////////////////////////////////////////////////////
+            MySqlConnection con = new MySqlConnection(getConString());
+            ////////////////////////////////////////////////////////////////////////
+
+            try
+            {
+                // open connection
+                con.Open();
+
+
+                // connect and execute query 
+                MySqlCommand cmd = new MySqlCommand(updateCity, con);
+
+                //Pass values to Parameters
+                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
+                cmd.Parameters.AddWithValue("@city", HttpUtility.UrlDecode(city));
+
+                // execute command
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                // close connection
+                con.Close();
+            }
+            finally
+            {
+                // close connection
+                con.Close();
+            }
+        }
+
+        [WebMethod]
+        public void UpdateState(string id, string state)
+        {
+            // update statement
+            string updateState = "UPDATE users SET STATE = @state WHERE userid = @id";
+
+            ////////////////////////////////////////////////////////////////////////
+            ///here's an example of using the getConString method!
+            ////////////////////////////////////////////////////////////////////////
+            MySqlConnection con = new MySqlConnection(getConString());
+            ////////////////////////////////////////////////////////////////////////
+
+            try
+            {
+                // open connection
+                con.Open();
+
+
+                // connect and execute query 
+                MySqlCommand cmd = new MySqlCommand(updateState, con);
+
+                //Pass values to Parameters
+                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
+                cmd.Parameters.AddWithValue("@state", HttpUtility.UrlDecode(state));
+
+                // execute command
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                // close connection
+                con.Close();
+            }
+            finally
+            {
+                // close connection
+                con.Close();
+            }
+        }
+
+        [WebMethod]
+        public void UpdatePostal(string id, string postalcode)
+        {
+            // update statement
+            string updatePostal = "UPDATE users SET POSTALCODE = @postalcode WHERE userid = @id";
+
+            ////////////////////////////////////////////////////////////////////////
+            ///here's an example of using the getConString method!
+            ////////////////////////////////////////////////////////////////////////
+            MySqlConnection con = new MySqlConnection(getConString());
+            ////////////////////////////////////////////////////////////////////////
+
+            try
+            {
+                // open connection
+                con.Open();
+
+
+                // connect and execute query 
+                MySqlCommand cmd = new MySqlCommand(updatePostal, con);
+
+                //Pass values to Parameters
+                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
+                cmd.Parameters.AddWithValue("@postalcode", HttpUtility.UrlDecode(postalcode));
+
+                // execute command
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                // close connection
+                con.Close();
+            }
+            finally
+            {
+                // close connection
+                con.Close();
+            }
+        }
+
+        [WebMethod]
+        public void UpdateCountry(string id, string country)
+        {
+            // update statement
+            string updateCountry = "UPDATE users SET COUNTRY = @country WHERE userid = @id";
+
+            ////////////////////////////////////////////////////////////////////////
+            ///here's an example of using the getConString method!
+            ////////////////////////////////////////////////////////////////////////
+            MySqlConnection con = new MySqlConnection(getConString());
+            ////////////////////////////////////////////////////////////////////////
+
+            try
+            {
+                // open connection
+                con.Open();
+
+
+                // connect and execute query 
+                MySqlCommand cmd = new MySqlCommand(updateCountry, con);
+
+                //Pass values to Parameters
+                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
+                cmd.Parameters.AddWithValue("@country", HttpUtility.UrlDecode(country));
+
+                // execute command
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                // close connection
+                con.Close();
+            }
+            finally
+            {
+                // close connection
+                con.Close();
+            }
+        }
+
+        [WebMethod]
+        public void UpdatePhone(string id, string phone)
+        {
+            // update statement
+            string updatePhone = "UPDATE users SET PHONE = @phone WHERE userid = @id";
+
+            ////////////////////////////////////////////////////////////////////////
+            ///here's an example of using the getConString method!
+            ////////////////////////////////////////////////////////////////////////
+            MySqlConnection con = new MySqlConnection(getConString());
+            ////////////////////////////////////////////////////////////////////////
+
+            try
+            {
+                // open connection
+                con.Open();
+
+
+                // connect and execute query 
+                MySqlCommand cmd = new MySqlCommand(updatePhone, con);
+
+                //Pass values to Parameters
+                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
+                cmd.Parameters.AddWithValue("@phone", HttpUtility.UrlDecode(phone));
+
+                // execute command
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                // close connection
+                con.Close();
+            }
+            finally
+            {
+                // close connection
+                con.Close();
+            }
+        }
+
+        [WebMethod]
+        public void UpdateEmail(string id, string email)
+        {
+            // update statement
+            string updateEmail = "UPDATE users SET EMAIL = @email WHERE userid = @id";
+
+            ////////////////////////////////////////////////////////////////////////
+            ///here's an example of using the getConString method!
+            ////////////////////////////////////////////////////////////////////////
+            MySqlConnection con = new MySqlConnection(getConString());
+            ////////////////////////////////////////////////////////////////////////
+
+            try
+            {
+                // open connection
+                con.Open();
+
+
+                // connect and execute query 
+                MySqlCommand cmd = new MySqlCommand(updateEmail, con);
+
+                //Pass values to Parameters
+                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
+                cmd.Parameters.AddWithValue("@email", HttpUtility.UrlDecode(email));
+
+                // execute command
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                // close connection
+                con.Close();
+            }
+            finally
+            {
+                // close connection
+                con.Close();
+            }
+        }
+
+        [WebMethod]
+        public void UpdateWeb(string id, string website)
+        {
+            // update statement
+            string updateWeb = "UPDATE users SET WEBSITE = @website WHERE userid = @id";
+
+            ////////////////////////////////////////////////////////////////////////
+            ///here's an example of using the getConString method!
+            ////////////////////////////////////////////////////////////////////////
+            MySqlConnection con = new MySqlConnection(getConString());
+            ////////////////////////////////////////////////////////////////////////
+
+            try
+            {
+                // open connection
+                con.Open();
+
+
+                // connect and execute query 
+                MySqlCommand cmd = new MySqlCommand(updateWeb, con);
+
+                //Pass values to Parameters
+                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
+                cmd.Parameters.AddWithValue("@website", HttpUtility.UrlDecode(website));
+
+                // execute command
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                // close connection
+                con.Close();
+            }
+            finally
+            {
+                // close connection
+                con.Close();
+            }
+        }
+
+        [WebMethod]
+        public void DisableAccount(string id)
+        {
+            // update statement
+            string disableAccount = "UPDATE users SET STATUS = '0' WHERE userid = @id";
+
+            ////////////////////////////////////////////////////////////////////////
+            ///here's an example of using the getConString method!
+            ////////////////////////////////////////////////////////////////////////
+            MySqlConnection con = new MySqlConnection(getConString());
+            ////////////////////////////////////////////////////////////////////////
+
+            try
+            {
+                // open connection
+                con.Open();
+
+
+                // connect and execute query 
+                MySqlCommand cmd = new MySqlCommand(disableAccount, con);
+
+                //Pass values to Parameters
+                cmd.Parameters.AddWithValue("@id", HttpUtility.UrlDecode(id));
+
+                // execute command
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                // close connection
+                con.Close();
+            }
+            finally
+            {
+                // close connection
+                con.Close();
+            }
+        }
     }
 }
