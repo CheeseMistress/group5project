@@ -14,15 +14,15 @@
 
         // attempt control variable
         var attempts = 0;
+        var attemptsLeft;
 
         function Login(id, pass) {
-            // reset valid each time login is called
-            let valid = false;
 
-            // set up web method variables
-            let webMethod = "ProjectServices.asmx/LogOn";
-            var parameters = "{\"id\":\"" + encodeURI(id) + "\",\"pass\":\"" + encodeURI(pass) + "\"}";
-            //jQuery ajax method
+            let user = document.getElementById("user").value;
+
+            let webMethod = "ProjectServices.asmx/GetUsers";
+            let parameters = "{}";
+
             $.ajax({
                 type: "POST",
                 url: webMethod,
@@ -30,51 +30,72 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (msg) {
-                    responseFromServer = msg.d;
-                    if (responseFromServer) {
-                        valid = true;
-                        // go to dashboard
-                        if (responseFromServer[0].admin == 1 && responseFromServer[0].status == 1) {
-                            let loginMessage = document.getElementById("loginMessage");
-                            loginMessage.innerHTML = `<p>You have been successfully logged in!</p>`
-                            window.location.replace("admin-manageaccounts.html");
-                        }
-                        else if (responseFromServer[0].status == 1) {
-                            let loginMessage = document.getElementById("loginMessage");
-                            loginMessage.innerHTML = `<p>You have been successfully logged in!</p>`
-                            window.location.replace("dashboard-results.html");
-                        }
-                        else {
-                            alert("Your account has not yet been approved.");
-                        }
-                    }
-                    else {
-                        alert("Log On Failed!");
+                    console.log('success1');
+                    let responseFromServer = msg.d;
+                    let userFound = false;
+
+                    let loginMessage = document.getElementById("loginMessage");
+
+                    for (let i = 0; i < responseFromServer.length; i++) {
+                        if (user == responseFromServer[i].userid) {
+
+                            userFound = true;
+                            // set up web method variables
+                            webMethod = "ProjectServices.asmx/LogOn";
+                            parameters = {
+                                id: encodeURI(id),
+                                pass: encodeURI(pass)
+                            };
+                            params = JSON.stringify(parameters);
+                            //jQuery ajax method
+                            $.ajax({
+                                type: "POST",
+                                url: webMethod,
+                                data: params,
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (msg) {
+                                    responseFromServer = msg.d;
+                                    if (responseFromServer) {
+                                        valid = true;
+                                        // go to dashboard
+                                        if (responseFromServer[0].admin == 1) {
+                                            window.location.replace("admin-manageaccounts.html");
+                                        } else if (responseFromServer[0].status == 1) {
+                                            window.location.replace("dashboard-results.html");
+                                        } else if (responseFromServer[0].status == 0) {
+                                            loginMessage.innerHTML = "<p>This account is not active.</p>";
+                                        }   
+                                    } else {
+                                        // invalid password message
+                                        attempts++;
+                                        attemptsLeft = 4 - attempts;
+                                        if (attemptsLeft != 0) {
+                                            loginMessage.innerHTML = "Invalid password.<br>Attempts Left: " + attemptsLeft;
+                                        } else {
+                                            loginMessage.innerHTML = "Maximum attempts reached.<br>Please contact support to reactivate your account.";
+                                            document.getElementById("user").disabled = true;
+                                            document.getElementById("pass").disabled = true;
+                                            document.getElementById("login").disabled = true;
+                                            // write function to set user status to 0
+                                        }
+                                    }
+                                }
+                            });  
+                        } 
                     }
 
-                    // if userid and password do not match, update p and increment attempts
-                    if (valid == false) {
-                        attempts++
-                        attemptsLeft = 4 - attempts;
-                        let loginMessage = document.getElementById("loginMessage");
-                        loginMessage.innerHTML = `Login unsuccessful, please try again! <br> Attempts Left: ` + attemptsLeft + ``
-                            ;
+                    if (!userFound) {
+                        loginMessage.innerHTML = "Invalid username.";
                     }
 
-                    // if attempts reaches more than 3, disable input/button
-                    if (attempts > 3) {
-                        document.getElementById("user").disabled = true;
-                        document.getElementById("pass").disabled = true;
-                        document.getElementById("login").disabled = true;
-                        loginMessage.innerHTML = `<p>You exceeded the allowable amount of login requests!</p>`
-                    }
                 },
-                error: function (e) {
-                    alert("this code will only execute if javascript is unable to access the webservice");
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                    alert("Unable to reach server.  See console for error details.");
                 }
             });
         }
-
     </script>
 
     <style>
@@ -111,7 +132,7 @@
                 <div class="row"><input id="pass" type="password"></div>
 
                 <div class="row">
-                    <div class="col-12" style="text-align: center; height: 6vh; font-size:8pt;" id="loginMessage"></div>
+                    <div class="col-12" style="text-align: center; height: 6vh; font-size:8pt; color: red;" id="loginMessage"></div>
                     <button id="login" style="font-size: 10pt; width: 100%;">Sign In</button>
                     <div class="col-12" style="text-align: center;"><a href="forgotpassword.html" style="font-size: 8pt;">Forgot Password?</a></div>
                 </div>

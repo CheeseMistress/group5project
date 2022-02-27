@@ -40,42 +40,32 @@
                         var row = document.createElement("tr");
 
                         for (var i = 0; i < 7; i++) {
-                            if (i == 0) {
-                                var cell = document.createElement("th");
-                                var celltxt = document.createTextNode("Username");
-                                cell.appendChild(celltxt);
-                                row.appendChild(cell);
-                            } else if (i == 1) {
-                                var cell = document.createElement("th");
-                                var celltxt = document.createTextNode("First Name");
-                                cell.appendChild(celltxt);
-                                row.appendChild(cell);
-                            } else if (i == 2) {
-                                var cell = document.createElement("th");
-                                var celltxt = document.createTextNode("Last Name");
-                                cell.appendChild(celltxt);
-                                row.appendChild(cell);
-                            } else if (i == 3) {
-                                var cell = document.createElement("th");
-                                var celltxt = document.createTextNode("Company");
-                                cell.appendChild(celltxt);
-                                row.appendChild(cell);
-                            } else if (i == 4) {
-                                var cell = document.createElement("th");
-                                var celltxt = document.createTextNode("Status");
-                                cell.appendChild(celltxt);
-                                row.appendChild(cell);
-                            } else if (i == 5) {
-                                var cell = document.createElement("th");
-                                var celltxt = document.createTextNode("Approve");
-                                cell.appendChild(celltxt);
-                                row.appendChild(cell);
-                            } else {
-                                var cell = document.createElement("th");
-                                var celltxt = document.createTextNode("Deny");
-                                cell.appendChild(celltxt);
-                                row.appendChild(cell);
+                            var cell = document.createElement("th");
+                            switch (i) {
+                                case 0:
+                                    var celltxt = document.createTextNode("Username");
+                                    break;
+                                case 1:
+                                    var celltxt = document.createTextNode("First Name");
+                                    break;
+                                case 2:
+                                    var celltxt = document.createTextNode("Last Name");
+                                    break;
+                                case 3:
+                                    var celltxt = document.createTextNode("Company");
+                                    break;
+                                case 4:
+                                    var celltxt = document.createTextNode("Status");
+                                    break;
+                                case 5:
+                                    var celltxt = document.createTextNode("Approve");
+                                    break;
+                                case 6:
+                                    var celltxt = document.createTextNode("Deny");
+                                    break;
                             }
+                            cell.appendChild(celltxt);
+                            row.appendChild(cell);
                         }
                         tblBody.appendChild(row);
                         tbl.appendChild(tblBody);

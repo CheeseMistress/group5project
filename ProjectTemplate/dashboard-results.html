@@ -40,56 +40,35 @@
                         var row = document.createElement("tr");
 
                         for (var i = 0; i < 8; i++) {
+                            var cell = document.createElement("th");
                             switch (i) {
                                 case 0:
-                                    var cell = document.createElement("th");
                                     var celltxt = document.createTextNode("Response ID");
-                                    cell.appendChild(celltxt);
-                                    row.appendChild(cell);
                                     break;
                                 case 1:
-                                    var cell = document.createElement("th");
                                     var celltxt = document.createTextNode("Survey ID");
-                                    cell.appendChild(celltxt);
-                                    row.appendChild(cell);
                                     break;
                                 case 2:
-                                    var cell = document.createElement("th");
                                     var celltxt = document.createTextNode("Time");
-                                    cell.appendChild(celltxt);
-                                    row.appendChild(cell);
                                     break;
                                 case 3:
-                                    var cell = document.createElement("th");
                                     var celltxt = document.createTextNode("Response 1");
-                                    cell.appendChild(celltxt);
-                                    row.appendChild(cell);
                                     break;
                                 case 4:
-                                    var cell = document.createElement("th");
                                     var celltxt = document.createTextNode("Response 2");
-                                    cell.appendChild(celltxt);
-                                    row.appendChild(cell);
                                     break;
                                 case 5:
-                                    var cell = document.createElement("th");
                                     var celltxt = document.createTextNode("Response 3");
-                                    cell.appendChild(celltxt);
-                                    row.appendChild(cell);
                                     break;
                                 case 6:
-                                    var cell = document.createElement("th");
                                     var celltxt = document.createTextNode("Response 4");
-                                    cell.appendChild(celltxt);
-                                    row.appendChild(cell);
                                     break;
                                 case 7:
-                                    var cell = document.createElement("th");
                                     var celltxt = document.createTextNode("Response 5");
-                                    cell.appendChild(celltxt);
-                                    row.appendChild(cell);
                                     break;
                             }
+                            cell.appendChild(celltxt);
+                            row.appendChild(cell);
                         }
                         tblBody.appendChild(row);
                         tbl.appendChild(tblBody);
