@@ -89,7 +89,7 @@ namespace ProjectTemplate
         }
 
         [WebMethod(EnableSession = true)]
-        public bool logOff()
+        public bool LogOff()
         {
             // if they log off, then we remove the session, that way if they access again later they have
             // to log back in in order for their ID to be in the session
@@ -403,7 +403,7 @@ namespace ProjectTemplate
 
 
         [WebMethod(EnableSession = true)]
-        public Responses[] GetsurveyResults()
+        public Responses[] GetSurveyResults()
         {
             if (Session["userid"] != null)
             {
@@ -463,8 +463,7 @@ namespace ProjectTemplate
             if (Session["userid"] != null)
             {
                 // insert statement
-                string insertResponse = "INSERT INTO surveys (userid, question1, question2, question3, question4, question5) " +
-                "VALUES (@id, @q1, @q2, @q3, @q4, @q5)";
+                string insertSurvey = "INSERT INTO surveys VALUES ('', @id, @q1, @q2, @q3, @q4, @q5)";
 
                 ////////////////////////////////////////////////////////////////////////
                 ///here's an example of using the getConString method!
@@ -479,7 +478,7 @@ namespace ProjectTemplate
 
 
                     // connect and execute query 
-                    MySqlCommand cmd = new MySqlCommand(insertResponse, con);
+                    MySqlCommand cmd = new MySqlCommand(insertSurvey, con);
 
                     // get session id
                     var id = Session["userid"].ToString();
@@ -504,7 +503,7 @@ namespace ProjectTemplate
                     con.Close();
                 }
             }
-        }
+    }
 
         [WebMethod(EnableSession = true)]
         public Surveys[] GetSurveyQuestionsId()

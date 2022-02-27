@@ -13,6 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
+        // displays current surveys tied to user
         function surveys() {
             var webMethod = "ProjectServices.asmx/GetSurveyQuestionsId";
             var parameters = "{}";
@@ -28,6 +29,8 @@
                     var responseFromServer = msg.d;
                     var feedback = document.getElementById("feedback");
 
+                    console.log(responseFromServer);
+
                     // if there are no survey results in the database, display a message
                     if (responseFromServer.length == 0) {
                         var feedbackP = document.createElement("p");
@@ -35,6 +38,11 @@
                         feedbackP.appendChild(feedbackMsg);
                         feedback.appendChild(feedbackP);
                     } else {
+                        var surveysHeading = document.createElement("h2");
+                        surveysHeadingTxt = document.createTextNode("Current Surveys");
+                        surveysHeading.appendChild(surveysHeadingTxt);
+                        surveysdiv.appendChild(surveysHeading);
+
                         var tbl = document.createElement("table");
                         var tblBody = document.createElement("tbody");
                         var newRow = document.createElement("tr");
@@ -145,85 +153,176 @@
                     else {
                     }
                 },
-                error: function (xhr, status, error) {
+                error: function (xhr) {
                     console.log(xhr.responseText);
                     alert("Unable to reach server.  See console for error details.");
                 }
             });
         }
 
-        
+        let questionNumber;
+        let submitBtn = document.createElement("button");
+        var q1;
+        var q2;
+        var q3;
+        var q4;
+        var q5;
 
-        //function sendQuestions(q1, q2, q3, q4, q5) {
-        //    let webMethod = "ProjectServices.asmx/InsertSurvey";
-        //    let parameters = "{\"q1\":\"" + encodeURI(q1) + "\"," + "\"q2\":\"" + encodeURI(q2) + "\"," + "\"q3\":\"" + encodeURI(q3) + "\"," + "\"q4\":\"" + encodeURI(q4) + "\"," + "\"q5\":\"" + encodeURI(q5) + "\" }";
+        // allows user to create new survey
+        function newSurvey() {
+            document.getElementById("nsbutton").disabled = true;
+            questionNumber = 0;
 
-        //    //jQuery ajax method
-        //    $.ajax({
-        //        type: "POST",
-        //        url: webMethod,
-        //        data: parameters,
-        //        contentType: "application/json; charset=utf-8",
-        //        dataType: "json",
-        //        success: function (msg) {
-        //            // set boolean from web method to a local variable representing the response
-        //            let responseFromServer = msg.d;
-        //            alert("Survey has been saved to database.");
-        //        },
-        //        error: function (e) {
-        //            alert("this code will only execute if javascript is unable to access the webservice");
-        //        }
-        //    });
-        //}
+            let newSurvey = document.getElementById("newsurvey");
 
-        ////hhinker script for question page code
-        //let surveyQuestions = [];
+            let surveyBlock = document.createElement("div");
+            let surveyRow1 = document.createElement("div");
+            surveyRow1.class = "col-12 row";
+            surveyRow1.style = "white-space: nowrap;";
+            let surveyLabel = document.createElement("label");
+            surveyLabel.for = "qSubmission";
+            let sLblContent = document.createTextNode("Add question:");
+            let qEntry = document.createElement("input");
+            qEntry.style = "margin: 20px;";
+            qEntry.style = "width: 50%;";
+            qEntry.id = "question";
+            submitBtn.innerHTML = "+";
+            submitBtn.id = "qSubmit";
+            submitBtn.style = "padding: 10px 15px;";
+            submitBtn.onclick = function () {
+                questionNumber++;
+                console.log(questionNumber);
+                newQuestion = qEntry.value;
 
-        //// counter variable
-        //let counter = 0;
+                let questionsList = document.createElement("div");
+                var tbl = document.createElement("table");
+                var tblBody = document.createElement("tbody");
+                var row;
+                var cell;
+                var cellTxt;
 
-        //const addQuestion = (ev) => {
-        //    ev.preventDefault();  //stops the form submitting
-        //    let question = document.getElementById('questionBox').value
-        //    surveyQuestions.push(question);
-        //    // to clear the form for the next entries
-        //    document.querySelector('form').reset();
+                // creates first row of table
+                if (questionNumber == 1) {
+                    row = document.createElement("tr");
+                    cell = document.createElement("th");
+                    cell.style = "width: 10%;";
+                    cellTxt = document.createTextNode("Question#");
+                    cell.appendChild(cellTxt);
+                    row.appendChild(cell);
+                    cell = document.createElement("th");
+                    cell.style = "width: 90%;";
+                    cellTxt = document.createTextNode("Question");
+                    cell.appendChild(cellTxt);
+                    row.appendChild(cell);
+                    tblBody.appendChild(row);
+                    tbl.appendChild(tblBody);
+                    questionsList.appendChild(tbl);
+                    surveyBlock.appendChild(questionsList);
+                    newSurvey.appendChild(surveyBlock);
+                }
+                row = document.createElement("tr");
+                row.style = "text-align: left;";
+                cell = document.createElement("td");
+                cell.style = "width: 10%;";
+                cellTxt = document.createTextNode(questionNumber);
+                cell.appendChild(cellTxt);
+                row.appendChild(cell);
 
-        //    //this is for display purposes to make sure the text is diplayed as an object
-        //    console.warn('added', { surveyQuestions });
-        //    let pre = document.querySelector('#msg pre');
-        //    pre.textContent = JSON.stringify(surveyQuestions);
+                cell = document.createElement("td");
+                cell.style = "width: 90%;";
+                cellTxt = document.createTextNode(qEntry.value);
+                switch (questionNumber) {
+                    case 1:
+                        q1 = qEntry.value;
+                        break;
+                    case 2:
+                        q2 = qEntry.value;
+                        break;
+                    case 3:
+                        q3 = qEntry.value;
+                        break;
+                    case 4:
+                        q4 = qEntry.value;
+                        break;
+                    case 5:
+                        q5 = qEntry.value;
+                        break;
+                }
+                cell.appendChild(cellTxt);
+                row.appendChild(cell);
 
-        //    // get input from the question box
-        //    var list = question;
+                tblBody.appendChild(row);
+                tbl.appendChild(tblBody);
+                questionsList.appendChild(tbl);
+                surveyBlock.appendChild(questionsList);
+                newSurvey.appendChild(surveyBlock);
 
-        //    // start a html table
-        //    var table = document.getElementsByTagName('table')[0];
+                if (questionNumber == 5) {
+                    surveyDoneRow = document.createElement("div");
+                    surveyDoneRow.class = "col-12 row";
+                    surveyDoneRow.style = "white-space: nowrap;";
+                    submitSurveyBtn = document.createElement("button");
+                    submitSurveyBtn.innerHTML = "Submit Survey";
+                    function submitQuestions(q1, q2, q3, q4, q5) {
+                        let webMethod = "ProjectServices.asmx/InsertSurvey";
+                        let parameters = {
+                            q1: encodeURI(q1),
+                            q2: encodeURI(q2),
+                            q3: encodeURI(q3),
+                            q4: encodeURI(q4),
+                            q5: encodeURI(q5)
+                        }
+                        const params = JSON.stringify(parameters);
 
-        //    // add a row to the table
-        //    var newRow = table.insertRow(table.rows.length);
+                        //jQuery ajax method
+                        $.ajax({
+                            type: "POST",
+                            url: webMethod,
+                            data: params,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (msg) {
+                                var feedbackP = document.createElement("p");
+                                var feedbackMsg = document.createTextNode("Survey successfully submitted!  Refresh to create another.");
+                                feedbackP.appendChild(feedbackMsg);
+                                feedback.appendChild(feedbackP);
+                            },
+                            error: function (xhr) {
+                                console.log(xhr.responseText);
+                                alert("Unable to reach server.  See console for error details.");
+                            }
+                        });
+                    }
+                    submitSurveyBtn.onclick = function () {
+                        submitQuestions(q1, q2, q3, q4, q5)
+                    };
+                    clearSurveyBtn = document.createElement("button");
+                    clearSurveyBtn.innerHTML = "Clear Survey";
+                    clearSurveyBtn.style = "background-color: #86BCAC;";
+                    clearSurveyBtn.onclick = function () {
+                        surveyBlock.innerHTML = '';
+                        document.getElementById("nsbutton").disabled = false;
+                    };
 
-        //    // add cells to the row
-        //    var cell = newRow.insertCell(0);
+                    surveyDoneRow.appendChild(submitSurveyBtn);
+                    surveyDoneRow.appendChild(clearSurveyBtn);
+                    surveyBlock.appendChild(surveyDoneRow)
+                    newSurvey.appendChild(surveyBlock);
+                }
+                qEntry.focus();
+                qEntry.value = '';
+            }
 
-        //    // add text values to the cells
-        //    cell.innerHTML = list;
+            surveyLabel.appendChild(sLblContent);
+            surveyRow1.appendChild(surveyLabel);
+            surveyRow1.appendChild(qEntry);
+            surveyRow1.appendChild(submitBtn);
 
-        //    // increment counter
-        //    counter++;
+            surveyBlock.appendChild(surveyRow1);
+            newSurvey.appendChild(surveyBlock);
 
-        //    // if user sends 5 questions, disable button so no more can be sent
-        //    if (counter == 5) {
-        //        document.getElementById("btn").disabled = true;
-        //        document.getElementById("msg").innerHTML = "You have entered five questions - your survey has been saved!";
-        //        sendQuestions(surveyQuestions[0], surveyQuestions[1], surveyQuestions[2], surveyQuestions[3], questions[4]);
-        //    }
+        }
 
-        //}
-        //document.addEventListener('DOMContentLoaded', () => {
-        //    document.getElementById('btn').addEventListener('click', addQuestion);
-        /*//});*/
-        ////end of hhinker script for question page code
     </script>
 
 </head>
@@ -232,7 +331,7 @@
     <header>
         <div class="row">
             <div class="col-11"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
-            <div class="col-01" style="vertical-align: bottom; white-space: nowrap;">
+            <div class="col-01" style="vertical-align: bottom; white-space: nowrap; text-align: right;">
                 <a href="#" onclick="logOff()">Log Out</a>
             </div>
         </div>
@@ -283,38 +382,12 @@
             <div class="col-01 filler"></div>
             <div class="col-10 box" style="padding: 10px 50px; box-shadow: none; border-radius: 0px 0px 10px 10px;">
                 <div id="surveysdiv">
-                    <div style="text-align: center;"><button id="newsurvey" onclick="newSurvey()">New Survey</button></div>
-                    <div id="feedback" style="text-align: center;"></div>
+                    <div id="newsurvey" style="text-align: center;"><button id="nsbutton" onclick="newSurvey()" style="margin: 20px;">New Survey</button></div>
+                    <hr />
+                    <div id="feedback" style="text-align: center; color: green;"></div>
                 </div>
-                <!--<div id="modsurveys">
-                    <form>
-                        <section id="question">
-                            <label>Please enter five questions to be asked in your survey:</label><br>
-                            <textarea id="questionBox" name="questionBox" placeholder="Enter Question Here"></textarea>
-                        </section>
-
-                        <div>
-                            <button id="btn">Submit</button>
-                            <button type="reset"> Reset</button>
-                        </div>
-                        <div id="msg">
-                            <pre>
-                
-                            </pre>
-                        </div>
-
-                    </form>
-
-                    <table border="1">
-
-                        <tr>
-                            <th id="qList">List of Questions</th>
-
-                        </tr>
-
-                    </table>
-                </div>-->
             </div>
+            <div class="col-01 filler"></div>
         </div>
     </main>
 
