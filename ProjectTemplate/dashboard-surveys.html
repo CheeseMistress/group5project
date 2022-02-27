@@ -13,7 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-        function questions() {
+        function surveys() {
             var webMethod = "ProjectServices.asmx/GetSurveyQuestionsId";
             var parameters = "{}";
 
@@ -30,7 +30,10 @@
 
                     // if there are no survey results in the database, display a message
                     if (responseFromServer.length == 0) {
-                        feedback.innerHTML = "You do not currently have any surveys.";
+                        var feedbackP = document.createElement("p");
+                        var feedbackMsg = document.createTextNode("You currently do not have any surveys.");
+                        feedbackP.appendChild(feedbackMsg);
+                        feedback.appendChild(feedbackP);
                     } else {
                         var tbl = document.createElement("table");
                         var tblBody = document.createElement("tbody");
@@ -149,80 +152,82 @@
             });
         }
 
-        function sendQuestions(q1, q2, q3, q4, q5) {
-            let webMethod = "ProjectServices.asmx/InsertSurvey";
-            let parameters = "{\"q1\":\"" + encodeURI(q1) + "\"," + "\"q2\":\"" + encodeURI(q2) + "\"," + "\"q3\":\"" + encodeURI(q3) + "\"," + "\"q4\":\"" + encodeURI(q4) + "\"," + "\"q5\":\"" + encodeURI(q5) + "\" }";
+        
 
-            //jQuery ajax method
-            $.ajax({
-                type: "POST",
-                url: webMethod,
-                data: parameters,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (msg) {
-                    // set boolean from web method to a local variable representing the response
-                    let responseFromServer = msg.d;
-                    alert("Survey has been saved to database.");
-                },
-                error: function (e) {
-                    alert("this code will only execute if javascript is unable to access the webservice");
-                }
-            });
-        }
+        //function sendQuestions(q1, q2, q3, q4, q5) {
+        //    let webMethod = "ProjectServices.asmx/InsertSurvey";
+        //    let parameters = "{\"q1\":\"" + encodeURI(q1) + "\"," + "\"q2\":\"" + encodeURI(q2) + "\"," + "\"q3\":\"" + encodeURI(q3) + "\"," + "\"q4\":\"" + encodeURI(q4) + "\"," + "\"q5\":\"" + encodeURI(q5) + "\" }";
 
-        //hhinker script for question page code
-        let surveyQuestions = [];
+        //    //jQuery ajax method
+        //    $.ajax({
+        //        type: "POST",
+        //        url: webMethod,
+        //        data: parameters,
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        success: function (msg) {
+        //            // set boolean from web method to a local variable representing the response
+        //            let responseFromServer = msg.d;
+        //            alert("Survey has been saved to database.");
+        //        },
+        //        error: function (e) {
+        //            alert("this code will only execute if javascript is unable to access the webservice");
+        //        }
+        //    });
+        //}
 
-        // counter variable
-        let counter = 0;
+        ////hhinker script for question page code
+        //let surveyQuestions = [];
 
-        const addQuestion = (ev) => {
-            ev.preventDefault();  //stops the form submitting
-            let question = document.getElementById('questionBox').value
-            surveyQuestions.push(question);
-            // to clear the form for the next entries
-            document.querySelector('form').reset();
+        //// counter variable
+        //let counter = 0;
 
-            //this is for display purposes to make sure the text is diplayed as an object
-            console.warn('added', { surveyQuestions });
-            let pre = document.querySelector('#msg pre');
-            pre.textContent = JSON.stringify(surveyQuestions);
+        //const addQuestion = (ev) => {
+        //    ev.preventDefault();  //stops the form submitting
+        //    let question = document.getElementById('questionBox').value
+        //    surveyQuestions.push(question);
+        //    // to clear the form for the next entries
+        //    document.querySelector('form').reset();
 
-            // get input from the question box
-            var list = question;
+        //    //this is for display purposes to make sure the text is diplayed as an object
+        //    console.warn('added', { surveyQuestions });
+        //    let pre = document.querySelector('#msg pre');
+        //    pre.textContent = JSON.stringify(surveyQuestions);
 
-            // start a html table
-            var table = document.getElementsByTagName('table')[0];
+        //    // get input from the question box
+        //    var list = question;
 
-            // add a row to the table
-            var newRow = table.insertRow(table.rows.length);
+        //    // start a html table
+        //    var table = document.getElementsByTagName('table')[0];
 
-            // add cells to the row
-            var cell = newRow.insertCell(0);
+        //    // add a row to the table
+        //    var newRow = table.insertRow(table.rows.length);
 
-            // add text values to the cells
-            cell.innerHTML = list;
+        //    // add cells to the row
+        //    var cell = newRow.insertCell(0);
 
-            // increment counter
-            counter++;
+        //    // add text values to the cells
+        //    cell.innerHTML = list;
 
-            // if user sends 5 questions, disable button so no more can be sent
-            if (counter == 5) {
-                document.getElementById("btn").disabled = true;
-                document.getElementById("msg").innerHTML = "You have entered five questions - your survey has been saved!";
-                sendQuestions(surveyQuestions[0], surveyQuestions[1], surveyQuestions[2], surveyQuestions[3], questions[4]);
-            }
+        //    // increment counter
+        //    counter++;
 
-        }
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('btn').addEventListener('click', addQuestion);
-        });
-        //end of hhinker script for question page code
+        //    // if user sends 5 questions, disable button so no more can be sent
+        //    if (counter == 5) {
+        //        document.getElementById("btn").disabled = true;
+        //        document.getElementById("msg").innerHTML = "You have entered five questions - your survey has been saved!";
+        //        sendQuestions(surveyQuestions[0], surveyQuestions[1], surveyQuestions[2], surveyQuestions[3], questions[4]);
+        //    }
+
+        //}
+        //document.addEventListener('DOMContentLoaded', () => {
+        //    document.getElementById('btn').addEventListener('click', addQuestion);
+        /*//});*/
+        ////end of hhinker script for question page code
     </script>
 
 </head>
-<body onload="questions()">
+<body onload="surveys()">
     <!-- This is the page header. This is universal to all logged-in pages. -->
     <header>
         <div class="row">
@@ -278,9 +283,10 @@
             <div class="col-01 filler"></div>
             <div class="col-10 box" style="padding: 10px 50px; box-shadow: none; border-radius: 0px 0px 10px 10px;">
                 <div id="surveysdiv">
+                    <div style="text-align: center;"><button id="newsurvey" onclick="newSurvey()">New Survey</button></div>
                     <div id="feedback" style="text-align: center;"></div>
                 </div>
-                <div id="modsurveys">
+                <!--<div id="modsurveys">
                     <form>
                         <section id="question">
                             <label>Please enter five questions to be asked in your survey:</label><br>
@@ -307,7 +313,7 @@
                         </tr>
 
                     </table>
-                </div>
+                </div>-->
             </div>
         </div>
     </main>
