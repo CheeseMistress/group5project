@@ -89,7 +89,7 @@ namespace ProjectTemplate
         }
 
         [WebMethod(EnableSession = true)]
-        public bool LogOff()
+        public bool logOff()
         {
             // if they log off, then we remove the session, that way if they access again later they have
             // to log back in in order for their ID to be in the session
@@ -403,7 +403,7 @@ namespace ProjectTemplate
 
 
         [WebMethod(EnableSession = true)]
-        public Responses[] GetSurveyResults()
+        public Responses[] GetsurveyResults()
         {
             if (Session["userid"] != null)
             {

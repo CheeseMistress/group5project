@@ -78,11 +78,8 @@
                                             loginMessage.innerHTML = "Invalid password.<br>Attempts Left: " + attemptsLeft;
                                         } else {
                                             loginMessage.innerHTML = "Maximum attempts reached.<br>Please contact support to reactivate your account.";
-                                            //document.getElementById("user").disabled = true;
-                                            //document.getElementById("pass").disabled = true;
-                                            //document.getElementById("login").disabled = true;
                                             // disables account
-                                            DisableAccount(user);
+                                            disableAccount(user);
                                         }
                                     }
                                 }
@@ -102,7 +99,7 @@
             });
         }
 
-        function DisableAccount(user) {
+        function disableAccount(user) {
             var webMethod = "ProjectServices.asmx/DisableAccount";
             var parameters = {
                 id: encodeURI(user)

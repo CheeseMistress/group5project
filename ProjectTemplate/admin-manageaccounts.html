@@ -12,7 +12,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-        function DisplayUnapprovedAccounts() {
+        function displayUnapprovedAccounts() {
             var webMethod = "ProjectServices.asmx/GetUnapprovedUsers";
             var parameters = "{}";
 
@@ -75,37 +75,37 @@
                     // loop through the list of unapproved users and display them on the HTML page in a table
                     for (let i = 0; i < responseFromServer.length; i++) {
 
-                        var newrow = document.createElement("tr");
+                        var newRow = document.createElement("tr");
 
                         var user = document.createElement('td');
                         user.id = "id";
                         var usercontent = document.createTextNode(responseFromServer[i].userid);
                         user.appendChild(usercontent);
-                        newrow.appendChild(user);
+                        newRow.appendChild(user);
 
                         var fname = document.createElement('td');
                         fname.id = "fname";
                         var fnamecontent = document.createTextNode(responseFromServer[i].firstname);
                         fname.appendChild(fnamecontent);
-                        newrow.appendChild(fname);
+                        newRow.appendChild(fname);
 
                         var lname = document.createElement('td');
                         lname.id = "lname";
                         var lnamecontent = document.createTextNode(responseFromServer[i].lastname);
                         lname.appendChild(lnamecontent);
-                        newrow.appendChild(lname);
+                        newRow.appendChild(lname);
 
                         var compname = document.createElement('td');
                         compname.id = "compname";
                         var compnamecontent = document.createTextNode(responseFromServer[i].companyname);
                         compname.appendChild(compnamecontent);
-                        newrow.appendChild(compname);
+                        newRow.appendChild(compname);
 
                         var status = document.createElement('td');
                         status.id = "status";
                         var statuscontent = document.createTextNode("Unapproved");
                         status.appendChild(statuscontent);
-                        newrow.appendChild(status);
+                        newRow.appendChild(status);
 
                         // create approve button
                         var approve = document.createElement('td');
@@ -127,7 +127,7 @@
                             document.getElementById("feedback").innerHTML = text;
                         };
                         approve.appendChild(approvebtn);
-                        newrow.appendChild(approve);
+                        newRow.appendChild(approve);
 
 
                         // create deny button
@@ -151,10 +151,10 @@
                             document.getElementById("feedback").innerHTML = text;
                         };
                         deny.appendChild(denybtn);
-                        newrow.appendChild(deny);
+                        newRow.appendChild(deny);
 
-                        // add newrow to table
-                        tblBody.appendChild(newrow);
+                        // add newRow to table
+                        tblBody.appendChild(newRow);
                         tbl.appendChild(tblBody);
                         accounts.appendChild(tbl);
                     }
@@ -218,7 +218,7 @@
             });
         }
 
-        function LogOff() {
+        function logOff() {
             var webMethod = "ProjectServices.asmx/LogOff";
             $.ajax({
                 type: "POST",
@@ -242,13 +242,15 @@
 
 </head>
 
-<body onload="DisplayUnapprovedAccounts()">
+<body onload="displayUnapprovedAccounts()">
 
     <!-- This is the page header.  This one is specific to this page. -->
     <header>
         <div class="row">
-            <div class="col-12"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
-            <a href="#" onclick="LogOff()">log off</a>
+            <div class="col-11"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
+            <div class="col-01" style="vertical-align: bottom; white-space: nowrap;">
+                <a href="#" onclick="logOff()">Log Out</a>
+            </div>
         </div>
 
         <div class="row">

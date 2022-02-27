@@ -13,7 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-        function Questions() {
+        function questions() {
             var webMethod = "ProjectServices.asmx/GetSurveyQuestionsId";
             var parameters = "{}";
 
@@ -26,65 +26,108 @@
                 dataType: "json",
                 success: function (msg) {
                     var responseFromServer = msg.d;
+                    var feedback = document.getElementById("feedback");
 
                     // if there are no survey results in the database, display a message
                     if (responseFromServer.length == 0) {
-                        var message = document.createElement('div');
-                        message.id = "noresult";
-                        message.innerHTML = "There are currently no surveys.";
-                        document.body.appendChild(message);
-                    }
+                        feedback.innerHTML = "You do not currently have any surveys.";
+                    } else {
+                        var tbl = document.createElement("table");
+                        var tblBody = document.createElement("tbody");
+                        var newRow = document.createElement("tr");
 
-                    // loop through the list of results and display them on the HTML page
-                    for (let i = 0; i < responseFromServer.length; i++) {
-                        // Create table row
-                        let newRow = document.createElement('tr');
-                        newRow.id = "row" + i;
-                        document.getElementById("resultTable").appendChild(newRow);
-                        // display survey id
-                        var survey = document.createElement('td');
-                        survey.id = "survId";
-                        survey.innerHTML = decodeURI(responseFromServer[i].surveyid);
-                        document.getElementById("resultTable").appendChild(survey);
-                        // display user id
-                        var userid = document.createElement('td');
-                        userid.id = "userId";
-                        userid.innerHTML = decodeURI(responseFromServer[i].userid);
-                        document.getElementById("resultTable").appendChild(userid);
-                        // display question 1
-                        var q1 = document.createElement('td');
-                        q1.id = "q1";
-                        q1.innerHTML = decodeURI(responseFromServer[i].question1);
-                        document.getElementById("resultTable").appendChild(q1);
-                        // display question 2
-                        var q2 = document.createElement('td');
-                        q2.id = "q2";
-                        q2.innerHTML = decodeURI(responseFromServer[i].question2);
-                        document.getElementById("resultTable").appendChild(q2);
-                        // display question 3
-                        var q3 = document.createElement('td');
-                        q3.id = "q3";
-                        q3.innerHTML = decodeURI(responseFromServer[i].question3);
-                        document.getElementById("resultTable").appendChild(q3);
-                        // display question 4
-                        var q4 = document.createElement('td');
-                        q4.id = "q4";
-                        q4.innerHTML = decodeURI(responseFromServer[i].question4);
-                        document.getElementById("resultTable").appendChild(q4);
-                        // display question 5
-                        var q5 = document.createElement('td');
-                        q5.id = "q5";
-                        q5.innerHTML = decodeURI(responseFromServer[i].question5);
-                        document.getElementById("resultTable").appendChild(q5);
+                        for (var i = 0; i < 6; i++) {
+                            var cell = document.createElement("th");
+                            switch (i) {
+                                case 0:
+                                    var cellTxt = document.createTextNode("Survey ID");
+                                    break;
+                                case 1:
+                                    var cellTxt = document.createTextNode("Question 1");
+                                    break;
+                                case 2:
+                                    var cellTxt = document.createTextNode("Question 2");
+                                    break;
+                                case 3:
+                                    var cellTxt = document.createTextNode("Question 3");
+                                    break;
+                                case 4:
+                                    var cellTxt = document.createTextNode("Question 4");
+                                    break;
+                                case 5:
+                                    var cellTxt = document.createTextNode("Question 5");
+                                    break;
+                            }
+                            cell.appendChild(cellTxt);
+                            newRow.appendChild(cell);
+                        }
+                        tblBody.appendChild(newRow);
+                        tbl.appendChild(tblBody);
+                        surveysdiv.appendChild(tbl);
+
+                        // loop through the list of results and display them on the HTML page
+                        for (let i = 0; i < responseFromServer.length; i++) {
+                            // Create table row
+                            newRow = document.createElement('tr');
+                            
+                            // display survey id
+                            var survey = document.createElement('td');
+                            survey.id = "survId";
+                            var surveyContent = document.createTextNode(decodeURI(responseFromServer[i].surveyid));
+                            survey.appendChild(surveyContent);
+                            newRow.appendChild(survey);
+
+                            // display question 1
+                            var q1 = document.createElement('td');
+                            q1.id = "q1";
+                            var q1Content = document.createTextNode(decodeURI(responseFromServer[i].question1));
+                            q1.appendChild(q1Content);
+                            newRow.appendChild(q1);
+
+                            // display question 2
+                            var q2 = document.createElement('td');
+                            q2.id = "q2";
+                            var q2Content = document.createTextNode(decodeURI(responseFromServer[i].question2));
+                            q2.appendChild(q2Content);
+                            newRow.appendChild(q2);
+
+                            // display question 3
+                            var q3 = document.createElement('td');
+                            q3.id = "q3";
+                            var q3Content = document.createTextNode(decodeURI(responseFromServer[i].question3));
+                            q3.appendChild(q3Content);
+                            newRow.appendChild(q3);
+
+                            // display question 4
+                            var q4 = document.createElement('td');
+                            q4.id = "q4";
+                            var q4Content = document.createTextNode(decodeURI(responseFromServer[i].question4));
+                            q4.appendChild(q4Content);
+                            newRow.appendChild(q4);
+
+                            // display question 5
+                            var q5 = document.createElement('td');
+                            q5.id = "q5";
+                            var q5Content = document.createTextNode(decodeURI(responseFromServer[i].question5));
+                            q5.appendChild(q5Content);
+                            newRow.appendChild(q5);
+
+                            // add newRow to table
+                            tblBody.appendChild(newRow);
+                            tbl.appendChild(tblBody);
+                            surveysdiv.appendChild(tbl);
+                    }
+                    
                     }
                 },
-                error: function (e) {
-                    alert("this code will only execute if javascript is unable to access the webservice");
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                    alert("Unable to reach server.  See console for error details.");
                 }
             });
         }
 
-        function LogOff() {
+        function logOff() {
             var webMethod = "ProjectServices.asmx/LogOff";
             $.ajax({
                 type: "POST",
@@ -99,22 +142,93 @@
                     else {
                     }
                 },
-                error: function (e) {
-                    alert("boo...");
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                    alert("Unable to reach server.  See console for error details.");
                 }
             });
         }
 
+        function sendQuestions(q1, q2, q3, q4, q5) {
+            let webMethod = "ProjectServices.asmx/InsertSurvey";
+            let parameters = "{\"q1\":\"" + encodeURI(q1) + "\"," + "\"q2\":\"" + encodeURI(q2) + "\"," + "\"q3\":\"" + encodeURI(q3) + "\"," + "\"q4\":\"" + encodeURI(q4) + "\"," + "\"q5\":\"" + encodeURI(q5) + "\" }";
+
+            //jQuery ajax method
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    // set boolean from web method to a local variable representing the response
+                    let responseFromServer = msg.d;
+                    alert("Survey has been saved to database.");
+                },
+                error: function (e) {
+                    alert("this code will only execute if javascript is unable to access the webservice");
+                }
+            });
+        }
+
+        //hhinker script for question page code
+        let surveyQuestions = [];
+
+        // counter variable
+        let counter = 0;
+
+        const addQuestion = (ev) => {
+            ev.preventDefault();  //stops the form submitting
+            let question = document.getElementById('questionBox').value
+            surveyQuestions.push(question);
+            // to clear the form for the next entries
+            document.querySelector('form').reset();
+
+            //this is for display purposes to make sure the text is diplayed as an object
+            console.warn('added', { surveyQuestions });
+            let pre = document.querySelector('#msg pre');
+            pre.textContent = JSON.stringify(surveyQuestions);
+
+            // get input from the question box
+            var list = question;
+
+            // start a html table
+            var table = document.getElementsByTagName('table')[0];
+
+            // add a row to the table
+            var newRow = table.insertRow(table.rows.length);
+
+            // add cells to the row
+            var cell = newRow.insertCell(0);
+
+            // add text values to the cells
+            cell.innerHTML = list;
+
+            // increment counter
+            counter++;
+
+            // if user sends 5 questions, disable button so no more can be sent
+            if (counter == 5) {
+                document.getElementById("btn").disabled = true;
+                document.getElementById("msg").innerHTML = "You have entered five questions - your survey has been saved!";
+                sendQuestions(surveyQuestions[0], surveyQuestions[1], surveyQuestions[2], surveyQuestions[3], questions[4]);
+            }
+
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('btn').addEventListener('click', addQuestion);
+        });
+        //end of hhinker script for question page code
     </script>
 
 </head>
-<body onload="Questions()">
+<body onload="questions()">
     <!-- This is the page header. This is universal to all logged-in pages. -->
     <header>
         <div class="row">
             <div class="col-11"><a href="index.html"><img src=".\resources\pascal-home.png" width="30"></a></div>
             <div class="col-01" style="vertical-align: bottom; white-space: nowrap;">
-                <a href="#" onclick="LogOff()">Log Out</a>
+                <a href="#" onclick="logOff()">Log Out</a>
             </div>
         </div>
 
@@ -163,17 +277,35 @@
         <div class="row">
             <div class="col-01 filler"></div>
             <div class="col-10 box" style="padding: 10px 50px; box-shadow: none; border-radius: 0px 0px 10px 10px;">
-                <div id="resultsdiv" class="center">
-                    <table id="resultTable" class="center">
+                <div id="surveysdiv">
+                    <div id="feedback" style="text-align: center;"></div>
+                </div>
+                <div id="modsurveys">
+                    <form>
+                        <section id="question">
+                            <label>Please enter five questions to be asked in your survey:</label><br>
+                            <textarea id="questionBox" name="questionBox" placeholder="Enter Question Here"></textarea>
+                        </section>
+
+                        <div>
+                            <button id="btn">Submit</button>
+                            <button type="reset"> Reset</button>
+                        </div>
+                        <div id="msg">
+                            <pre>
+                
+                            </pre>
+                        </div>
+
+                    </form>
+
+                    <table border="1">
+
                         <tr>
-                            <th>Survey ID</th>
-                            <th>User ID</th>
-                            <th>Question 1</th>
-                            <th>Question 2</th>
-                            <th>Question 3</th>
-                            <th>Question 4</th>
-                            <th>Question 5</th>
+                            <th id="qList">List of Questions</th>
+
                         </tr>
+
                     </table>
                 </div>
             </div>

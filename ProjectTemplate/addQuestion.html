@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script type="text/javascript">
-        function SendQuestions(q1, q2, q3, q4, q5) {
+        function sendQuestions(q1, q2, q3, q4, q5) {
             let webMethod = "ProjectServices.asmx/InsertSurvey";
             let parameters = "{\"q1\":\"" + encodeURI(q1) + "\"," + "\"q2\":\"" + encodeURI(q2) + "\"," + "\"q3\":\"" + encodeURI(q3) + "\"," + "\"q4\":\"" + encodeURI(q4) + "\"," + "\"q5\":\"" + encodeURI(q5) + "\" }";
 
@@ -70,7 +70,7 @@
             if (counter == 5) {
                 document.getElementById("btn").disabled = true;
                 document.getElementById("msg").innerHTML = "You have entered five questions - your survey has been saved!";
-                SendQuestions(questions[0], questions[1], questions[2], questions[3], questions[4]);
+                sendQuestions(questions[0], questions[1], questions[2], questions[3], questions[4]);
             }
 
         }
@@ -86,10 +86,6 @@
 <body>
 
     <!--hhinker BEGIN question page html-->
-    <header>
-        <button type="button" onclick="window.location.href='logoff.html'">Log Off</button>
-    </header>
-
     <h1>Pascal Questions</h1>
 
     <form>
