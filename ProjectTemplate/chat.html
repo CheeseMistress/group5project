@@ -19,16 +19,22 @@
             text-align: center;
         }
 
+        #chatbox {
+            position: relative;
+        }
+
         #sendmsg {
-            margin-left: 25%;
-            margin-right: 25%;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            white-space: nowrap;
         }
 
         .bubble {
             line-height: 1.5em;
             border: 12px;
             margin: 12px;
-            width: 400px;
+            width: 80%;
             text-align: left;
         }
 
@@ -43,27 +49,32 @@
         }
 
         #pascalchat {
-            height: 400px;
+            margin: 0 20px;
+            max-height: inherit;
             max-width: inherit;
-            width: 500px;
             overflow: auto;
         }
 
         #pascalmsg {
             background-color: lightgray;
             height: auto;
-            width: auto;
-            max-width: 380px;
+            width: inherit;
             border-radius: 30px 30px 30px 5px;
         }
 
         #usermsg {
             background-color: lightblue;
             height: auto;
-            width: auto;
-            max-width: 380px;
+            width: inherit;
             border-radius: 30px 30px 5px 30px;
+            position: relative;
+            right: -40%;
         }
+
+        div {
+            overflow: visible;
+        }
+
     </style>
 
     <script type="text/javascript">
@@ -529,6 +540,7 @@
                                 document.getElementById("pascalchat").appendChild(newbubble).appendChild(newchat);
                             };
 
+
                             //create pascal message and bubble
                             function pascalResp(ans) {
                                 let newbubble = document.createElement('div');
@@ -537,7 +549,18 @@
                                 newchat.id = 'pascalmsg';
                                 let text = document.createTextNode(ans);
                                 newchat.appendChild(text);
-                                document.getElementById("pascalchat").appendChild(newbubble).appendChild(newchat);
+                                function typingDelay() {
+                                    var typingImg = document.createElement("img");
+                                    typingImg.src = ".\\resources\\typing.gif";
+                                    typingImg.style = "width: 30px;";
+                                    setTimeout(() => { document.getElementById("pascalchat").appendChild(newbubble).appendChild(typingImg); }, 500);
+                                    setTimeout(() => {
+                                        newbubble.removeChild(typingImg);
+                                        document.getElementById("pascalchat").appendChild(newbubble).appendChild(newchat);
+                                    }, 2000);
+                                    
+                                }
+                                typingDelay();
                             };
 
                             //Go through survey questions with each button submission
@@ -649,13 +672,13 @@
     </header>
     <main>
         <div class="row col-12" style="height: 25%;"></div>
-        <div class="row" style="position: absolute;">
+        <div class="row col-12" style="position: absolute;">
             <div class="col-01 filler"><br /></div>
             <div class="col-02" style="padding-top: 65vh;">
                 <img src=".\resources\pascal-avatar.png" style="display: block;
-                position: relative; left: 50%; max-width: 100%; /*transform: translate(-50%, -50%);*/">
+                position: relative; left: 50%; max-width: 100%; transform: translate(-50%, -50%);">
             </div>
-            <div class="col-06 box" style="border: 3px solid #707070; height: 75vh; width:500px; max-width: inherit;">
+            <div id="chatbox" class="col-06 box" style="border: 3px solid #707070; height: 75vh; max-width: inherit;">
                 <!--chat box goes here-->
                 <h2>Survey</h2>
                 <h3>Choose your survey: </h3>
@@ -668,10 +691,8 @@
                 </div>
                 <br>
                 <div id="sendmsg">
-                    <input type="text" id="resp" value="">
-                    <div id="sendButton">
-                        <button id="send">Send</button>
-                    </div>
+                    <input type="text" id="resp" value=""/>
+                    <button id="send">Send</button>
                 </div>
                 <br>
             </div>
