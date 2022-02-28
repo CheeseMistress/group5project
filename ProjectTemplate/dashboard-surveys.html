@@ -316,6 +316,8 @@
                 newSurvey.appendChild(surveyBlock);
 
                 if (questionNumber == 5) {
+                    submitBtn.disabled = true;
+                    qEntry.disabled = true;
                     surveyDoneRow = document.createElement("div");
                     surveyDoneRow.class = "col-12 row";
                     surveyDoneRow.style = "white-space: nowrap;";
@@ -341,9 +343,12 @@
                             dataType: "json",
                             success: function (msg) {
                                 var feedbackP = document.createElement("p");
-                                var feedbackMsg = document.createTextNode("Survey successfully submitted!  Refresh to create another.");
+                                var feedbackMsg = document.createTextNode("Survey successfully submitted!  Refresh to see all surveys below.");
                                 feedbackP.appendChild(feedbackMsg);
                                 feedback.appendChild(feedbackP);
+                                surveyBlock.innerHTML = '';
+                                document.getElementById("nsbutton").disabled = false;
+                                qEntry.disabled = false;
                             },
                             error: function (xhr) {
                                 console.log(xhr.responseText);
@@ -360,6 +365,8 @@
                     clearSurveyBtn.onclick = function () {
                         surveyBlock.innerHTML = '';
                         document.getElementById("nsbutton").disabled = false;
+                        submitBtn.disabled = false;
+                        qEntry.disabled = false;
                     };
 
                     surveyDoneRow.appendChild(submitSurveyBtn);
