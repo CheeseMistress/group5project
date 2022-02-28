@@ -60,8 +60,6 @@
                     // validate email is unique using onchange and GetUsers()
                 }
 
-               
-
             }
 
             validateForm();
@@ -99,6 +97,7 @@
                     success: function () {
                         // set boolean from web method to a local variable representing the response
                         alert("Success!  An account has been requested for " + user + "!");
+                        document.getElementById('createuser').reset();
                     },
                     error: function (e) {
                         alert("Unable to access webservice.");
