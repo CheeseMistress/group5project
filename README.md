@@ -39,11 +39,11 @@ Give it a try and see what you think. Our team is very proud of the work we have
 * enter contact information to receive employer-sponsored rewards
 
 ## Built With
-- C#
-- Javascript
-- ASP.NET
 - HTML
+- C#
 - CSS
+- ASP.NET
+- Javascript
 - JSON data structures
 
 ## Credits
