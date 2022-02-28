@@ -90,7 +90,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="addQuestion.html" />
     <Content Include="admin-manageaccounts.html" />
     <Content Include="chat.html" />
     <Content Include="dashboard-accountmgr.html" />

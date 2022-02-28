@@ -58,10 +58,10 @@
                                     var celltxt = document.createTextNode("Status");
                                     break;
                                 case 5:
-                                    var celltxt = document.createTextNode("Approve");
+                                    cell.colspan = "2";
+                                    var celltxt = document.createTextNode("");
                                     break;
-                                case 6:
-                                    var celltxt = document.createTextNode("Deny");
+                                default:
                                     break;
                             }
                             cell.appendChild(celltxt);
@@ -103,12 +103,13 @@
 
                         var status = document.createElement('td');
                         status.id = "status";
-                        var statuscontent = document.createTextNode("Unapproved");
+                        var statuscontent = document.createTextNode("Inactive");
                         status.appendChild(statuscontent);
                         newRow.appendChild(status);
 
                         // create approve button
                         var approve = document.createElement('td');
+                        approve.style = "text-align: center;";
                         var approvebtn = document.createElement('button');
                         approvebtn.id = "approveButton" + i;
                         approvebtn.innerHTML = "Approve";
@@ -132,9 +133,10 @@
 
                         // create deny button
                         var deny = document.createElement('td');
+                        deny.style = "text-align: center;";
                         var denybtn = document.createElement('button');
 
-                        // name denybtn id "denyButton" plus index number to keep buttons unique from each other
+                        // name denybtn id "denyButton" plus index number to keep buttons unique
                         denybtn.id = "denyButton" + i;
                         denybtn.innerHTML = "Deny";
                         denybtn.onclick = function () {
