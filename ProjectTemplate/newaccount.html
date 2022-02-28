@@ -10,9 +10,18 @@
     <title>Pascal - Create Account</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    
+
     <script type="text/javascript">
-        function AddUser() {
+
+        window.addEventListener("load", function () {
+            var form = document.getElementById("createuser");
+
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+            });
+        });
+
+        function addUser() {
 
             // get user input from DOM
             let user = document.getElementById("usernew").value;
@@ -31,29 +40,28 @@
             let repass = document.getElementById("repass").value;
             let email2 = document.getElementById("email2").value;
 
-            let carryOn = true;
+            let carryOn = false;
 
             function validateForm() {
                 if (user && pass && fname && lname && comp && addy &&
                     cit && sta && pcode && cntry && pho && email && site) {
+                    carryOn = true;
                     // validates email and password matches
                     if (pass != repass) {
                         alert("Try again. Passwords do not match.");
                         carryOn = false;
-                    }
-                    else if (email !== email2) {
+                    } else if (email !== email2) {
                         alert("Try again. Emails do not match." + email + email2);
                         carryOn = false;
                     }
-                }
-                else {
-                    alert("Try again. Please complete all fields.")
-                    carryOn = false;
+                    // FUTURE CHANGES:
+                    // validation for input type matches
+                    // validate username is unique using onchange and GetUsers()
+                    // validate email is unique using onchange and GetUsers()
                 }
 
-                // FUTURE CHANGES:
-                // validate username is unique using onchange and GetUsers()
-                // validate email is unique using onchange and GetUsers()
+               
+
             }
 
             validateForm();
@@ -81,18 +89,15 @@
                 }
                 const params = JSON.stringify(parameters)
 
-                // do an alert to see data
-                alert(parameters);
                 //jQuery ajax method
                 $.ajax({
                     type: "POST",
                     url: webMethod,
-                    data: parameters,
+                    data: params,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: function (msg) {
+                    success: function () {
                         // set boolean from web method to a local variable representing the response
-                        let responseFromServer = msg.d;
                         alert("Success!  An account has been requested for " + user + "!");
                     },
                     error: function (e) {
@@ -423,16 +428,24 @@
 
                         <div class="row">
                             <div class="col-12" style="white-space: nowrap; margin-right: 5px; text-align: right;">
-                                    <button id="clear" onclick="document.getElementById('createuser').reset()" style="background-color: #86BCAC">Clear Form</button>
-                                    <button id="adduser" onclick="AddUser()">Request Account</button>
+                                <button id="clear" onclick="document.getElementById('createuser').reset()" style="background-color: #86BCAC">Clear Form</button>
+                                <button id="adduser" onclick="addUser()">Request Account</button>
                             </div>
                         </div>
-                    </form>                    
+                    </form>
                 </div>
-                
+
             </div>
         </div>
         <div class="col-02 filler"></div>
+
+        <div class="col-12 row filler" style="height: 5vh;"></div>
+
     </main>
+
+    <div class="row footer">
+        <div class="col-12" style="text-align: right;"><span>&copy; 2022 Pascal's Posse</span></div>
+    </div>
+
 </body>
 </html>
