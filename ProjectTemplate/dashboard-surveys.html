@@ -163,7 +163,14 @@
                                         contentType: "application/json; charset=utf-8",
                                         dataType: "json",
                                         success: function (msg) {
-                                            console.log("Survey deleted.")
+                                            survey.removeChild(surveyContent);
+                                            q1.removeChild(q1Content);
+                                            q2.removeChild(q2Content);
+                                            q3.removeChild(q3Content);
+                                            q4.removeChild(q4Content);
+                                            q5.removeChild(q5Content);
+                                            edit.removeChild(editContent);
+                                            deleteCell.removeChild(deleteContent);
                                         },
                                         error: function (xhr) {
                                             console.log(xhr.responseText);
