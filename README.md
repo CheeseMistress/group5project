@@ -41,9 +41,10 @@ Give it a try and see what you think. Our team is very proud of the work we have
 ## Built With
 - C#
 - Javascript
-- JSON
+- ASP.NET
 - HTML
 - CSS
+- JSON data structures
 
 ## Credits
 - Adam Drakulic
