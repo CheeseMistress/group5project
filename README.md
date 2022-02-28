@@ -58,7 +58,7 @@ Contributions are welcome via separate branches and pull requests.  Document you
 
 - Clone the repository.
 - Create a local branch.
-- Add changes.
+- Add change(s).
 - Commit with a note.
 - Push commit(s).
 - Create a well-documented pull request.
