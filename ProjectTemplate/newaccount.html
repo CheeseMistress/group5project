@@ -99,8 +99,9 @@
                         alert("Success!  An account has been requested for " + user + "!");
                         document.getElementById('createuser').reset();
                     },
-                    error: function (e) {
-                        alert("Unable to access webservice.");
+                    error: function (xhr) {
+                        console.log(xhr.responseText);
+                        alert("Unable to reach server.  See console for error details.");
                     }
                 });
             }

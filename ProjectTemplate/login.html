@@ -92,7 +92,7 @@
                     }
 
                 },
-                error: function (xhr, status, error) {
+                error: function (xhr) {
                     console.log(xhr.responseText);
                     alert("Unable to reach server.  See console for error details.");
                 }
@@ -116,8 +116,9 @@
                 success: function (msg) {
                     console.log("User disabled.  User status set to '0'.")
                 },
-                error: function (e) {
-                    alert("Unable to access webservice.");
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                    alert("Unable to reach server.  See console for error details.");
                 }
             });
         }

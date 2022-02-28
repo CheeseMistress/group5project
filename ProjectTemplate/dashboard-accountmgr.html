@@ -28,8 +28,9 @@
                     else {
                     }
                 },
-                error: function (e) {
-                    alert("boo...");
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                    alert("Unable to reach server.  See console for error details.");
                 }
             });
         }

@@ -95,12 +95,12 @@
                 data: parameters,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function (msg) {
-                    var responseFromServer = msg.d;
-                    alert("Response has been saved to the database!");
+                success: function () {
+                    console.log("Responses have been saved to the database!");
                 },
-                error: function (e) {
-                    alert("this code will only execute if javascript is unable to access the webservice");
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                    alert("Unable to reach server.  See console for error details.");
                 }
             });
         }
@@ -677,8 +677,9 @@
                         }
                     }
                 },
-                error: function (e) {
-                    alert("this code will only execute if javascript is unable to access the webservice");
+                error: function (xhr) {
+                    console.log(xhr.responseText);
+                    alert("Unable to reach server.  See console for error details.");
                 }
             });
         }
